@@ -1,0 +1,16 @@
+record_type,geography_name,state_or_territory,erp_2025,change_2024_25_abs,change_2024_25_pct,context,source_id
+capital_city,Greater Sydney,NSW,5638830,75230,1.4,"Greater Capital City Statistical Area",SRC-ABS-REGPOP-2025
+capital_city,Greater Melbourne,VIC,5435590,105030,2.0,"Greater Capital City Statistical Area",SRC-ABS-REGPOP-2025
+capital_city,Greater Brisbane,QLD,2833524,58223,2.1,"Greater Capital City Statistical Area",SRC-ABS-REGPOP-2025
+capital_city,Canberra,ACT,484630,6200,1.3,"Greater Capital City Statistical Area / ACT",SRC-ABS-REGPOP-2025
+regional_change,Rest of New South Wales,NSW,,25200,0.9,"Population outside Greater Sydney",SRC-ABS-REGPOP-2025
+regional_change,Rest of Victoria,VIC,,17900,1.1,"Population outside Greater Melbourne",SRC-ABS-REGPOP-2025
+regional_change,Rest of Queensland,QLD,,39700,1.4,"Population outside Greater Brisbane",SRC-ABS-REGPOP-2025
+sa2_growth,Rockbank - Mount Cottrell,VIC,35856,4602,,"Largest Australian SA2 absolute growth in 2024-25",SRC-ABS-REGPOP-2025
+sa2_growth,Mickleham - Yuroke,VIC,39389,4145,,"Major outer Melbourne growth SA2",SRC-ABS-REGPOP-2025
+sa2_growth,Fraser Rise - Plumpton,VIC,24739,4064,19.7,"Major outer Melbourne growth SA2",SRC-ABS-REGPOP-2025
+sa2_growth,Box Hill - Nelson,NSW,26348,3911,17.4,"Major outer Sydney growth SA2",SRC-ABS-REGPOP-2025
+sa2_growth,Clyde North - South,VIC,28328,3771,,"Major outer Melbourne growth SA2",SRC-ABS-REGPOP-2025
+sa2_growth,Ripley,QLD,,,15.0,"Ipswich; ABS reports increase of about 3,100 people",SRC-ABS-REGPOP-2025
+sa2_growth,Caloundra West - Baringa,QLD,,2000,,"Largest absolute SA2 growth outside Australian capital cities in 2024-25",SRC-ABS-REGPOP-2025
+sa2_growth,Googong,NSW,,,9.7,"Just outside ACT; highest growth rate outside Australian capital cities in 2024-25",SRC-ABS-REGPOP-2025
