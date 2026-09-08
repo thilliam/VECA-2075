@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "tools/extract_ga_east_rail.py"
+      - "tools/summarize_ga_rail.py"
       - ".github/workflows/extract-ga-rail.yml"
   workflow_dispatch:
 
@@ -24,6 +25,8 @@ jobs:
         run: pip install requests
       - name: Extract rail foundation
         run: python tools/extract_ga_east_rail.py
+      - name: Summarize and validate rail foundation
+        run: python tools/summarize_ga_rail.py
       - name: Commit derived rail layer
         run: |
           git config user.name "VECA data bot"
