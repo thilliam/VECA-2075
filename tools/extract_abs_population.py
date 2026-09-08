@@ -8,6 +8,7 @@ Outputs:
 
 The script intentionally uses the ABS-published XLSX cubes because ABS itself recommends
 Excel cubes over Data Explorer for large SA2 datasets. It preserves ASGS Edition 3 SA2 codes.
+This file is also the explicit trigger path for the population extraction CI workflow.
 """
 from __future__ import annotations
 
