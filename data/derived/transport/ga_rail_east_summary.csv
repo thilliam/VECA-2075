@@ -1,0 +1,12 @@
+dimension,value,feature_count
+operational_status,Abandoned,1576
+operational_status,Dismantled,1926
+operational_status,Disused,1056
+operational_status,Fully capable of operation.,279
+operational_status,N/A,1
+operational_status,Operational,22220
+operational_status,Proposed,1
+operational_status,The feature has been physically removed,945
+operational_status,Under Construction,14
+operational_status,Unknown,21
+feature_type,UNKNOWN,28039
