@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Extract strategic highways/arterials for the VECA east-corridor base layer.
+"""Extract operational national/state highways for VECA's east-corridor base layer.
 
 Source: Geoscience Australia hosted National Roads by Geoscape FeatureServer.
-The source is monthly-updated national road-centreline data. To avoid turning EXP-001 into
-a multi-million-feature street map, this extractor intentionally retains only operational
-NATIONAL OR STATE HIGHWAY and ARTERIAL ROAD features within a broad Brisbane–Melbourne envelope.
+EXP-001 deliberately starts with national/state highways only. Arterials are too granular
+for the inherited inter-regional base layer and belong in later city/access analysis.
 
 Outputs:
 - data/derived/transport/ga_major_roads_east.geojson
@@ -23,9 +22,8 @@ import requests
 BASE = "https://services-ap1.arcgis.com/ypkPEy1AmwPKGNNv/ArcGIS/rest/services/National_Roads/FeatureServer/0"
 QUERY = BASE + "/query"
 ENVELOPE = {"xmin": 138.5, "ymin": -39.8, "xmax": 154.2, "ymax": -25.0}
-# Service values use title case. Keep SQL minimal; status is filtered again in Python.
-WHERE = "hierarchy IN ('National or State Highway','Arterial Road')"
-ID_BATCH = 400
+WHERE = "hierarchy = 'National or State Highway'"
+ID_BATCH = 250
 FIELDS = ",".join([
     "road_id", "national_route", "state_route", "full_street_name", "feature_type",
     "hierarchy", "subtype", "ground_relationship", "lane_count", "one_way", "status",
@@ -55,14 +53,15 @@ def get_ids() -> list[int]:
 
 
 def get_features(ids: list[int]) -> list[dict]:
-    params = {
+    # POST avoids ArcGIS/proxy URL-length failures when object ID batches are long.
+    form = {
         "objectIds": ",".join(map(str, ids)),
         "outFields": FIELDS,
         "returnGeometry": "true",
-        "outSR": 7844,
+        "outSR": "7844",
         "f": "geojson",
     }
-    r = requests.get(QUERY, params=params, timeout=180)
+    r = requests.post(QUERY, data=form, timeout=180)
     r.raise_for_status()
     data = r.json()
     if "error" in data:
@@ -73,8 +72,10 @@ def get_features(ids: list[int]) -> list[dict]:
 def main() -> None:
     ids = get_ids()
     if not ids:
-        raise RuntimeError("No strategic road IDs returned; check source values/service")
-    print(f"Strategic road IDs in envelope before status filter: {len(ids):,}")
+        raise RuntimeError("No highway IDs returned; check source values/service")
+    if len(ids) > 100_000:
+        raise RuntimeError(f"Strategic highway extraction unexpectedly large: {len(ids):,} IDs")
+    print(f"National/state highway IDs in envelope before status filter: {len(ids):,}")
 
     features: list[dict] = []
     for start in range(0, len(ids), ID_BATCH):
@@ -83,14 +84,12 @@ def main() -> None:
         features.extend(batch)
         print(f"batch {start:,}-{start + len(batch_ids):,}: {len(batch)} features; total {len(features):,}")
 
-    # Operational status is deliberately applied client-side because status vocabularies can
-    # be finicky in ArcGIS SQL and geometry retrieval is already constrained to major roads.
     features = [
         f for f in features
         if str(f.get("properties", {}).get("status") or "").strip().lower() == "operational"
     ]
     if not features:
-        raise RuntimeError("Major-road query returned records but none with operational status")
+        raise RuntimeError("Highway query returned records but none with operational status")
 
     returned_ids = [str(f.get("properties", {}).get("OBJECTID")) for f in features]
     if len(returned_ids) != len(set(returned_ids)):
@@ -98,7 +97,7 @@ def main() -> None:
 
     collection = {
         "type": "FeatureCollection",
-        "name": "VECA east strategic road foundation",
+        "name": "VECA east national/state highway foundation",
         "source": BASE,
         "source_crs": "EPSG:7844 GDA2020",
         "filter": WHERE + "; client-side status=Operational",
@@ -110,10 +109,9 @@ def main() -> None:
     VALIDATION.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(collection, separators=(",", ":")), encoding="utf-8")
 
-    hierarchy, states, surface, named_routes = Counter(), Counter(), Counter(), Counter()
+    states, surface, named_routes = Counter(), Counter(), Counter()
     for f in features:
         p = f.get("properties", {})
-        hierarchy[str(p.get("hierarchy") or "UNKNOWN")] += 1
         states[str(p.get("state") or "UNKNOWN")] += 1
         surface[str(p.get("surface") or "UNKNOWN")] += 1
         nr = p.get("national_route") or p.get("state_route")
@@ -123,27 +121,27 @@ def main() -> None:
     with SUMMARY.open("w", newline="", encoding="utf-8") as fp:
         w = csv.writer(fp)
         w.writerow(["dimension", "value", "feature_count"])
-        for label, counter in [("hierarchy", hierarchy), ("state", states), ("surface", surface)]:
+        for label, counter in [("state", states), ("surface", surface)]:
             for k, v in sorted(counter.items()):
                 w.writerow([label, k, v])
-        for k, v in named_routes.most_common(50):
-            w.writerow(["route_number_top50", k, v])
+        for k, v in named_routes.most_common(75):
+            w.writerow(["route_number_top75", k, v])
 
     VALIDATION.write_text(
         "# Strategic road foundation extraction validation\n\n"
         "Source: Geoscience Australia-hosted National Roads by Geoscape.\n\n"
-        f"Extracted **{len(features):,} operational highway/arterial line features** intersecting the broad EXP-001 envelope.\n\n"
-        f"The initial spatial/hierarchy query returned {len(ids):,} object IDs before client-side operational-status filtering.\n\n"
+        f"Extracted **{len(features):,} operational National or State Highway line features** intersecting the broad EXP-001 envelope.\n\n"
+        f"The spatial/hierarchy query returned {len(ids):,} object IDs before client-side operational-status filtering.\n\n"
         "## Scope decision\n\n"
-        "This layer intentionally excludes sub-arterial, collector and local streets. EXP-001 needs the inherited inter-regional/major urban network first; local access can be added when evaluating specific places.\n\n"
+        "The first base layer deliberately excludes arterials, sub-arterials, collectors and local streets. A previous test showed highway+arterial selection produced about 220,000 segments, which is too granular for EXP-001's inter-regional inherited-system map. Arterials should be introduced later for city/access analysis.\n\n"
         "## Important limitations\n\n"
         "- Geometry is not traffic volume, capacity or strategic freight importance.\n"
-        "- Road importance must be enriched with NFDH harmonised traffic counts/heavy-vehicle share and state data.\n"
+        "- Road importance must be enriched with NFDH traffic counts/heavy-vehicle share and state data.\n"
         "- The broad extraction envelope is not a future settlement or transport corridor.\n"
-        "- Route segments rather than whole named corridors are the source unit, so feature counts are not road-length or capacity measures.\n",
+        "- Source units are road segments, so feature counts are not road-length or capacity measures.\n",
         encoding="utf-8",
     )
-    print(f"Wrote {OUT} with {len(features):,} operational features")
+    print(f"Wrote {OUT} with {len(features):,} operational highway features")
 
 
 if __name__ == "__main__":
