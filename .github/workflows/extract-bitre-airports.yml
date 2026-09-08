@@ -15,10 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install dependencies
+      - name: Install extractor dependencies
         run: pip install pandas openpyxl requests tabulate
       - name: Extract BITRE airport history
         run: python tools/extract_bitre_airports.py
@@ -31,5 +33,6 @@ jobs:
             echo "No derived airport changes"
           else
             git commit -m "EXP-001: materialise BITRE airport history"
-            git push
+            git pull --rebase origin main
+            git push origin HEAD:main
           fi
