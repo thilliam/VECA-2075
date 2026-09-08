@@ -3,9 +3,8 @@
 
 Source: Geoscience Australia hosted National Roads by Geoscape FeatureServer.
 The source is monthly-updated national road-centreline data. To avoid turning EXP-001 into
-a multi-million-feature street map, this extractor intentionally retains only hierarchy
-classes NATIONAL OR STATE HIGHWAY and ARTERIAL ROAD within a broad Brisbane–Melbourne
-envelope. Sub-arterials/local roads can be added later for local access analysis.
+a multi-million-feature street map, this extractor intentionally retains only operational
+NATIONAL OR STATE HIGHWAY and ARTERIAL ROAD features within a broad Brisbane–Melbourne envelope.
 
 Outputs:
 - data/derived/transport/ga_major_roads_east.geojson
@@ -21,10 +20,12 @@ from pathlib import Path
 
 import requests
 
-LAYER = "https://services-ap1.arcgis.com/ypkPEy1AmwPKGNNv/ArcGIS/rest/services/National_Roads/FeatureServer/0/query"
+BASE = "https://services-ap1.arcgis.com/ypkPEy1AmwPKGNNv/ArcGIS/rest/services/National_Roads/FeatureServer/0"
+QUERY = BASE + "/query"
 ENVELOPE = {"xmin": 138.5, "ymin": -39.8, "xmax": 154.2, "ymax": -25.0}
-WHERE = "hierarchy IN ('NATIONAL OR STATE HIGHWAY','ARTERIAL ROAD') AND status = 'OPERATIONAL'"
-PAGE = 1800
+# Service values use title case. Keep SQL minimal; status is filtered again in Python.
+WHERE = "hierarchy IN ('National or State Highway','Arterial Road')"
+ID_BATCH = 400
 FIELDS = ",".join([
     "road_id", "national_route", "state_route", "full_street_name", "feature_type",
     "hierarchy", "subtype", "ground_relationship", "lane_count", "one_way", "status",
@@ -33,58 +34,74 @@ FIELDS = ",".join([
 OUT = Path("data/derived/transport/ga_major_roads_east.geojson")
 SUMMARY = Path("data/derived/transport/ga_major_roads_east_summary.csv")
 VALIDATION = Path("research/transport/road_foundation_validation.md")
-SOURCE = "https://services-ap1.arcgis.com/ypkPEy1AmwPKGNNv/ArcGIS/rest/services/National_Roads/FeatureServer/0"
 
 
-def page(offset: int) -> dict:
+def get_ids() -> list[int]:
     params = {
         "where": WHERE,
         "geometry": json.dumps(ENVELOPE, separators=(",", ":")),
         "geometryType": "esriGeometryEnvelope",
         "inSR": 7844,
         "spatialRel": "esriSpatialRelIntersects",
-        "outFields": FIELDS,
-        "returnGeometry": "true",
-        "outSR": 7844,
-        "resultOffset": offset,
-        "resultRecordCount": PAGE,
-        "orderByFields": "OBJECTID",
-        "f": "geojson",
+        "returnIdsOnly": "true",
+        "f": "json",
     }
-    r = requests.get(LAYER, params=params, timeout=120)
+    r = requests.get(QUERY, params=params, timeout=180)
     r.raise_for_status()
     data = r.json()
     if "error" in data:
-        raise RuntimeError(data["error"])
-    return data
+        raise RuntimeError(f"ID query failed: {data['error']}")
+    return sorted(int(x) for x in data.get("objectIds", []))
+
+
+def get_features(ids: list[int]) -> list[dict]:
+    params = {
+        "objectIds": ",".join(map(str, ids)),
+        "outFields": FIELDS,
+        "returnGeometry": "true",
+        "outSR": 7844,
+        "f": "geojson",
+    }
+    r = requests.get(QUERY, params=params, timeout=180)
+    r.raise_for_status()
+    data = r.json()
+    if "error" in data:
+        raise RuntimeError(f"Feature query failed: {data['error']}")
+    return data.get("features", [])
 
 
 def main() -> None:
-    features = []
-    offset = 0
-    while True:
-        batch = page(offset).get("features", [])
+    ids = get_ids()
+    if not ids:
+        raise RuntimeError("No strategic road IDs returned; check source values/service")
+    print(f"Strategic road IDs in envelope before status filter: {len(ids):,}")
+
+    features: list[dict] = []
+    for start in range(0, len(ids), ID_BATCH):
+        batch_ids = ids[start:start + ID_BATCH]
+        batch = get_features(batch_ids)
         features.extend(batch)
-        print(f"offset={offset} batch={len(batch)} total={len(features)}")
-        if len(batch) < PAGE:
-            break
-        offset += len(batch)
-        if offset > 250_000:
-            raise RuntimeError("Road extraction exceeded 250k-feature safety limit; tighten scope before committing")
+        print(f"batch {start:,}-{start + len(batch_ids):,}: {len(batch)} features; total {len(features):,}")
 
+    # Operational status is deliberately applied client-side because status vocabularies can
+    # be finicky in ArcGIS SQL and geometry retrieval is already constrained to major roads.
+    features = [
+        f for f in features
+        if str(f.get("properties", {}).get("status") or "").strip().lower() == "operational"
+    ]
     if not features:
-        raise RuntimeError("No road features returned; check hierarchy/status values or source service")
+        raise RuntimeError("Major-road query returned records but none with operational status")
 
-    ids = [str(f.get("properties", {}).get("OBJECTID")) for f in features]
-    if len(ids) != len(set(ids)):
+    returned_ids = [str(f.get("properties", {}).get("OBJECTID")) for f in features]
+    if len(returned_ids) != len(set(returned_ids)):
         raise RuntimeError("Duplicate road OBJECTIDs returned")
 
     collection = {
         "type": "FeatureCollection",
         "name": "VECA east strategic road foundation",
-        "source": SOURCE,
+        "source": BASE,
         "source_crs": "EPSG:7844 GDA2020",
-        "filter": WHERE,
+        "filter": WHERE + "; client-side status=Operational",
         "extraction_envelope": ENVELOPE,
         "extraction_note": "Broad EXP-001 extraction convenience; not a future VECA corridor boundary.",
         "features": features,
@@ -93,10 +110,7 @@ def main() -> None:
     VALIDATION.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(collection, separators=(",", ":")), encoding="utf-8")
 
-    hierarchy = Counter()
-    states = Counter()
-    surface = Counter()
-    named_routes = Counter()
+    hierarchy, states, surface, named_routes = Counter(), Counter(), Counter(), Counter()
     for f in features:
         p = f.get("properties", {})
         hierarchy[str(p.get("hierarchy") or "UNKNOWN")] += 1
@@ -119,6 +133,7 @@ def main() -> None:
         "# Strategic road foundation extraction validation\n\n"
         "Source: Geoscience Australia-hosted National Roads by Geoscape.\n\n"
         f"Extracted **{len(features):,} operational highway/arterial line features** intersecting the broad EXP-001 envelope.\n\n"
+        f"The initial spatial/hierarchy query returned {len(ids):,} object IDs before client-side operational-status filtering.\n\n"
         "## Scope decision\n\n"
         "This layer intentionally excludes sub-arterial, collector and local streets. EXP-001 needs the inherited inter-regional/major urban network first; local access can be added when evaluating specific places.\n\n"
         "## Important limitations\n\n"
@@ -128,7 +143,7 @@ def main() -> None:
         "- Route segments rather than whole named corridors are the source unit, so feature counts are not road-length or capacity measures.\n",
         encoding="utf-8",
     )
-    print(f"Wrote {OUT} with {len(features):,} features")
+    print(f"Wrote {OUT} with {len(features):,} operational features")
 
 
 if __name__ == "__main__":
