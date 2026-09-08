@@ -5,6 +5,9 @@ Source: Geoscience Australia hosted National Roads by Geoscape FeatureServer.
 EXP-001 deliberately starts with national/state highways only. Arterials are too granular
 for the inherited inter-regional base layer and belong in later city/access analysis.
 
+The service times out on one large eastern-Australia spatial query, so this extractor uses
+small geographic tiles, unions object IDs, then fetches features in POST batches.
+
 Outputs:
 - data/derived/transport/ga_major_roads_east.geojson
 - data/derived/transport/ga_major_roads_east_summary.csv
@@ -14,6 +17,7 @@ from __future__ import annotations
 
 import csv
 import json
+import time
 from collections import Counter
 from pathlib import Path
 
@@ -23,7 +27,7 @@ BASE = "https://services-ap1.arcgis.com/ypkPEy1AmwPKGNNv/ArcGIS/rest/services/Na
 QUERY = BASE + "/query"
 ENVELOPE = {"xmin": 138.5, "ymin": -39.8, "xmax": 154.2, "ymax": -25.0}
 WHERE = "hierarchy = 'National or State Highway'"
-ID_BATCH = 250
+ID_BATCH = 200
 FIELDS = ",".join([
     "road_id", "national_route", "state_route", "full_street_name", "feature_type",
     "hierarchy", "subtype", "ground_relationship", "lane_count", "one_way", "status",
@@ -34,26 +38,51 @@ SUMMARY = Path("data/derived/transport/ga_major_roads_east_summary.csv")
 VALIDATION = Path("research/transport/road_foundation_validation.md")
 
 
-def get_ids() -> list[int]:
+def make_tiles() -> list[dict[str, float]]:
+    # 4-degree longitude x 3-degree latitude tiles keep ArcGIS spatial queries small.
+    tiles = []
+    y = ENVELOPE["ymin"]
+    while y < ENVELOPE["ymax"]:
+        x = ENVELOPE["xmin"]
+        while x < ENVELOPE["xmax"]:
+            tiles.append({
+                "xmin": x,
+                "ymin": y,
+                "xmax": min(x + 4.0, ENVELOPE["xmax"]),
+                "ymax": min(y + 3.0, ENVELOPE["ymax"]),
+            })
+            x += 4.0
+        y += 3.0
+    return tiles
+
+
+def get_tile_ids(tile: dict[str, float]) -> list[int]:
     params = {
         "where": WHERE,
-        "geometry": json.dumps(ENVELOPE, separators=(",", ":")),
+        "geometry": json.dumps(tile, separators=(",", ":")),
         "geometryType": "esriGeometryEnvelope",
         "inSR": 7844,
         "spatialRel": "esriSpatialRelIntersects",
         "returnIdsOnly": "true",
         "f": "json",
     }
-    r = requests.get(QUERY, params=params, timeout=180)
-    r.raise_for_status()
-    data = r.json()
-    if "error" in data:
-        raise RuntimeError(f"ID query failed: {data['error']}")
-    return sorted(int(x) for x in data.get("objectIds", []))
+    last_error: Exception | None = None
+    for attempt in range(1, 4):
+        try:
+            r = requests.get(QUERY, params=params, timeout=120)
+            r.raise_for_status()
+            data = r.json()
+            if "error" in data:
+                raise RuntimeError(data["error"])
+            return [int(x) for x in data.get("objectIds", [])]
+        except (requests.RequestException, RuntimeError) as exc:
+            last_error = exc
+            if attempt < 3:
+                time.sleep(5 * attempt)
+    raise RuntimeError(f"Tile ID query failed for {tile}: {last_error}")
 
 
 def get_features(ids: list[int]) -> list[dict]:
-    # POST avoids ArcGIS/proxy URL-length failures when object ID batches are long.
     form = {
         "objectIds": ",".join(map(str, ids)),
         "outFields": FIELDS,
@@ -61,21 +90,37 @@ def get_features(ids: list[int]) -> list[dict]:
         "outSR": "7844",
         "f": "geojson",
     }
-    r = requests.post(QUERY, data=form, timeout=180)
-    r.raise_for_status()
-    data = r.json()
-    if "error" in data:
-        raise RuntimeError(f"Feature query failed: {data['error']}")
-    return data.get("features", [])
+    last_error: Exception | None = None
+    for attempt in range(1, 4):
+        try:
+            r = requests.post(QUERY, data=form, timeout=180)
+            r.raise_for_status()
+            data = r.json()
+            if "error" in data:
+                raise RuntimeError(data["error"])
+            return data.get("features", [])
+        except (requests.RequestException, RuntimeError) as exc:
+            last_error = exc
+            if attempt < 3:
+                time.sleep(5 * attempt)
+    raise RuntimeError(f"Feature batch failed after retries: {last_error}")
 
 
 def main() -> None:
-    ids = get_ids()
+    ids_set: set[int] = set()
+    tiles = make_tiles()
+    for i, tile in enumerate(tiles, start=1):
+        tile_ids = get_tile_ids(tile)
+        before = len(ids_set)
+        ids_set.update(tile_ids)
+        print(f"tile {i}/{len(tiles)} {tile}: {len(tile_ids):,} ids; +{len(ids_set)-before:,} unique")
+
+    ids = sorted(ids_set)
     if not ids:
         raise RuntimeError("No highway IDs returned; check source values/service")
     if len(ids) > 100_000:
         raise RuntimeError(f"Strategic highway extraction unexpectedly large: {len(ids):,} IDs")
-    print(f"National/state highway IDs in envelope before status filter: {len(ids):,}")
+    print(f"Unique national/state highway IDs in envelope before status filter: {len(ids):,}")
 
     features: list[dict] = []
     for start in range(0, len(ids), ID_BATCH):
@@ -102,6 +147,7 @@ def main() -> None:
         "source_crs": "EPSG:7844 GDA2020",
         "filter": WHERE + "; client-side status=Operational",
         "extraction_envelope": ENVELOPE,
+        "tile_count": len(tiles),
         "extraction_note": "Broad EXP-001 extraction convenience; not a future VECA corridor boundary.",
         "features": features,
     }
@@ -131,7 +177,7 @@ def main() -> None:
         "# Strategic road foundation extraction validation\n\n"
         "Source: Geoscience Australia-hosted National Roads by Geoscape.\n\n"
         f"Extracted **{len(features):,} operational National or State Highway line features** intersecting the broad EXP-001 envelope.\n\n"
-        f"The spatial/hierarchy query returned {len(ids):,} object IDs before client-side operational-status filtering.\n\n"
+        f"The tiled spatial/hierarchy query returned {len(ids):,} unique object IDs before client-side operational-status filtering, using {len(tiles)} small spatial tiles.\n\n"
         "## Scope decision\n\n"
         "The first base layer deliberately excludes arterials, sub-arterials, collectors and local streets. A previous test showed highway+arterial selection produced about 220,000 segments, which is too granular for EXP-001's inter-regional inherited-system map. Arterials should be introduced later for city/access analysis.\n\n"
         "## Important limitations\n\n"
