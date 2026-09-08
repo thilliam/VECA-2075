@@ -51,15 +51,21 @@ The first experiment, `EXP-001-east-coast-base-map`, therefore contains no propo
 
 ## Repository guide
 
+The canonical organising principle is now **research domain**, not file type. Evidence, source registers and derived datasets for a subject should live together wherever practical.
+
+- `domains/<domain>/research/` — plans, source registers, findings and evidence notes for that domain.
+- `domains/<domain>/data/raw/` — preserved source data where practical.
+- `domains/<domain>/data/derived/` — reproducible/structured outputs for that domain.
 - `doctrine/` — project purpose and durable design principles.
-- `research/` — research dimensions, sources, assumptions and domain work.
-- `data/` — raw and derived datasets; provenance belongs with every dataset.
-- `maps/` — spatial outputs and layer documentation.
-- `experiments/` — bounded research experiments.
+- `experiments/` — bounded cross-domain research experiments and synthesis.
+- `maps/` — rendered spatial outputs and map-specific documentation.
 - `scenarios/` — later alternative 2075 spatial scenarios.
 - `decisions/` — consequential project decisions and rationale.
-- `tools/` — only tooling that becomes necessary to answer research questions.
+- `tools/` — only tooling necessary to answer research questions.
+- `research/` and `data/` — legacy/migration locations only while older generated layers and CI workflows are moved safely into the domain structure.
+
+The one-time automated migration of the older population/transport files staged successfully but its push was blocked because the GitHub App lacks permission to rewrite workflow files. New work is domain-first; legacy paths will be retired once the workflow migration can be completed without breaking reproducibility.
 
 ## Current phase
 
-**Bootstrap / EXP-001.** Build a multilayer spatial picture of eastern Australia before proposing a settlement or transport network.
+**EXP-001 inherited-system synthesis + habitat/resource layer build.** Population and core transport geometry are established; energy, water and industry/logistics are being structured; climate, hazard and land constraints are now being added before any settlement ranking or transport architecture is proposed.
