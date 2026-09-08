@@ -121,6 +121,32 @@ Potential future layers include:
 
 This is not required for the first coherent EXP-001 base map unless evidence shows it is necessary.
 
+## AI Infrastructure Potential — future layer
+
+Investigate the physical potential for AI-intensive infrastructure and related industry, eventually considering:
+- electricity availability, reliability and cost;
+- transmission capacity and augmentation;
+- fibre and communications connectivity;
+- climate and cooling conditions;
+- suitable industrial land;
+- water and recycled-water options;
+- proximity to universities and research capability; and
+- compatible industrial loads or infrastructure synergies.
+
+This layer is conceptual only at this stage. Do not rank regions or assume that attracting data centres is intrinsically beneficial.
+
+## AI Economic Resilience — future layer
+
+Investigate whether a regional economic system remains diverse and productive under materially different automation outcomes. Potential later evidence includes industry and occupational concentration, automation exposure, remote-work potential, education/retraining capability and capacity to create new economic activity.
+
+This is a resilience test, not a forecast of which occupations AI will eliminate.
+
+## AI Social Resilience — future layer
+
+Investigate whether a settlement remains highly desirable if paid employment occupies materially less of residents' time. Potential later dimensions include housing quality and affordability, 15/30/60-minute life accessibility, natural amenity, recreation, sport, education, health, culture, community infrastructure, walking/cycling and regional connectivity.
+
+Natural amenity may become more economically significant if leisure time rises, but VECA must test rather than assume that outcome.
+
 ## Capital Gravity — future concept
 
 **Capital Gravity** is a future metric representing the degree to which strategically useful public and private investment is accumulating around a region.
