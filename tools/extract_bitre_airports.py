@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import io
 import re
+import time
 from pathlib import Path
 
 import pandas as pd
@@ -37,11 +38,28 @@ def norm(v: object) -> str:
 
 
 def download() -> bytes:
-    r = requests.get(URL, timeout=120)
-    r.raise_for_status()
-    if len(r.content) < 100_000:
-        raise RuntimeError(f"BITRE workbook unexpectedly small: {len(r.content)} bytes")
-    return r.content
+    """BITRE can serve large XLSX files slowly; stream with retries and a long read timeout."""
+    headers = {"User-Agent": "VECA-2075 research extractor/1.0"}
+    last_error: Exception | None = None
+    for attempt in range(1, 5):
+        try:
+            chunks: list[bytes] = []
+            with requests.get(URL, headers=headers, stream=True, timeout=(30, 600)) as r:
+                r.raise_for_status()
+                for chunk in r.iter_content(chunk_size=1024 * 1024):
+                    if chunk:
+                        chunks.append(chunk)
+            content = b"".join(chunks)
+            if len(content) < 100_000:
+                raise RuntimeError(f"BITRE workbook unexpectedly small: {len(content)} bytes")
+            print(f"Downloaded BITRE workbook: {len(content):,} bytes on attempt {attempt}")
+            return content
+        except (requests.RequestException, RuntimeError) as exc:
+            last_error = exc
+            print(f"BITRE download attempt {attempt} failed: {exc}")
+            if attempt < 4:
+                time.sleep(attempt * 10)
+    raise RuntimeError(f"BITRE workbook download failed after retries: {last_error}")
 
 
 def flatten(raw: pd.DataFrame, row: int, depth: int = 3) -> list[str]:
@@ -84,10 +102,9 @@ def parse_row_table(xls: pd.ExcelFile) -> pd.DataFrame | None:
                 "passenger_movements": pd.to_numeric(data.iloc[:, passenger_i], errors="coerce"),
             })
             aircraft_i = find_col(headers, ("aircraft",), ("percent", "%"))
-            if aircraft_i is not None:
-                out["aircraft_movements"] = pd.to_numeric(data.iloc[:, aircraft_i], errors="coerce")
-            else:
-                out["aircraft_movements"] = pd.NA
+            out["aircraft_movements"] = (
+                pd.to_numeric(data.iloc[:, aircraft_i], errors="coerce") if aircraft_i is not None else pd.NA
+            )
             out = out[out["year"].between(1985, 2025, inclusive="both")]
             out = out[out["airport"].ne("")]
             if len(out) > 100:
@@ -98,11 +115,9 @@ def parse_row_table(xls: pd.ExcelFile) -> pd.DataFrame | None:
 
 
 def parse_matrix(xls: pd.ExcelFile) -> pd.DataFrame | None:
-    """Fallback for presentation matrices with years across columns and airport names down rows."""
     records = []
     for sheet in xls.sheet_names:
         raw = pd.read_excel(xls, sheet_name=sheet, header=None)
-        # Identify candidate year row.
         for r in range(min(60, len(raw))):
             years = {}
             for c, v in enumerate(raw.iloc[r].tolist()):
@@ -114,7 +129,6 @@ def parse_matrix(xls: pd.ExcelFile) -> pd.DataFrame | None:
                     years[c] = y
             if len(years) < 5:
                 continue
-            # Search nearby/remaining rows for airport names and numeric values under year columns.
             for rr in range(r + 1, len(raw)):
                 row_text = " | ".join(str(v).strip() for v in raw.iloc[rr, : min(8, raw.shape[1])].tolist() if not pd.isna(v))
                 if not row_text:
@@ -127,14 +141,12 @@ def parse_matrix(xls: pd.ExcelFile) -> pd.DataFrame | None:
                         break
                 if not match:
                     continue
-                numeric_count = 0
                 vals = []
                 for c, y in years.items():
                     val = pd.to_numeric(pd.Series([raw.iat[rr, c]]), errors="coerce").iloc[0]
                     if pd.notna(val):
-                        numeric_count += 1
                         vals.append((y, float(val)))
-                if numeric_count >= 3:
+                if len(vals) >= 3:
                     for y, val in vals:
                         records.append({"airport": match, "year": y, "passenger_movements": val, "aircraft_movements": pd.NA})
             if records:
@@ -174,8 +186,6 @@ def main() -> None:
     df["airport"] = df["airport"].map(canonical)
     df = df[df["airport"].isin(TARGETS)].copy()
     df["year"] = df["year"].astype(int)
-    # When presentation sheets repeat a metric, keep the largest passenger value per airport/year;
-    # this is a defensive de-duplication and is reported in validation.
     df = (df.sort_values("passenger_movements")
             .drop_duplicates(["airport", "year"], keep="last")
             .sort_values(["airport", "year"]))
