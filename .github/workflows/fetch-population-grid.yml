@@ -1,0 +1,43 @@
+name: Fetch ABS population grid
+
+on:
+  push:
+    paths:
+      - ".github/workflows/fetch-population-grid.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-grid:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download authoritative ABS 2025 1km population grid
+        run: |
+          mkdir -p data/raw/population
+          curl --fail --location --retry 3 \
+            "https://www.abs.gov.au/statistics/people/population/regional-population/2024-25/GEOTIFF.zip" \
+            -o data/raw/population/abs_population_grid_2025_geotiff.zip
+          test $(stat -c%s data/raw/population/abs_population_grid_2025_geotiff.zip) -gt 500000
+          unzip -l data/raw/population/abs_population_grid_2025_geotiff.zip
+          sha256sum data/raw/population/abs_population_grid_2025_geotiff.zip > data/raw/population/abs_population_grid_2025_geotiff.sha256
+          cat > data/raw/population/README.md <<'EOF'
+          # ABS population grid raw source
+
+          `abs_population_grid_2025_geotiff.zip` is the Australian Bureau of Statistics Australian population grid 2025 in GeoTIFF format, downloaded without transformation from Regional Population 2024-25.
+
+          Source ID: `SRC-ABS-POPGRID-2025`
+
+          Source publication: https://www.abs.gov.au/statistics/people/population/regional-population/2024-25
+
+          The ABS describes the grid as a 1 km x 1 km representation for Australia based on the National Nested Grid Standard. Preserve this archive as raw source evidence; derived clipping/reprojection belongs under `data/derived`.
+          EOF
+      - name: Commit raw population grid
+        run: |
+          git config user.name "VECA data bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/raw/population/
+          git commit -m "EXP-001: add ABS 2025 1km population grid raw source"
+          git push
