@@ -1,66 +1,9 @@
-# Raw Population Sources
+# ABS population grid raw source
 
-This directory documents the authoritative source assets for EXP-001 population work. Large upstream binaries should not be duplicated into the repository unless there is a clear reproducibility reason; preserve canonical source URLs, versions and transformations instead.
+`abs_population_grid_2025_geotiff.zip` is the Australian Bureau of Statistics Australian population grid 2025 in GeoTIFF format, downloaded without transformation from Regional Population 2024-25.
 
-## Preferred current sources
+Source ID: `SRC-ABS-POPGRID-2025`
 
-### `SRC-ABS-SA2-ERP-2025`
+Source publication: https://www.abs.gov.au/statistics/people/population/regional-population/2024-25
 
-ABS hosted feature layer:
-
-`https://geo.abs.gov.au/arcgis/rest/services/Hosted/SA2_Regional_Population_2025/FeatureServer/3`
-
-The service is native to **ASGS Edition 3** and contains:
-
-- State / GCCSA / SA4 / SA3 / SA2 hierarchy and codes;
-- SA2 polygon geometry;
-- ERP for every year 2001–2025;
-- 2024–25 absolute and percentage population change;
-- area and 2025 population density; and
-- births, deaths, internal migration and overseas migration components for 2021–22 through 2024–25.
-
-Supported query formats include JSON and GeoJSON. The service maximum record count is 2,000, so extraction should be paginated or partitioned by state where necessary.
-
-### `SRC-ABS-POPGRID-2025`
-
-ABS 1 km Australian population grid for June 2025, available as GeoTIFF from the `Regional population, 2024-25` release.
-
-Use this raster to show the actual spatial distribution of resident population at finer resolution than SA2 polygons. It complements rather than replaces the SA2 analytical dataset.
-
-## Initial extraction scope
-
-Retain all records from:
-
-- Queensland — ABS state code `3`
-- New South Wales — `1`
-- Australian Capital Territory — `8`
-- Victoria — `2`
-
-Do not clip these records to a hand-drawn VECA corridor during raw extraction. A study-area subset should be a later, reproducible derived transformation.
-
-## Required normalized fields
-
-For the first derived table retain at least:
-
-- `state_code_2021`
-- `state_name_2021`
-- `sa4_code_2021`
-- `sa4_name_2021`
-- `sa3_code_2021`
-- `sa3_name_2021`
-- `sa2_code_2021`
-- `sa2_name_2021`
-- `erp_2015`
-- `erp_2024`
-- `erp_2025`
-- `erp_change_number_2024_25`
-- `erp_change_per_cent_2024_25`
-- `area_km2`
-- `pop_density_2025_people_per_km2`
-- source and geography-version metadata
-
-Later demographic work can add the migration-component fields and age/sex structure without changing the baseline population layer.
-
-## Geography rule
-
-The first EXP-001 population layer remains native to ASGS Edition 3. ASGS Edition 4 (July 2026–June 2031) is a later geography and must not be substituted without an explicit ABS concordance/transformation step.
+The ABS describes the grid as a 1 km x 1 km representation for Australia based on the National Nested Grid Standard. Preserve this archive as raw source evidence; derived clipping/reprojection belongs under `data/derived`.
