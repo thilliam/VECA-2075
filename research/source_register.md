@@ -41,7 +41,7 @@ One record should represent one source or clearly versioned dataset. Capture the
 | `dollar_basis` | Nominal/real, price year and other basis if known |
 | `notes` | Caveats, definitions, transformations, exclusions |
 
-Do not invent unavailable metadata. Record `unknown` or leave the field explicitly empty according to the eventual storage format.
+Do not invent unavailable metadata. Record `unknown` or leave the field explicitly empty according to the storage format.
 
 ## Infrastructure status taxonomy
 
@@ -57,12 +57,22 @@ Use only these values for infrastructure/project status:
 
 Never mix proposed projects with committed projects in analysis or visualisation. Capture public/private ownership separately from status.
 
+A declaration or planning-zone status that is not itself an infrastructure project — for example a declared Renewable Energy Zone — must not be forced into this project-delivery taxonomy. Store the zone/declaration status separately and apply the controlled delivery status only to actual infrastructure projects.
+
 ## Evidence discipline
 
 A source's existence does not prove every claim made about a project. Record the precise status, cost, date and scope supported by the source. Where sources conflict, retain the conflict rather than silently selecting the most convenient figure.
 
 Derived datasets must preserve enough provenance to reconstruct which source records and transformations produced them.
 
-## Bootstrap state
+## Current implementation
 
-No substantive sources are registered yet. EXP-001 will begin populating this register as its first research activity.
+Substantive sources are now being registered and used by EXP-001.
+
+- `research/source_register.csv` is the main structured cross-domain source register.
+- Domain-specific registers may supplement it where a research stream needs additional fields; for example `research/transport/transport_source_register.csv`.
+- Derived datasets should carry stable `source_id` values back to these registers where practical.
+- Raw archives and source contracts under `data/raw/` preserve authoritative source material when redistribution/size permits.
+- Reproducible extractors under `tools/` document transformations for datasets such as ABS population and Geoscience Australia rail geometry.
+
+This Markdown file defines provenance policy; the CSV registers contain the live source records. Do not infer research completeness from this policy page alone.
