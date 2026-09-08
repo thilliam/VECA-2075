@@ -1,0 +1,35 @@
+name: Extract GA east strategic roads
+
+on:
+  push:
+    paths:
+      - "tools/extract_ga_east_major_roads.py"
+      - ".github/workflows/extract-ga-major-roads.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install requests
+      - name: Extract strategic roads
+        run: python tools/extract_ga_east_major_roads.py
+      - name: Commit derived road layer
+        run: |
+          git config user.name "VECA data bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/derived/transport/ga_major_roads_east.geojson data/derived/transport/ga_major_roads_east_summary.csv research/transport/road_foundation_validation.md
+          if git diff --cached --quiet; then
+            echo "No derived road changes"
+          else
+            git commit -m "EXP-001: materialise east strategic road foundation layer"
+            git push
+          fi
