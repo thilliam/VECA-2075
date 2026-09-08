@@ -1,4 +1,4 @@
-project_id,project_name,jurisdiction,status_class,in_service_timing,full_capacity_timing,vega_relevance,source_id,notes
+project_id,project_name,jurisdiction,status_class,in_service_timing,full_capacity_timing,veca_relevance,source_id,notes
 EN-TR-001,HumeLink,NSW,committed_anticipated,2027-12,,high,SRC-AEMO-ISP-2026,"365 km 500 kV NSW backbone; separate project source holds cost/status detail."
 EN-TR-002,Hunter-Central Coast REZ Network Infrastructure Project,NSW,committed_anticipated,2028-07,,high,SRC-AEMO-ISP-2026,"Connects Hunter-Central Coast REZ development to wider NSW system."
 EN-TR-003,Central-West Orana REZ Network Infrastructure Project,NSW,committed_anticipated,2028-12,,high,SRC-AEMO-ISP-2026,"Initial operating transfer capability 4.5 GW; access-scheme transfer determination 6 GW; generation/storage connection cap 7.7 GW. Keep concepts distinct."
