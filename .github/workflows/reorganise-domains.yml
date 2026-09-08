@@ -1,0 +1,30 @@
+name: Consolidate repository by evidence domain
+on:
+  push:
+    paths:
+      - "tools/reorganise_domains.sh"
+      - ".github/workflows/reorganise-domains.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  reorganise:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Consolidate domain files
+        run: bash tools/reorganise_domains.sh
+      - name: Commit reorganisation
+        run: |
+          git config user.name "VECA data bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No reorganisation changes"
+          else
+            git commit -m "REPO: consolidate evidence by domain"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
