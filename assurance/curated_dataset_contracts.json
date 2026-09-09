@@ -170,6 +170,13 @@
       "selection_policy": "Capture current east-coast conventional-rail capability-changing investments, funded corridor programs, Inland Rail section status and the next authoritative operating-capability sources needed to convert rail geometry into a usable capacity layer.",
       "completeness_test": "Every included row resolves to a current primary ARTC/Inland Rail source and distinguishes completed, in-progress, funded-program, approved/preserved and ingestion-target states. The dataset does not claim to contain every ARTC project, train path, loop or route-access parameter.",
       "canonical": true
+    },
+    {
+      "path": "domains/industry/data/derived/port_catchments_seed.csv",
+      "selection_claim": "selective_east_coast_port_systems",
+      "selection_policy": "Capture the major east-coast port systems that materially affect VECA freight/economic geography: Brisbane, Botany, Kembla, Newcastle, Melbourne and Geelong. Preserve current throughput/capacity separately from rail/intermodal access and future expansion optionality.",
+      "completeness_test": "Every row must resolve to primary port/operator sources and distinguish current capability from planned/optional expansion. This is not a census of every east-coast commercial port or berth.",
+      "canonical": true
     }
   ]
 }

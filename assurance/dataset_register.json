@@ -404,6 +404,19 @@
       ],
       "blocker": "Entity completeness reconciled 265/265. Numeric load scale remains sampled; historical load must not be treated as connection capacity.",
       "canonical": true
+    },
+    {
+      "path": "domains/industry/data/derived/port_catchments_seed.csv",
+      "domain": "industry",
+      "role": "imported_dataset",
+      "assurance_state": "provenance_reconciled",
+      "map_relevance": true,
+      "provenance": "primary port-operator current capability, trade and development-strategy sources",
+      "blocker": null,
+      "selection_claim": "selective_east_coast_port_systems",
+      "selection_policy": "Capture the major east-coast port systems that materially affect VECA freight/economic geography: Brisbane, Botany, Kembla, Newcastle, Melbourne and Geelong. Preserve current throughput/capacity separately from rail/intermodal access and future expansion optionality.",
+      "completeness_test": "Every row must resolve to primary port/operator sources and distinguish current capability from planned/optional expansion. This is not a census of every east-coast commercial port or berth.",
+      "canonical": true
     }
   ]
 }

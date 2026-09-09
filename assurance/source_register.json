@@ -750,6 +750,188 @@
         "Published numeric MW/MVA labels appear systematically inconsistent with magnitudes; raw values are retained and interpreted /1000 fields remain explicitly sampled rather than source-certified.",
         "Substation coordinates and DAPR capacity/forecast attributes still require join to Ergon network/DAPR records."
       ]
+    },
+    {
+      "source_id": "PORT-BRIS-FY25",
+      "title": "Strong FY25 trade through Port of Brisbane",
+      "publisher": "Port of Brisbane Pty Ltd",
+      "domain": "industry",
+      "geography": "Port of Brisbane / Queensland",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Current throughput and land/precinct scale captured; detailed berth, rail-terminal and commodity capacity still require deeper extraction."
+      ]
+    },
+    {
+      "source_id": "PORT-BRIS-VISION2060",
+      "title": "Port of Brisbane Vision 2060",
+      "publisher": "Port of Brisbane Pty Ltd",
+      "domain": "industry",
+      "geography": "Port of Brisbane / Queensland",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Vision figures are operator planning assumptions, not committed construction or guaranteed future demand."
+      ]
+    },
+    {
+      "source_id": "PORT-NSW-BOTANY",
+      "title": "Port Botany capabilities",
+      "publisher": "NSW Ports",
+      "domain": "industry",
+      "geography": "Port Botany / NSW",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Current terminal capacity and role captured; berth-by-berth utilisation and landside bottleneck metrics remain to be structured."
+      ]
+    },
+    {
+      "source_id": "PORT-NSW-KEMBLA",
+      "title": "Port Kembla and future NSW container role",
+      "publisher": "NSW Ports",
+      "domain": "industry",
+      "geography": "Port Kembla / NSW",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Future container terminal is strategic/concept-approved optionality; current bulk/RoRo throughput requires a separate detailed trade extract."
+      ]
+    },
+    {
+      "source_id": "PORT-NSW-RAIL",
+      "title": "NSW Ports rail strategy and investment",
+      "publisher": "NSW Ports",
+      "domain": "transport",
+      "geography": "Port Botany / Port Kembla / Sydney intermodal network",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Rail target and investment program captured; actual annual rail TEU by terminal and train-path utilisation remain to be structured."
+      ]
+    },
+    {
+      "source_id": "PORT-NEWCASTLE-CAPABILITY",
+      "title": "Port of Newcastle capability",
+      "publisher": "Port of Newcastle",
+      "domain": "industry",
+      "geography": "Newcastle / Hunter",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Physical spare-capacity and diversification signals captured; trade-by-commodity, terminal-specific capacity and container-market constraints need separate evidence."
+      ]
+    },
+    {
+      "source_id": "PORT-MEL-FY25",
+      "title": "Port of Melbourne FY25 trade data",
+      "publisher": "Port of Melbourne",
+      "domain": "industry",
+      "geography": "Port of Melbourne / Victoria",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Current container throughput captured; commodity and landside-mode detail remains incomplete."
+      ]
+    },
+    {
+      "source_id": "PORT-MEL-PDS2055",
+      "title": "Port of Melbourne 2055 Port Development Strategy",
+      "publisher": "Port of Melbourne",
+      "domain": "industry",
+      "geography": "Port of Melbourne / Victoria",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Future terminal, rail and land projects are planning evidence and must remain separated from completed assets."
+      ]
+    },
+    {
+      "source_id": "PORT-GEELONG-CURRENT",
+      "title": "GeelongPort current trade and facilities",
+      "publisher": "GeelongPort",
+      "domain": "industry",
+      "geography": "Geelong / south-west Victoria",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P1",
+      "map_relevance": true,
+      "known_gaps": [
+        "Current bulk scale captured; detailed rail utilisation and berth/commodity capacity remain incomplete."
+      ]
+    },
+    {
+      "source_id": "PORT-GEELONG-PDS2024",
+      "title": "Port of Geelong 2024 Port Development Strategy",
+      "publisher": "GeelongPort",
+      "domain": "industry",
+      "geography": "Geelong / regional Victoria",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P1",
+      "map_relevance": true,
+      "known_gaps": [
+        "Strategy identifies catchment/corridor and land requirements; individual future projects require separate status evidence."
+      ]
+    },
+    {
+      "source_id": "INTERMODAL-MOOREBANK-2026",
+      "title": "Moorebank Intermodal Precinct terminals",
+      "publisher": "MITCo / Moorebank Intermodal Precinct",
+      "domain": "transport",
+      "geography": "Moorebank / South-west Sydney",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Current interstate capacity and ultimate expansion captured; current IMEX throughput/capacity availability needs a separate operational extract."
+      ]
+    },
+    {
+      "source_id": "INTERMODAL-NSWPORTS-ENFIELD",
+      "title": "Enfield Intermodal Logistics Centre",
+      "publisher": "NSW Ports",
+      "domain": "transport",
+      "geography": "Enfield / Sydney",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Site scale and investment captured; annual throughput and train-path utilisation not yet structured."
+      ]
+    },
+    {
+      "source_id": "INTERMODAL-NSWPORTS-COOKS",
+      "title": "Cooks River Intermodal Terminal",
+      "publisher": "NSW Ports",
+      "domain": "transport",
+      "geography": "Cooks River / Sydney",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P1",
+      "map_relevance": true,
+      "known_gaps": [
+        "Rail/service role and storage scale captured; annual terminal throughput not yet structured."
+      ]
     }
   ]
 }
