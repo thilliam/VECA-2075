@@ -23,12 +23,25 @@ jobs:
       - name: Profile workbook
         run: |
           python tools/profile_xlsx_stdlib.py _scratch/ausgrid/substation-capacity-demand-forecast-2025.xlsx assurance/source_profiles/ausgrid_substation_capacity_demand_2025.json --max-rows 30
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('assurance/source_profiles/ausgrid_substation_capacity_demand_2025.json')
+          d=json.loads(p.read_text(encoding='utf-8'))
+          out={'source_file':d['source_file'],'sheets':[]}
+          for s in d['sheets']:
+              out['sheets'].append({
+                  'name':s['name'],'dimension':s['dimension'],'xml_row_count':s['xml_row_count'],
+                  'sample_nonempty_rows':s['sample_nonempty_rows'][:8]
+              })
+          Path('assurance/source_profiles/ausgrid_capacity_sheet_summary_2025.json').write_text(json.dumps(out,indent=2)+'\n',encoding='utf-8')
+          PY
       - name: Publish profile
         run: |
           git config user.name "VECA ingestion bot"
           git config user.email "actions@users.noreply.github.com"
-          git add assurance/source_profiles/ausgrid_substation_capacity_demand_2025.json
+          git add assurance/source_profiles/ausgrid_substation_capacity_demand_2025.json assurance/source_profiles/ausgrid_capacity_sheet_summary_2025.json
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "Energy: profile Ausgrid substation capacity forecast"
+          git commit -m "Energy: profile Ausgrid capacity workbook sheets"
           git pull --rebase --autostash origin feature/ingest-ausgrid-capacity-001
           git push origin HEAD:feature/ingest-ausgrid-capacity-001
