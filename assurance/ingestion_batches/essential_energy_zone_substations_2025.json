@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "updated": "2026-09-09",
+  "replace_existing": true,
+  "sources": [
+    {
+      "source_id": "ENERGY-ESSENTIAL-DAPR-2025-DATA",
+      "title": "Essential Energy DAPR and zone-substation capacity data 2025",
+      "publisher": "Essential Energy",
+      "domain": "energy",
+      "geography": "Regional NSW",
+      "source_type": "infrastructure_owner_intent",
+      "status": "reconciled",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Zone-substation summer/winter capacity and five-year forecasts are reconciled for all 366 published zone-substation records.",
+        "Bulk supply point, sub-transmission line, limitation, retirement/derating and augmentation tables remain separate follow-on ingestion tasks.",
+        "Substation coordinates/geometry remain to be joined from the Essential Energy DAPR portal before map rendering.",
+        "Arithmetic firm-capacity margin is not guaranteed connection headroom and must not be presented as such."
+      ]
+    }
+  ],
+  "datasets": [
+    {
+      "path": "domains/energy/data/derived/essential_energy_zone_substation_capacity_2025.csv",
+      "domain": "energy",
+      "role": "imported_dataset",
+      "assurance_state": "reconciled",
+      "map_relevance": true,
+      "provenance": "Essential Energy DAPR 2025 BSP, ZS and Lines Extract Summary V2 workbook; exhaustive matched ZSSummer/ZSWinter zone-substation inventory",
+      "blocker": null,
+      "selection_claim": "exhaustive_import",
+      "selection_policy": "Include every published zone-substation identity present in both ZSSummer and ZSWinter and preserve source summer/winter transformer, firm-rating, forecast, embedded-generation and peak-duration fields.",
+      "completeness_test": "Independent openpyxl identity inventory and separate stdlib/XML extraction must reconcile exactly with identical summer/winter identity sets and zero missing/extra/duplicate assets.",
+      "canonical": true,
+      "observed_count": 366,
+      "source_ids": ["ENERGY-ESSENTIAL-DAPR-2025-DATA"]
+    }
+  ]
+}
