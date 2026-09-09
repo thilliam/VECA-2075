@@ -6,7 +6,7 @@
     "exhaustive_import": 4,
     "support_output": 3
   },
-  "curated_structural_provenance_failures": 1,
+  "curated_structural_provenance_failures": 0,
   "datasets": [
     {
       "path": "data/derived/energy_zones_seed.csv",
@@ -580,15 +580,10 @@
       "provenance_fields": [
         "source_ids"
       ],
-      "rows_missing_provenance": [
-        6,
-        9,
-        10,
-        11
-      ],
+      "rows_missing_provenance": [],
       "unresolved_source_ids": [],
       "invalid_source_urls": [],
-      "structural_provenance_pass": false
+      "structural_provenance_pass": true
     },
     {
       "path": "domains/government-intent/data/derived/regional_health_assets_seed.csv",
