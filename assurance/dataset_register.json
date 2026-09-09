@@ -430,6 +430,23 @@
       "selection_policy": "Capture material digital-backbone routes and network investments that affect VECA east-coast regional connectivity, data-centre geography and resilience. Keep operating terrestrial fibre, planned fibre, network-level reach and domestic subsea diversity as distinct record types.",
       "completeness_test": "Every row must resolve to a primary operator source and preserve operating/planned status plus the published capacity definition. This is not a complete census of all carriers, metro fibre, NBN access infrastructure or cable landing stations.",
       "canonical": true
+    },
+    {
+      "path": "domains/energy/data/derived/aemo_generation_information_east_july_2026.csv",
+      "domain": "energy",
+      "role": "imported_dataset",
+      "assurance_state": "reconciled",
+      "map_relevance": true,
+      "provenance": "AEMO NEM Generation Information July 2026 Generator Information sheet; NSW1/QLD1/VIC1 exhaustive unit-level extraction with independent identity inventory",
+      "blocker": null,
+      "selection_claim": "exhaustive_import",
+      "selection_policy": "Include every Generator Information row in AEMO NEM regions NSW1, QLD1 and VIC1 that has a Gen Info Unit ID; preserve all 165 source columns and source-native commitment/status semantics.",
+      "completeness_test": "Independent openpyxl inventory and separate stdlib XML extraction must have exact composite source_record_id set equality with zero missing, extra or duplicate records.",
+      "canonical": true,
+      "observed_count": 1415,
+      "source_ids": [
+        "ENERGY-AEMO-GENINFO-2026-07"
+      ]
     }
   ]
 }
