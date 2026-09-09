@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Apply one declared ingestion batch to VECA assurance registers.
 
-The batch file declares source_register entries and dataset_register entries.
-Updates are idempotent by source_id/path. Existing entries are only replaced when
-`replace_existing` is true on the batch, preventing accidental silent overwrites.
+The batch file may declare source-register entries, dataset-register entries and
+curated-dataset contracts. Updates are idempotent by source_id/path. Existing
+entries are only replaced when `replace_existing` is true on the batch, preventing
+accidental silent overwrites.
 """
 from __future__ import annotations
 
@@ -14,6 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_REGISTER = ROOT / "assurance" / "source_register.json"
 DATASET_REGISTER = ROOT / "assurance" / "dataset_register.json"
+CURATED_CONTRACTS = ROOT / "assurance" / "curated_dataset_contracts.json"
 
 
 def load(path: Path) -> dict:
@@ -52,16 +54,26 @@ def main() -> int:
 
     sources = load(SOURCE_REGISTER)
     datasets = load(DATASET_REGISTER)
+    contracts = load(CURATED_CONTRACTS)
 
     sources["sources"], sa, sr = merge(sources["sources"], batch.get("sources", []), "source_id", replace)
     datasets["datasets"], da, dr = merge(datasets["datasets"], batch.get("datasets", []), "path", replace)
+    contracts["contracts"], ca, cr = merge(contracts["contracts"], batch.get("curated_contracts", []), "path", replace)
 
-    sources["updated"] = batch.get("updated", sources.get("updated"))
-    datasets["updated"] = batch.get("updated", datasets.get("updated"))
+    updated = batch.get("updated")
+    if updated:
+        sources["updated"] = updated
+        datasets["updated"] = updated
+        contracts["updated"] = updated
+
     dump(SOURCE_REGISTER, sources)
     dump(DATASET_REGISTER, datasets)
+    dump(CURATED_CONTRACTS, contracts)
 
-    print(f"assurance batch applied: sources +{sa}/~{sr}; datasets +{da}/~{dr}")
+    print(
+        "assurance batch applied: "
+        f"sources +{sa}/~{sr}; datasets +{da}/~{dr}; curated_contracts +{ca}/~{cr}"
+    )
     return 0
 
 
