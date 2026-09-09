@@ -4,9 +4,20 @@ Add tooling only when a research task requires it. Prefer the smallest reproduci
 
 ## Current tools
 
-The repository now contains reproducible extraction/summarisation tooling for key inherited-system layers, including ABS population and Geoscience Australia road/rail geometry, plus GitHub Actions used where direct source acquisition is more reliable in CI than in an interactive environment.
+The repository contains reproducible extraction/summarisation tooling for key inherited-system layers, including ABS population and Geoscience Australia road/rail geometry, plus GitHub Actions used where direct source acquisition is more reliable in CI than in an interactive environment.
 
 A MapLibre-based interactive evidence POC exists under `maps/poc-001/`.
+
+`validate_source_assurance.py` is the cross-domain assurance gate for source discovery/ingestion. It is stdlib-only and validates the canonical `assurance/source_register.json` plus per-source `assurance/manifests/*.json` records. It enforces independent expected inventories, exact entity reconciliation, map-required completeness and evidence-backed verification state.
+
+Run:
+
+```bash
+python tools/validate_source_assurance.py --strict
+python tools/validate_source_assurance.py --strict --write-report
+```
+
+See `assurance/README.md` before changing the assurance model.
 
 These implementations solve current research needs; they do **not** pin the final VECA architecture.
 

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "source_id": "REPLACE-ME",
+  "map_required": true,
+  "inventory": {
+    "mode": "entity_count",
+    "expected_count": 27,
+    "count_basis": "table_rows",
+    "evidence_locator": "Report p. 42, table 'Sites', 27 data rows",
+    "independent_from_extraction": true,
+    "notes": "Count established before/independently of entity extraction."
+  },
+  "disposition": {
+    "mapped": 23,
+    "dataset_only": 0,
+    "excluded": 2,
+    "duplicate": 1,
+    "unresolved": 1
+  },
+  "verification": {
+    "state": "sampled",
+    "checks": [
+      {
+        "field": "location",
+        "method": "Compare mapped coordinates against source location and stated town/state; flag implausible geocodes.",
+        "evidence_locator": "Report p. 42 plus source map p. 43",
+        "result": "26 plausible; 1 unresolved location retained as unresolved."
+      },
+      {
+        "field": "capacity/status",
+        "method": "Directly compare decision-critical values with the source rows for all high-capacity sites and a sample of remaining sites.",
+        "evidence_locator": "Report p. 42, columns Capacity and Status",
+        "result": "Sample complete; do not set verification state to passed until unresolved entity is closed."
+      }
+    ]
+  },
+  "dataset_paths": [
+    "domains/example/data/derived/example.geojson"
+  ],
+  "map_layers": [
+    "example-layer"
+  ],
+  "notes": "Template only. Files beginning with '_' are ignored by the validator."
+}
