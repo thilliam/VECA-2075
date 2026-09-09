@@ -138,5 +138,14 @@
       "completeness_test": "Every included signal must resolve to a primary DNSP DAPR, RIT-D, project or network-planning source and preserve whether the capacity is existing, planned, required or merely proposed. This dataset does not claim to contain every zone substation or network limitation.",
       "canonical": true
     }
+  ],
+  "curated_contracts": [
+    {
+      "path": "domains/energy/data/derived/distribution_capacity_signals_seed.csv",
+      "selection_claim": "selective_capacity_signals",
+      "selection_policy": "Capture high-consequence distribution/sub-transmission capacity, augmentation and enabling-infrastructure signals encountered during the first DNSP ingestion sweep, prioritising regional growth, new economic nodes, data-centre/industrial demand and metropolitan counterfactuals.",
+      "completeness_test": "Every included signal must resolve to a primary DNSP DAPR, RIT-D, project or network-planning source and preserve whether the capacity is existing, planned, required or merely proposed. This dataset does not claim to contain every zone substation or network limitation.",
+      "canonical": true
+    }
   ]
 }
