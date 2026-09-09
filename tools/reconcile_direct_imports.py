@@ -16,6 +16,7 @@ import requests
 ROOT = Path(__file__).resolve().parents[1]
 MANIFESTS = ROOT / "assurance" / "manifests"
 RESULT = ROOT / "assurance" / "direct_import_reconciliation.json"
+DATASET_REGISTER = ROOT / "assurance" / "dataset_register.json"
 TIMEOUT = 90
 ENVELOPE = {"xmin": 140.9, "ymin": -39.8, "xmax": 154.2, "ymax": -25.0}
 
@@ -115,6 +116,7 @@ def abs_reconcile() -> dict:
                       if source[code] is not None and derived[code] is not None and int(source[code]) != int(derived[code]))
     return {
         "source_id": "POP-ABS-SA2-ERP-2001-2025",
+        "dataset": "data/derived/population_sa2_east.csv",
         "source_inventory_count": len(source), "derived_count": len(derived),
         "missing_codes": missing, "extra_codes": extra, "erp_2025_value_mismatches": mismatch,
         "passed": not missing and not extra and not mismatch,
@@ -131,6 +133,7 @@ def road_reconcile() -> dict:
     missing, extra = sorted(expected - derived), sorted(derived - expected)
     return {
         "source_id": "TRANSPORT-GA-EAST-MAJOR-ROADS",
+        "dataset": "data/derived/transport/ga_major_roads_east.geojson",
         "source_inventory_count": len(expected), "derived_count": len(derived),
         "missing_objectids": missing, "extra_objectids": extra, "passed": not missing and not extra,
         "inventory_evidence": "GA National Roads service; independent 3x4-degree returnIdsOnly inventory with operational/highway/target-state source filtering",
@@ -138,20 +141,19 @@ def road_reconcile() -> dict:
 
 
 def rail_reconcile() -> dict:
-    # Production extraction removes only explicit SA source-jurisdiction rows after envelope retrieval.
-    # Apply the same scope semantics directly in the independent source query.
     expected = tiled_ids(RAIL_QUERY, "SOURCE_JURISDICTION <> 'SA' OR SOURCE_JURISDICTION IS NULL")
     derived = geojson_ids(ROOT / "data/derived/transport/ga_rail_east.geojson")
     missing, extra = sorted(expected - derived), sorted(derived - expected)
     return {
         "source_id": "TRANSPORT-GA-EAST-RAIL",
+        "dataset": "data/derived/transport/ga_rail_east.geojson",
         "source_inventory_count": len(expected), "derived_count": len(derived),
         "missing_objectids": missing, "extra_objectids": extra, "passed": not missing and not extra,
         "inventory_evidence": "GA Foundation Rail Railway_Lines service; independent 3x4-degree returnIdsOnly inventory excluding explicit SA source-jurisdiction rows",
     }
 
 
-def write_manifest(result: dict, dataset: str, map_required: bool, field_check: str) -> None:
+def write_manifest(result: dict, map_required: bool, field_check: str) -> None:
     count = result["source_inventory_count"]
     unresolved = len(result.get("missing_codes", result.get("missing_objectids", []))) + len(result.get("extra_codes", result.get("extra_objectids", [])))
     manifest = {
@@ -176,18 +178,34 @@ def write_manifest(result: dict, dataset: str, map_required: bool, field_check: 
                         "evidence_locator": result["inventory_evidence"],
                         "result": f"source={result['source_inventory_count']}; derived={result['derived_count']}; passed={result['passed']}"}],
         },
-        "dataset_paths": [dataset], "map_layers": [],
+        "dataset_paths": [result["dataset"]], "map_layers": [],
         "notes": "Machine-generated direct-import assurance manifest."
     }
     MANIFESTS.mkdir(parents=True, exist_ok=True)
     (MANIFESTS / f"{result['source_id']}.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 
 
+def update_dataset_register(results: list[dict]) -> None:
+    reg = json.loads(DATASET_REGISTER.read_text(encoding="utf-8"))
+    by_path = {x["path"]: x for x in reg["datasets"]}
+    for result in results:
+        item = by_path[result["dataset"]]
+        if result["passed"]:
+            item["assurance_state"] = "reconciled"
+            item["blocker"] = "Independent identity inventory reconciled with zero missing/extra entities; broader attribute/geometry field verification can continue separately."
+            item["independent_expected_count"] = result["source_inventory_count"]
+        else:
+            item["assurance_state"] = "inventory_required"
+            item["blocker"] = "Independent identity reconciliation failed; inspect assurance/direct_import_reconciliation.json for exact missing/extra identities."
+    DATASET_REGISTER.write_text(json.dumps(reg, indent=2) + "\n", encoding="utf-8")
+
+
 def main() -> int:
     results = [abs_reconcile(), road_reconcile(), rail_reconcile()]
-    write_manifest(results[0], "data/derived/population_sa2_east.csv", False, "SA2 identity + erp_2025")
-    write_manifest(results[1], "data/derived/transport/ga_major_roads_east.geojson", True, "road OBJECTID identity")
-    write_manifest(results[2], "data/derived/transport/ga_rail_east.geojson", True, "rail OBJECTID identity")
+    write_manifest(results[0], False, "SA2 identity + erp_2025")
+    write_manifest(results[1], True, "road OBJECTID identity")
+    write_manifest(results[2], True, "rail OBJECTID identity")
+    update_dataset_register(results)
     RESULT.write_text(json.dumps({"schema_version": 1, "results": results}, indent=2) + "\n", encoding="utf-8")
     for r in results:
         print(r["source_id"], r["source_inventory_count"], r["derived_count"], "PASS" if r["passed"] else "FAIL")
