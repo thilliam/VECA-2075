@@ -1,0 +1,60 @@
+name: Reconcile curated VECA datasets
+
+on:
+  push:
+    branches:
+      - feature/assurance-complete-existing-sets
+    paths:
+      - "assurance/curated_dataset_contracts.json"
+      - "tools/sync_curated_assurance.py"
+      - "tools/validate_dataset_register.py"
+      - "tools/audit_current_datasets.py"
+      - "domains/**/data/derived/**"
+      - "data/derived/**"
+      - ".github/workflows/reconcile-curated-datasets.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/assurance-complete-existing-sets
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Refresh structural audit
+        run: python tools/audit_current_datasets.py
+      - name: Apply curated assurance contracts
+        run: python tools/sync_curated_assurance.py
+      - name: Mark legacy snapshots non-map
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('assurance/dataset_register.json')
+          d = json.loads(p.read_text())
+          for x in d['datasets']:
+              if x.get('assurance_state') == 'legacy_deprecated':
+                  x['map_relevance'] = False
+          p.write_text(json.dumps(d, indent=2) + '\n')
+          PY
+      - name: Validate dataset register
+        run: python tools/validate_dataset_register.py
+      - name: Commit assurance state
+        run: |
+          git config user.name "VECA assurance bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add assurance/dataset_register.json assurance/current_dataset_audit.json assurance/current_dataset_audit.md
+          if git diff --cached --quiet; then
+            echo "No curated assurance changes"
+          else
+            git commit -m "Assurance: reconcile curated dataset provenance"
+            git pull --rebase origin feature/assurance-complete-existing-sets
+            git push origin HEAD:feature/assurance-complete-existing-sets
+          fi
