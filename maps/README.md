@@ -1,35 +1,53 @@
 # Maps
 
-Spatial outputs live here. The map is an evidence-inspection surface over VECA entities; it is not the analytical model or source of truth.
+Spatial outputs live here. `layers/` contains the canonical map-layer catalogue and small map-definition artefacts appropriate for Git.
 
-## Current state
+## Interactive mapping lineage
 
-`poc-001/` is a working layered-map explorer. It already proves:
-- MapLibre pan/zoom;
-- grouped layer toggles;
-- semantic zoom;
-- time/status/scenario filtering;
-- regional navigation;
-- clickable feature evidence/interpretation panels.
+- `poc-001/` — first runnable layered explorer: toggles, semantic zoom, time/status filtering, regional navigation and feature evidence panels.
+- `poc-002/` — real east-coast spatial foundation: Geoscience Australia rail/major roads plus corpus-backed health, education and regional anchors; introduced reproducible map derivatives and spatial-gap reporting.
+- `poc-003/` — population, settlements and landscape: ABS SA2 density/growth, ABS LGA population/growth, ranked settlements/functional centres, satellite and ABARES land use.
+- `poc-004/` — energy and capital geography: AEMO transmission-project anchors, REZ anchors, major capital projects and intermodal freight, while restoring social infrastructure and retaining POC-003/002 layers.
 
-The POC currently uses a small spatially enabled subset of the corpus, including hospital and tertiary-education/government-intent records. Coordinates in the POC are display-oriented unless explicitly documented as authoritative geometry.
+The map is a view over VECA evidence entities. It is not the analytical model itself.
 
-Large authoritative Geoscience Australia road and rail extracts already exist under legacy `data/derived/transport/`. They are too large for normal whole-file browser loading.
+## Layer catalogue
 
-## Next map increment
+`layers/catalogue.json` records the current mapped evidence families, source/assurance state, geometry quality and serving mode. New durable map layers should be registered there rather than existing only inside frontend code.
 
-Do **not** rebuild the POC simply because a new research layer exists. Add map work when it improves evidence inspection.
+## Spatial serving boundary
 
-The next architecture step should introduce tiled/viewport delivery (for example PostGIS/vector tiles and/or PMTiles) for large authoritative layers and later EXP-002 climate/terrain/land surfaces.
+Large authoritative source files should not be loaded wholesale into the browser in production. Current POCs deliberately prove the data and interaction model first. Roads alone are ~46 MB after POC simplification.
 
-## Relationship to analysis
+Target production boundary remains:
 
-The intended progression is:
+```text
+VECA corpus + assurance
+        |
+        v
+canonical spatial entities
+        |
+        +---- PostGIS / API ---- dynamic/queryable layers
+        |
+        +---- PMTiles ---------- large mostly-static layers
+                  |
+                  v
+         viewport/vector tiles
+                  |
+                  v
+              MapLibre
+```
 
-`authoritative evidence -> structured VECA entities/layers -> analytical joins/screens -> map views`
+GeoJSON remains appropriate for small POC/diagnostic derivatives. Large roads, rail, population surfaces and future hazard/resource layers should move to tiled delivery.
 
-A future Regional Anchor Cluster layer, when explicitly resumed, would be a **derived analytical overlay** on top of the existing evidence layers. It must not replace or hide the component assets.
+## Geometry-quality rule
 
-The first EXP-002 survival map should likewise preserve separate climate, water, hazard, terrain and land evidence rather than rendering one unexplained suitability colour.
+Every spatial representation must distinguish source truth from map convenience. Examples include:
 
-See `poc-001/README.md` for run instructions and current architecture.
+- `authoritative_source_simplified`
+- `representative_project_anchor`
+- `representative_zone_anchor`
+- `approximate_asset_point`
+- `UCL_bounds_centre`
+
+A representative project or zone point is not an alignment, boundary, local connection capacity or land-availability claim.
