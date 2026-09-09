@@ -6,7 +6,7 @@
 - Exhaustive imports: **4**
 - Curated syntheses: **21**
 - Support outputs: **3**
-- Curated sets failing structural provenance: **6**
+- Curated sets failing structural provenance: **4**
 
 | Dataset | Kind | Records | Structural provenance | Current assurance |
 |---|---|---:|---|---|
@@ -34,8 +34,8 @@
 | `domains/government-intent/data/derived/regional_health_assets_seed.csv` | curated_synthesis | 6 | FAIL/N/A | source_decomposition_required |
 | `domains/government-intent/data/derived/regional_plan_assumptions_v1.csv` | curated_synthesis | 8 | PASS | source_decomposition_required |
 | `domains/government-intent/data/derived/school_growth_seed.csv` | curated_synthesis | 6 | PASS | source_decomposition_required |
-| `domains/industry/data/derived/industry_logistics_nodes_seed.csv` | curated_synthesis | 3 | FAIL/N/A | source_decomposition_required |
-| `domains/water/data/derived/water_systems_seed.csv` | curated_synthesis | 7 | FAIL/N/A | source_decomposition_required |
+| `domains/industry/data/derived/industry_logistics_nodes_seed.csv` | curated_synthesis | 3 | PASS | source_decomposition_required |
+| `domains/water/data/derived/water_systems_seed.csv` | curated_synthesis | 7 | PASS | source_decomposition_required |
 | `domains/government_intent/data/derived/future_capital_optionality_seed.csv` | curated_synthesis | 9 | PASS | source_decomposition_required |
 | `domains/government_intent/data/derived/government_intent_seed.csv` | curated_synthesis | 9 | PASS | source_decomposition_required |
 
@@ -45,8 +45,6 @@
 - `domains/government-intent/data/derived/land_zoning_optionality_seed.csv` — no recognised provenance column
 - `domains/government-intent/data/derived/regional_growth_baselines_seed.csv` — no recognised provenance column
 - `domains/government-intent/data/derived/regional_health_assets_seed.csv` — no recognised provenance column
-- `domains/industry/data/derived/industry_logistics_nodes_seed.csv` — no recognised provenance column
-- `domains/water/data/derived/water_systems_seed.csv` — no recognised provenance column
 
 ## Interpretation
 
