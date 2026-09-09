@@ -363,6 +363,19 @@
       "selection_policy": "Capture high-consequence distribution/sub-transmission capacity, augmentation and enabling-infrastructure signals encountered during the first DNSP ingestion sweep, prioritising regional growth, new economic nodes, data-centre/industrial demand and metropolitan counterfactuals.",
       "completeness_test": "Every included signal must resolve to a primary DNSP DAPR, RIT-D, project or network-planning source and preserve whether the capacity is existing, planned, required or merely proposed. This dataset does not claim to contain every zone substation or network limitation.",
       "canonical": true
+    },
+    {
+      "path": "domains/digital-compute/data/derived/compute_campus_pipeline_seed.csv",
+      "domain": "digital-compute",
+      "role": "imported_dataset",
+      "assurance_state": "provenance_reconciled",
+      "map_relevance": true,
+      "provenance": "primary operator campus/portfolio pages and current development announcements",
+      "blocker": null,
+      "selection_claim": "selective_operator_campus_census",
+      "selection_policy": "Capture material east-coast campuses and pipeline assets published by NEXTDC, AirTrunk, CDC and Goodman, plus non-physical portfolio-demand records where needed to preserve contracted-load evidence without double-counting.",
+      "completeness_test": "Every row has a primary operator source and explicit capacity definition/status. The set claims broad coverage of the named operators' east-coast campuses encountered in this sweep, not complete coverage of every Australian data-centre owner, planning approval, powered-land proposal or customer load.",
+      "canonical": true
     }
   ]
 }

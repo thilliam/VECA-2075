@@ -454,6 +454,118 @@
       "known_gaps": [
         "Digital map exposes topology, forecast loads/capacities and constraints; structured extraction remains outstanding."
       ]
+    },
+    {
+      "source_id": "COMPUTE-NEXTDC-PORTFOLIO-2026",
+      "title": "NEXTDC Australian data-centre locations and capacity portfolio",
+      "publisher": "NEXTDC",
+      "domain": "digital-compute",
+      "geography": "Australia / east-coast subset",
+      "source_type": "committed_private_capital",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Current ingestion is a selective east-coast campus census from operator portfolio pages; planning approvals, precise site geometry, power connection and water/cooling details require further source expansion."
+      ]
+    },
+    {
+      "source_id": "COMPUTE-NEXTDC-1H26",
+      "title": "NEXTDC 1H26 Record Results",
+      "publisher": "NEXTDC",
+      "domain": "digital-compute",
+      "geography": "Australia",
+      "source_type": "committed_private_capital",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Used for development status and in-progress capacity; later announcements may supersede figures."
+      ]
+    },
+    {
+      "source_id": "COMPUTE-AIRTRUNK-AU-2026",
+      "title": "AirTrunk Australian campus portfolio",
+      "publisher": "AirTrunk",
+      "domain": "digital-compute",
+      "geography": "Sydney / Melbourne",
+      "source_type": "committed_private_capital",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Campus capacity and HV feed captured; exact connection arrangements, staged built capacity and cooling/water detail need deeper ingestion."
+      ]
+    },
+    {
+      "source_id": "COMPUTE-AIRTRUNK-MEL2-2025",
+      "title": "AirTrunk MEL2 Melbourne announcement",
+      "publisher": "AirTrunk",
+      "domain": "digital-compute",
+      "geography": "Melbourne",
+      "source_type": "committed_private_capital",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Announced ultimate campus capacity/investment captured; delivery stages and current construction status require refresh."
+      ]
+    },
+    {
+      "source_id": "COMPUTE-CDC-LOCATIONS-2026",
+      "title": "CDC current Australian campus location pages",
+      "publisher": "CDC Data Centres",
+      "domain": "digital-compute",
+      "geography": "Sydney / Canberra / Melbourne",
+      "source_type": "committed_private_capital",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Campus-level operating/planned capacity captured; exact site geometry and utility connection evidence not yet structured."
+      ]
+    },
+    {
+      "source_id": "COMPUTE-CDC-CONTRACT-2026",
+      "title": "CDC 555MW customer contract",
+      "publisher": "CDC Data Centres",
+      "domain": "digital-compute",
+      "geography": "Australia",
+      "source_type": "committed_private_capital",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": false,
+      "known_gaps": [
+        "Contracted load is portfolio demand evidence and must not be double-counted with campus capacity."
+      ]
+    },
+    {
+      "source_id": "COMPUTE-GOODMAN-SYD01-2026",
+      "title": "Goodman SYD01 Artarmon construction announcement",
+      "publisher": "Goodman Group",
+      "domain": "digital-compute",
+      "geography": "Sydney",
+      "source_type": "private_development_pipeline",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Secured power and IT capacity captured; source does not establish spare network capacity beyond the project connection."
+      ]
+    },
+    {
+      "source_id": "COMPUTE-GOODMAN-POWERBANK-2026",
+      "title": "Goodman data-centre power bank and global pipeline",
+      "publisher": "Goodman Group",
+      "domain": "digital-compute",
+      "geography": "Australia / global",
+      "source_type": "private_development_pipeline",
+      "status": "relevant",
+      "priority": "P1",
+      "map_relevance": false,
+      "known_gaps": [
+        "Portfolio power-bank figures are market pipeline evidence, not operating IT load or a map asset census."
+      ]
     }
   ]
 }
