@@ -53,7 +53,7 @@ def csv_audit(path: Path, source_ids: set[str]) -> dict:
         rows = list(reader)
         fields = reader.fieldnames or []
 
-    provenance_fields = [x for x in ("source_id", "source_url", "url") if x in fields]
+    provenance_fields = [x for x in ("source_id", "source_ids", "source_url", "url") if x in fields]
     missing_provenance: list[int] = []
     unresolved_source_ids: set[str] = set()
     invalid_urls: set[str] = set()
@@ -62,9 +62,18 @@ def csv_audit(path: Path, source_ids: set[str]) -> dict:
         values = [(row.get(field) or "").strip() for field in provenance_fields]
         if provenance_fields and not any(values):
             missing_provenance.append(i)
-        sid = (row.get("source_id") or "").strip()
-        if sid and sid not in source_ids:
-            unresolved_source_ids.add(sid)
+
+        sid_values: list[str] = []
+        single = (row.get("source_id") or "").strip()
+        if single:
+            sid_values.append(single)
+        multi = (row.get("source_ids") or "").strip()
+        if multi:
+            sid_values.extend(x.strip() for x in multi.split(";") if x.strip())
+        for sid in sid_values:
+            if sid not in source_ids:
+                unresolved_source_ids.add(sid)
+
         for field in ("source_url", "url"):
             value = (row.get(field) or "").strip()
             if value and not valid_url(value):
@@ -82,7 +91,6 @@ def csv_audit(path: Path, source_ids: set[str]) -> dict:
 
 
 def geojson_audit(path: Path) -> dict:
-    # Current GA files are large but safely below typical Actions memory limits.
     with path.open(encoding="utf-8") as f:
         data = json.load(f)
     features = data.get("features") if isinstance(data, dict) else None
@@ -127,7 +135,7 @@ def main() -> int:
                 audit = geojson_audit(path)
             else:
                 audit = {"record_count": None, "structural_provenance_pass": False, "note": "unsupported audit format"}
-        except Exception as exc:  # audit should report, not silently skip
+        except Exception as exc:
             audit = {"record_count": None, "structural_provenance_pass": False, "error": str(exc)}
             errors.append(f"{item['path']}: {exc}")
 
@@ -168,10 +176,9 @@ def main() -> int:
         "|---|---|---:|---|---|",
     ]
     for r in results:
-        name = r["path"]
         count = "" if r.get("record_count") is None else f"{r['record_count']:,}"
         structural = "PASS" if r.get("structural_provenance_pass") else "FAIL/N/A"
-        lines.append(f"| `{name}` | {r['dataset_kind']} | {count} | {structural} | {r['assurance_state']} |")
+        lines.append(f"| `{r['path']}` | {r['dataset_kind']} | {count} | {structural} | {r['assurance_state']} |")
     lines += ["", "## Structural provenance failures", ""]
     if not provenance_fail:
         lines.append("_None._")
