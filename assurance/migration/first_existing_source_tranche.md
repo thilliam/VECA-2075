@@ -4,7 +4,7 @@ Date: 2026-09-09
 
 Purpose: move existing VECA evidence through the source-assurance system without retroactively declaring plausible-looking datasets complete.
 
-## 1. AEMO 2026 ISP transmission seed — assurance failure found
+## 1. AEMO 2026 ISP transmission seed — failure found and repaired
 
 Source: `ENERGY-AEMO-ISP-2026`  
 Derived dataset: `domains/energy/data/derived/transmission_projects_seed.csv`
@@ -14,10 +14,12 @@ An independent inventory was rebuilt from AEMO 2026 ISP Executive Summary Table 
 For the scoped QLD/NSW/VIC **transmission** inventory (excluding SA/Tasmania projects and separately classified NSW distribution-project rows):
 
 - expected from source: **21**
-- present in VECA dataset: **17**
-- unresolved/missing: **4**
+- initially present in VECA dataset: **17**
+- initially missing: **4**
+- present after repair: **21**
+- unresolved after repair: **0**
 
-Missing source-listed projects:
+The missing source-listed projects were:
 
 1. Gladstone Project
 2. Switching Station Near Wondalga
@@ -26,7 +28,7 @@ Missing source-listed projects:
 
 This is exactly the failure class the assurance system was introduced to catch. The existing seed looked coherent but was about 19% incomplete against this defined source inventory.
 
-The corresponding manifest is `assurance/manifests/ENERGY-AEMO-ISP-2026.json` and intentionally records `verification.state = failed` until the four entities are resolved.
+The four records have now been added and the manifest reconciles 21/21. Verification remains `sampled`, not `passed`, until the decision-critical fields receive a fuller direct-source check.
 
 ## 2. ABS SA2 ERP layer — ingestion exists, independent inventory still required
 
@@ -72,7 +74,6 @@ Until this independent API inventory exists, the source remains unverified.
 
 ## Next order
 
-1. Add the four missing AEMO transmission projects and rerun that reconciliation.
-2. Establish the independent ABS source code inventory and create its manifest.
-3. Establish the independent GA rail count/OBJECTID inventory and create its manifest.
-4. Repeat the pattern across roads, airports, Inland Rail and the remaining existing Stage-1 evidence before the large new non-government ingestion wave.
+1. Establish the independent ABS source code inventory and create its manifest.
+2. Establish the independent GA rail count/OBJECTID inventory and create its manifest.
+3. Repeat the pattern across roads, airports, Inland Rail and the remaining existing Stage-1 evidence before the large new non-government ingestion wave.
