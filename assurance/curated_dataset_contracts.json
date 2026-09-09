@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "updated": "2026-09-09",
+  "notes": "Curated datasets are intentionally selective evidence syntheses. A reconciled contract means every included row has traceable provenance and the selection claim is explicit; it does not mean the file contains every real-world entity of that class.",
+  "contracts": [
+    {
+      "path": "data/derived/energy_zones_seed.csv",
+      "selection_claim": "scope_enumerated",
+      "selection_policy": "Represent the source-listed NSW declared REZs, Victoria 2025 proposed REZs, and Queensland 2024 potential REZs relevant to the inherited/planned east-coast energy geography while preserving their different dates and status semantics.",
+      "completeness_test": "Within the named source families: NSW 5/5; Victoria 6/6; Queensland historical roadmap 12/12. This is not a generator, substation or current Queensland energy-hub inventory.",
+      "canonical": true
+    },
+    {
+      "path": "data/derived/hsr_corridor_obstacles_seed.csv",
+      "selection_claim": "selective_evidence",
+      "selection_policy": "Retain high-consequence physical/engineering constraints found in reviewed HSR and conventional-rail studies that materially inform corridor-cost reasoning.",
+      "completeness_test": "Every included obstacle must cite a primary study/evaluation. No claim that every obstacle in every study is extracted.",
+      "canonical": true
+    },
+    {
+      "path": "data/derived/hsr_studies_seed.csv",
+      "selection_claim": "curated_bibliography",
+      "selection_policy": "Track major Australian east-coast HSR study generations and current HSRA work needed to understand evidence lineage, assumptions and policy evolution.",
+      "completeness_test": "Every listed study has a source URL; the file is a major-study bibliography, not a claim that every historic paper/proposal mentioning HSR is present.",
+      "canonical": true
+    },
+    {
+      "path": "data/derived/hsr_study_evidence_seed.csv",
+      "selection_claim": "selective_evidence",
+      "selection_policy": "Extract decision-relevant quantitative and qualitative findings from reviewed HSR studies, including cost, travel time, engineering and settlement-policy evidence.",
+      "completeness_test": "Every evidence row must identify the study and source URL. No claim to reproduce every metric in each study.",
+      "canonical": true
+    },
+    {
+      "path": "data/derived/infrastructure_projects_seed.csv",
+      "selection_claim": "selective_capital_census",
+      "selection_policy": "Retain major recent, completed, committed or under-construction east-coast projects that illustrate inherited capital and path dependency at VECA scale.",
+      "completeness_test": "Every row must resolve to a primary project/program source and preserve value scope/status. This is not the complete Australian infrastructure pipeline.",
+      "canonical": true
+    },
+    {
+      "path": "data/derived/transport/intermodal_terminals_seed.csv",
+      "selection_claim": "selective_anchor_set",
+      "selection_policy": "Track strategic intermodal/freight nodes already encountered in VECA corridor research where rail-road-port interfaces materially affect regional optionality.",
+      "completeness_test": "Every included node must have a direct authority/operator source. No claim of national terminal completeness until a separate operator/authority census is built.",
+      "canonical": true
+    },
+    {
+      "path": "data/derived/transport_system_metrics_seed.csv",
+      "selection_claim": "selective_metrics",
+      "selection_policy": "Retain transport metrics directly useful to whole-system comparison, including capacity, utilisation, freight/passenger performance and cost evidence where sourced.",
+      "completeness_test": "Each metric must preserve source and definition. No claim that all transport KPIs are represented.",
+      "canonical": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/anchor_assets_seed.csv",
+      "selection_claim": "selective_anchor_set",
+      "selection_policy": "Track high-consequence health, education, government-land and related regional anchors in the currently studied VECA regions.",
+      "completeness_test": "Every included asset must be directly sourced. This is an anchor set, not a catalogue of all public assets.",
+      "canonical": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/education_assets_seed.csv",
+      "selection_claim": "selective_anchor_set",
+      "selection_policy": "Track major university, TAFE and VET institutions/campuses that materially contribute to skills and knowledge capacity in the studied regional centres.",
+      "completeness_test": "Every included asset has a provider/government source URL. Not an exhaustive inventory of every campus, school or training provider.",
+      "canonical": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/government_land_education_seed.csv",
+      "selection_claim": "selective_optionality_set",
+      "selection_policy": "Retain government-owned/development land and education assets where land control or institutional capital creates future settlement optionality.",
+      "completeness_test": "Included rows require direct provenance and explicit asset class. No claim of complete Crown/government land ownership coverage.",
+      "canonical": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/health_capital_optionality_seed.csv",
+      "selection_claim": "selective_optionality_set",
+      "selection_policy": "Track health capital programs and masterplans that expose relocation, renewal or long-horizon expansion choices relevant to VECA.",
+      "completeness_test": "Every row resolves to a canonical health plan/project source. Not an exhaustive hospital-capital program census.",
+      "canonical": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/health_capital_signals_v1.csv",
+      "selection_claim": "selective_signals",
+      "selection_policy": "Capture health-capital and service-planning signals that reveal fixed versus flexible future investment across currently studied regions.",
+      "completeness_test": "Every included signal must have traceable source provenance. No claim of every health project or budget line.",
+      "canonical": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/land_zoning_optionality_seed.csv",
+      "selection_claim": "selective_optionality_set",
+      "selection_policy": "Track planning mechanisms, future growth areas, zoning/target frameworks and conservation pre-clearance that materially preserve or constrain settlement options.",
+      "completeness_test": "Every row resolves to a statutory/strategic planning source. Not a parcel-level zoning census.",
+      "canonical": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/regional_growth_baselines_seed.csv",
+      "selection_claim": "scope_enumerated_regions",
+      "selection_policy": "Capture official growth assumptions for the regional-plan geographies currently selected for VECA comparison, including retained legacy Victorian plans where current statewide planning supersedes but does not erase historical intent.",
+      "completeness_test": "Each currently scoped regional baseline row resolves to its plan. Completeness is against the named VECA comparison regions, not every Australian regional plan.",
+      "canonical": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/regional_health_assets_seed.csv",
+      "selection_claim": "selective_anchor_set",
+      "selection_policy": "Track major regional hospital/health anchors whose current or committed capital materially affects settlement inheritance in studied regions.",
+      "completeness_test": "Every included asset resolves to one or more primary health sources. Not an exhaustive health-facility inventory.",
+      "canonical": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/regional_plan_assumptions_v1.csv",
+      "selection_claim": "selective_evidence",
+      "selection_policy": "Extract decision-relevant assumptions from reviewed regional plans, especially population, housing, centre hierarchy, infrastructure sequencing and growth geography.",
+      "completeness_test": "Every assumption must cite its source plan. No claim to reproduce every statement in each plan.",
+      "canonical": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/school_growth_seed.csv",
+      "selection_claim": "selective_signals",
+      "selection_policy": "Track new-school, expansion, reservation and growth signals that reveal where governments expect substantial settlement growth.",
+      "completeness_test": "Each signal has a government/education source. Explicitly not an inventory of all existing schools.",
+      "canonical": true
+    },
+    {
+      "path": "domains/industry/data/derived/industry_logistics_nodes_seed.csv",
+      "selection_claim": "selective_anchor_set",
+      "selection_policy": "Track major industrial/logistics precincts where public enabling infrastructure and private investment jointly create regional economic gravity.",
+      "completeness_test": "Every row resolves to all cited program/project sources. No claim of complete industrial-estate coverage.",
+      "canonical": true
+    },
+    {
+      "path": "domains/water/data/derived/water_systems_seed.csv",
+      "selection_claim": "selective_system_set",
+      "selection_policy": "Represent major functional water systems encountered in current VECA regions, preserving source, storage, treatment, transfer and augmentation distinctions where known.",
+      "completeness_test": "Every system row resolves to utility/authority sources. Geographic gaps remain an explicit research backlog; the set does not claim all east-coast water systems are present.",
+      "canonical": true
+    },
+    {
+      "path": "domains/government_intent/data/derived/future_capital_optionality_seed.csv",
+      "selection_claim": "legacy_snapshot",
+      "selection_policy": "Retain only as historical project-state evidence while canonical government-intent datasets are migrated.",
+      "completeness_test": "No completeness claim. Must not receive new data or be treated as canonical map input.",
+      "canonical": false
+    },
+    {
+      "path": "domains/government_intent/data/derived/government_intent_seed.csv",
+      "selection_claim": "legacy_snapshot",
+      "selection_policy": "Retain only as historical project-state evidence while canonical domains/government-intent data supersedes it.",
+      "completeness_test": "No completeness claim. Must not receive new data or be treated as canonical map input.",
+      "canonical": false
+    }
+  ]
+}
