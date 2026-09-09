@@ -26,9 +26,12 @@ jobs:
       - name: Download authoritative Ergon workbook
         run: |
           mkdir -p _scratch/ergon assurance/source_profiles
-          curl --fail --location --retry 3 \
-            'https://www.ergon.com.au/__data/assets/excel_doc/0011/1839755/BSP_and_Zone_Substation_Forecasts_-_Ergon_2025.xlsx' \
-            --output _scratch/ergon/BSP_and_Zone_Substation_Forecasts_-_Ergon_2025.xlsx
+          BASE='https://www.ergon.com.au/network/about-us/company-reports,-plans-and-charters/distribution-annual-planning-report'
+          FILE='https://www.ergon.com.au/__data/assets/excel_doc/0011/1839755/BSP_and_Zone_Substation_Forecasts_-_Ergon_2025.xlsx'
+          UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/150.0 Safari/537.36'
+          curl --fail --location --retry 3 -A "$UA" -c _scratch/ergon/cookies.txt "$BASE" --output /dev/null
+          curl --fail --location --retry 3 -A "$UA" -b _scratch/ergon/cookies.txt -e "$BASE" \
+            "$FILE" --output _scratch/ergon/BSP_and_Zone_Substation_Forecasts_-_Ergon_2025.xlsx
       - name: Profile workbook
         run: |
           python tools/profile_xlsx_stdlib.py \
