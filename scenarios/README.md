@@ -1,7 +1,22 @@
 # Scenarios
 
-This directory will hold explicit alternative 2075 spatial scenarios after the evidence base is mature enough to construct them.
+This directory will hold explicit alternative 2075 spatial systems after candidate discovery and regional attractiveness/economic analysis are mature enough to construct them.
 
-Scenarios must expose their assumptions and should be designed to test materially different spatial strategies, not minor variations around one preferred answer.
+Scenarios must expose their assumptions and test materially different spatial strategies, not minor variations around one preferred answer.
 
-No scenario is authorised during EXP-001.
+Potential later archetypes include:
+- metropolitan-concentration baseline;
+- regional constellation;
+- corridor/networked-city system;
+- deliberate new-city strategy;
+- hybrid.
+
+## Current status
+
+No VECA settlement scenario is authorised yet. The project is currently in EXP-002 habitat/resource screening, before candidate-region discovery.
+
+Transport architecture must be derived **after** settlement scenarios are defined; an HSR alignment must not define a settlement scenario in advance.
+
+AI/automation scenarios A0–A3 are later robustness stress tests, not settlement scenarios and not forecasts.
+
+See root `PROJECT_STATUS_AND_ROADMAP.md` for sequencing.
