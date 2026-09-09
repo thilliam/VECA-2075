@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "source_id": "ENERGY-ESSENTIAL-DAPR-2025-DATA",
+  "map_required": false,
+  "inventory": {
+    "mode": "entity_count",
+    "expected_count": 366,
+    "count_basis": "table_rows",
+    "evidence_locator": "Essential Energy DAPR 2025 BSP, ZS and Lines Extract Summary V2 workbook, ZSSummer and ZSWinter sheets; both independently inventory the same 366 scoped zone-substation identities.",
+    "independent_from_extraction": true,
+    "notes": "Expected identities were generated with openpyxl and reconciled against a separate stdlib/XML extraction path. Identity is zone_substation|Region|Substation|kV."
+  },
+  "disposition": {
+    "mapped": 0,
+    "dataset_only": 366,
+    "excluded": 0,
+    "duplicate": 0,
+    "unresolved": 0
+  },
+  "verification": {
+    "state": "sampled",
+    "checks": [
+      {
+        "field": "entity completeness",
+        "method": "Compare independent openpyxl ZSSummer/ZSWinter identity inventory with separate stdlib/XML extraction.",
+        "evidence_locator": "assurance/inventories/essential_energy_zone_substations_2025_ids.json and assurance/reconciliation/essential_energy_zone_substation_capacity_2025.json",
+        "result": "366 expected / 366 extracted; summer and winter identity sets match exactly; zero missing or extra records."
+      },
+      {
+        "field": "capacity/forecast semantics",
+        "method": "Preserve source transformer rating, max nameplate rating, firm normal cyclic rating, PF, five-year forecast, embedded generation and 95%-peak-hours fields separately for summer and winter.",
+        "evidence_locator": "domains/energy/data/derived/essential_energy_zone_substation_capacity_2025.csv",
+        "result": "Fields are preserved separately; derived apparent margins are explicitly labelled and are not treated as guaranteed connection headroom."
+      }
+    ]
+  },
+  "dataset_paths": [
+    "domains/energy/data/derived/essential_energy_zone_substation_capacity_2025.csv"
+  ],
+  "map_layers": [],
+  "notes": "This manifest reconciles the zone-substation capacity/forecast subset only. BSP, line, limitation, retirement/derating and geometry tables remain separate follow-on ingestion tasks."
+}
