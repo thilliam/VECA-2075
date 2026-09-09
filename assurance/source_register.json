@@ -336,11 +336,14 @@
       "domain": "energy",
       "geography": "Sydney / Central Coast / Hunter",
       "source_type": "infrastructure_owner_intent",
-      "status": "ingestion_planned",
+      "status": "reconciled",
       "priority": "P0",
       "map_relevance": true,
       "known_gaps": [
-        "Machine-readable substation capacity/demand forecast and limitation tables identified but not yet fully imported."
+        "Substation capacity, firm capacity, transfer capability, recent demand and 2025-29 demand forecasts are reconciled for all 210 published ZS/STS assets.",
+        "System Limitations Template, limitation interval data and retirement plans remain separate source tables to ingest and join.",
+        "Substation coordinates/geometry remain to be joined from Ausgrid's DTAPR mapping portal before map rendering.",
+        "Arithmetic firm-capacity margin is not firm connection headroom and must not be presented as guaranteed spare capacity."
       ]
     },
     {

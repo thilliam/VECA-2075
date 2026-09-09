@@ -1,0 +1,17 @@
+{
+  "source": "Ausgrid 2025 Substation Capacity and Demand Forecast",
+  "expected_assets": 210,
+  "extracted_assets": 210,
+  "unique_source_record_ids": 210,
+  "missing_source_record_ids": [],
+  "extra_source_record_ids": [],
+  "duplicate_source_record_ids": [],
+  "demand_join_gaps": [],
+  "exact_identity_match": true,
+  "asset_type_counts": {
+    "zone_substation": 177,
+    "subtransmission_substation": 33
+  },
+  "assets_with_negative_latest_apparent_firm_margin": 20,
+  "assets_with_negative_2029_apparent_firm_margin": 22
+}

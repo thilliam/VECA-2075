@@ -447,6 +447,23 @@
       "source_ids": [
         "ENERGY-AEMO-GENINFO-2026-07"
       ]
+    },
+    {
+      "path": "domains/energy/data/derived/ausgrid_substation_capacity_demand_2025.csv",
+      "domain": "energy",
+      "role": "imported_dataset",
+      "assurance_state": "reconciled",
+      "map_relevance": true,
+      "provenance": "Ausgrid 2025 DTAPR Substation Capacity and Demand Forecast workbook; exhaustive ZS/STS technical-spec inventory joined to actual-demand and forecast sheets",
+      "blocker": null,
+      "selection_claim": "exhaustive_import",
+      "selection_policy": "Include every published Tech Spec zone substation and subtransmission substation and join each by asset type/name to the associated actual demand and demand forecast sheets.",
+      "completeness_test": "Independent openpyxl technical-spec asset inventory and separate stdlib XML extraction must reconcile exactly, with zero missing/extra/duplicate assets and zero actual-demand or forecast join gaps.",
+      "canonical": true,
+      "observed_count": 210,
+      "source_ids": [
+        "ENERGY-AUSGRID-DTAPR-2025-DATA"
+      ]
     }
   ]
 }

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "updated": "2026-09-09",
+  "replace_existing": true,
+  "sources": [
+    {
+      "source_id": "ENERGY-AUSGRID-DTAPR-2025-DATA",
+      "title": "Ausgrid 2025 DTAPR capacity, forecast and limitation datasets",
+      "publisher": "Ausgrid",
+      "domain": "energy",
+      "geography": "Sydney / Central Coast / Hunter",
+      "source_type": "infrastructure_owner_intent",
+      "status": "reconciled",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Substation capacity, firm capacity, transfer capability, recent demand and 2025-29 demand forecasts are reconciled for all 210 published ZS/STS assets.",
+        "System Limitations Template, limitation interval data and retirement plans remain separate source tables to ingest and join.",
+        "Substation coordinates/geometry remain to be joined from Ausgrid's DTAPR mapping portal before map rendering.",
+        "Arithmetic firm-capacity margin is not firm connection headroom and must not be presented as guaranteed spare capacity."
+      ]
+    }
+  ],
+  "datasets": [
+    {
+      "path": "domains/energy/data/derived/ausgrid_substation_capacity_demand_2025.csv",
+      "domain": "energy",
+      "role": "imported_dataset",
+      "assurance_state": "reconciled",
+      "map_relevance": true,
+      "provenance": "Ausgrid 2025 DTAPR Substation Capacity and Demand Forecast workbook; exhaustive ZS/STS technical-spec inventory joined to actual-demand and forecast sheets",
+      "blocker": null,
+      "selection_claim": "exhaustive_import",
+      "selection_policy": "Include every published Tech Spec zone substation and subtransmission substation and join each by asset type/name to the associated actual demand and demand forecast sheets.",
+      "completeness_test": "Independent openpyxl technical-spec asset inventory and separate stdlib XML extraction must reconcile exactly, with zero missing/extra/duplicate assets and zero actual-demand or forecast join gaps.",
+      "canonical": true,
+      "observed_count": 210,
+      "source_ids": ["ENERGY-AUSGRID-DTAPR-2025-DATA"]
+    }
+  ]
+}

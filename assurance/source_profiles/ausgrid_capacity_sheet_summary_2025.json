@@ -1,0 +1,987 @@
+{
+  "source_file": "substation-capacity-demand-forecast-2025.xlsx",
+  "sheets": [
+    {
+      "name": "Tech Spec (ZS)",
+      "dimension": "B2:O192",
+      "xml_row_count": 190,
+      "sample_nonempty_rows": [
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            null,
+            "Technical Specifications - Zone Substation"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            null,
+            "Name",
+            "Voltage Level",
+            "Summer",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "Winter"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            null,
+            null,
+            null,
+            "Total Capacity (MVA)",
+            " Firm Capacity (MVA)",
+            "Load Transfer Capacity (MVA)",
+            "95% Peak Load Exceeded (hrs/yr)",
+            "Embedded Generation - Solar PV (MW)\t",
+            "Embedded Generation - Other (MW)",
+            "Total Capacity (MVA)",
+            " Firm Capacity (MVA)",
+            "Load Transfer Capacity (MVA)",
+            "95% Peak Load Exceeded (hrs/yr)",
+            "Embedded Generation - Solar PV (MW)\t",
+            "Embedded Generation - Other (MW)"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            null,
+            "ABERDEEN",
+            "66/11kV",
+            46.41,
+            25.53,
+            4.76,
+            2.25,
+            3.059855,
+            0,
+            46.41,
+            25.53,
+            3.45,
+            0,
+            2.795275,
+            0
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            null,
+            "ADAMSTOWN",
+            "132/11kV",
+            125.21,
+            63.03,
+            0,
+            0.75,
+            14.396022,
+            0.18662,
+            130.01,
+            65.01,
+            0,
+            0,
+            13.261532,
+            0.18662
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            null,
+            "ARGENTON",
+            "132/11kV",
+            121.4,
+            60.8,
+            27.0841473772392,
+            0.5,
+            21.843415,
+            0.09312,
+            121.4,
+            64.19,
+            19.091088123305617,
+            0,
+            19.177075,
+            0.09312
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            null,
+            "AUBURN",
+            "33/11kV",
+            83.53,
+            50.14,
+            20.866332539439032,
+            0.5,
+            4.857755,
+            0,
+            83.53,
+            50.16,
+            14.289835587667783,
+            0,
+            4.451185,
+            0
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            null,
+            "AVOCA",
+            "66/11kV",
+            97.93,
+            59.83,
+            12.349609176291136,
+            0.75,
+            22.899415,
+            1.0228,
+            101.78,
+            63.67,
+            11.293255436957285,
+            0,
+            21.22651,
+            1.0228
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Actual Demand (ZS)",
+      "dimension": "B2:N192",
+      "xml_row_count": 190,
+      "sample_nonempty_rows": [
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            null,
+            "Actual Demand - Zone Substation"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            null,
+            "Name",
+            "Summer",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "Winter"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            null,
+            null,
+            "2022/23 (MVA)",
+            "2022/23 (PF)",
+            "2023/24 (MVA)",
+            "2023/24 (PF)",
+            "2024/25 (MVA)",
+            "2024/25 (PF)",
+            "2022 (MVA)",
+            "2022 (PF)",
+            "2023 (MVA)",
+            "2023 (PF)",
+            "2024 (MVA)",
+            "2024 (PF)"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            null,
+            "ABERDEEN",
+            4.64,
+            1,
+            5.58,
+            0.99,
+            4.76,
+            1,
+            3.55,
+            0.99,
+            4.3,
+            1,
+            3.45,
+            0.99
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            null,
+            "ADAMSTOWN",
+            28.91,
+            0.99,
+            29.34,
+            0.9,
+            32.08,
+            0.97,
+            22.76,
+            1,
+            22.54,
+            0.9,
+            22.17,
+            0.98
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            null,
+            "ARGENTON",
+            33.09,
+            0.99,
+            36.28,
+            0.9,
+            39.34,
+            0.99,
+            25.82,
+            1,
+            26.83,
+            0.9,
+            27.73,
+            0.87
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            null,
+            "AUBURN",
+            25.14,
+            0.98,
+            25.55,
+            0.97,
+            31.57,
+            0.98,
+            19.35,
+            0.98,
+            20.44,
+            0.9,
+            21.62,
+            0.99
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            null,
+            "AVOCA",
+            37.8,
+            1,
+            35.01,
+            1,
+            35.54,
+            1,
+            36.58,
+            1,
+            31.35,
+            1,
+            32.5,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Demand Forecast (ZS)",
+      "dimension": "B2:V192",
+      "xml_row_count": 190,
+      "sample_nonempty_rows": [
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            null,
+            "Demand Forecast - Zone Substation"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            null,
+            "Name",
+            "Summer",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "Winter"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            null,
+            null,
+            "2025/26 (MVA)",
+            "2025/26 (PF)",
+            "2026/27 (MVA)",
+            "2026/27 (PF)",
+            "2027/28 (MVA)",
+            "2027/28 (PF)",
+            "2028/29 (MVA)",
+            "2028/29 (PF)",
+            "2029/30 (MVA)",
+            "2029/30 (PF)",
+            "2025 (MVA)",
+            "2025 (PF)",
+            "2026 (MVA)",
+            "2026 (PF)",
+            "2027 (MVA)",
+            "2027 (PF)",
+            "2028 (MVA)",
+            "2028 (PF)",
+            "2029 (MVA)",
+            "2029 (PF)"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            null,
+            "ABERDEEN",
+            4.69,
+            0.99,
+            4.77,
+            0.99,
+            5.05,
+            0.99,
+            7.48,
+            0.99,
+            9.06,
+            0.99,
+            4.19,
+            1,
+            4.14,
+            1,
+            4.16,
+            1,
+            4.24,
+            1,
+            8.92,
+            1
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            null,
+            "ADAMSTOWN",
+            31.49,
+            0.99,
+            31.34,
+            0.99,
+            31.2,
+            0.99,
+            31.9,
+            0.99,
+            31.52,
+            0.99,
+            30.66,
+            0.99,
+            30.46,
+            0.99,
+            30.43,
+            0.99,
+            30.43,
+            0.99,
+            31.4,
+            0.99
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            null,
+            "ARGENTON",
+            31.34,
+            0.99,
+            31.48,
+            0.99,
+            31.73,
+            0.99,
+            32.89,
+            0.99,
+            33.79,
+            0.99,
+            28.12,
+            0.99,
+            27.84,
+            0.99,
+            28.05,
+            0.99,
+            28.37,
+            0.99,
+            29.63,
+            0.99
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            null,
+            "AUBURN",
+            26.23,
+            0.97,
+            26.38,
+            0.97,
+            26.75,
+            0.97,
+            27.33,
+            0.97,
+            28.11,
+            0.97,
+            23.59,
+            0.98,
+            24.07,
+            0.98,
+            24.65,
+            0.98,
+            25.45,
+            0.98,
+            26.43,
+            0.98
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            null,
+            "AVOCA",
+            38.17,
+            1,
+            38.62,
+            1,
+            38.76,
+            1,
+            38.41,
+            1,
+            39.17,
+            1,
+            39.91,
+            1,
+            39.57,
+            1,
+            39.92,
+            1,
+            40.08,
+            1,
+            39.67,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tech Spec (STS)",
+      "dimension": "B2:O39",
+      "xml_row_count": 37,
+      "sample_nonempty_rows": [
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            null,
+            "Technical Specifications - Transmission Substation"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            null,
+            "Name",
+            "Voltage Level",
+            "Summer",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "Winter"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            null,
+            null,
+            null,
+            "Total Capacity (MVA)",
+            " Firm Capacity (MVA)",
+            "Load Transfer Capacity (MVA)",
+            "95% Peak Load Exceeded (hrs/yr)",
+            "Embedded Generation - Solar PV (MW)\t",
+            "Embedded Generation - Other (MW)",
+            "Total Capacity (MVA)",
+            " Firm Capacity (MVA)",
+            "Load Transfer Capacity (MVA)",
+            "95% Peak Load Exceeded (hrs/yr)",
+            "Embedded Generation - Solar PV (MW)\t",
+            "Embedded Generation - Other (MW)"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            null,
+            "ALEXANDRIA",
+            "132/33kV",
+            275.73,
+            142.9,
+            0,
+            0.5,
+            0,
+            0,
+            275.7,
+            142.9,
+            0,
+            " ",
+            0,
+            0
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            null,
+            "ARGENTON",
+            "132/33kV",
+            285.8,
+            142.9,
+            0,
+            1.5,
+            59.97085,
+            0.5204,
+            285.8,
+            142.9,
+            0,
+            " ",
+            56.140145,
+            0.5138
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            null,
+            "AWABA",
+            "132/33kV",
+            135.1,
+            68.6,
+            0,
+            0.5,
+            0.116,
+            0,
+            137.2,
+            68.6,
+            0,
+            " ",
+            0.116,
+            0
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            null,
+            "BANKSTOWN",
+            "132/33kV",
+            206.5,
+            139.4,
+            0,
+            2.5,
+            20.639495,
+            0,
+            206.5,
+            147.2,
+            0,
+            " ",
+            19.02701,
+            0
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            null,
+            "BERESFIELD",
+            "132/33kV",
+            239.8,
+            150.1,
+            0,
+            1.8,
+            60.710676,
+            2.62,
+            239.8,
+            158.6,
+            0,
+            " ",
+            56.323341,
+            2.62
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Actual Demand (STS)",
+      "dimension": "B2:N39",
+      "xml_row_count": 37,
+      "sample_nonempty_rows": [
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            null,
+            "Actual Demand - Transmission Substation"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            null,
+            "Name",
+            "Summer",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "Winter"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            null,
+            null,
+            "2022/23 (MVA)",
+            "2022/23 (PF)",
+            "2023/24 (MVA)",
+            "2023/24 (PF)",
+            "2024/25 (MVA)",
+            "2024/25 (PF)",
+            "2022 (MVA)",
+            "2022 (PF)",
+            "2023 (MVA)",
+            "2023 (PF)",
+            "2024 (MVA)",
+            "2024 (PF)"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            null,
+            "ALEXANDRIA",
+            26.19,
+            1,
+            25.5,
+            1,
+            24.54,
+            1,
+            28.91,
+            1,
+            22.42,
+            1,
+            24.42,
+            0.99
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            null,
+            "ARGENTON",
+            88.69,
+            0.98,
+            93.23,
+            0.98,
+            105.25,
+            0.98,
+            62.75,
+            1,
+            58.55,
+            1,
+            62.51,
+            1
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            null,
+            "AWABA",
+            9.79,
+            1,
+            4.3,
+            1,
+            8.13,
+            0.97,
+            8.35,
+            0.95,
+            6.5,
+            0.99,
+            8.15,
+            0.96
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            null,
+            "BANKSTOWN",
+            69.18,
+            0.9,
+            70.14,
+            0.9,
+            66.76,
+            0.9,
+            62.95,
+            0.9,
+            63.55,
+            0.9,
+            65.15,
+            0.9
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            null,
+            "BERESFIELD",
+            94.27,
+            0.97,
+            110.2,
+            0.95,
+            113.91,
+            0.97,
+            67.7,
+            0.99,
+            67.05,
+            0.99,
+            70.09,
+            1
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Demand Forecast (STS)",
+      "dimension": "B2:V39",
+      "xml_row_count": 37,
+      "sample_nonempty_rows": [
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            null,
+            "Demand Forecast - Transmission Substation"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            null,
+            "Name",
+            "Summer",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "Winter"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            null,
+            null,
+            "2025/26 (MVA)",
+            "2025/26 (PF)",
+            "2026/27 (MVA)",
+            "2026/27 (PF)",
+            "2027/28 (MVA)",
+            "2027/28 (PF)",
+            "2028/29 (MVA)",
+            "2028/29 (PF)",
+            "2029/30 (MVA)",
+            "2029/30 (PF)",
+            "2025 (MVA)",
+            "2025 (PF)",
+            "2026 (MVA)",
+            "2026 (PF)",
+            "2027 (MVA)",
+            "2027 (PF)",
+            "2028 (MVA)",
+            "2028 (PF)",
+            "2029 (MVA)",
+            "2029 (PF)"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            null,
+            "ALEXANDRIA",
+            48.87,
+            1,
+            54.5,
+            1,
+            62.84,
+            1,
+            78.08,
+            1,
+            93.27,
+            1,
+            24.37,
+            1,
+            46.85,
+            1,
+            51.68,
+            1,
+            58.83,
+            1,
+            71.93,
+            1
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            null,
+            "ARGENTON",
+            78.33,
+            0.98,
+            79.48,
+            0.98,
+            79.42,
+            0.98,
+            79.24,
+            0.98,
+            79.36,
+            0.98,
+            64.54,
+            1,
+            63.88,
+            1,
+            64.78,
+            1,
+            64.84,
+            1,
+            64.66,
+            1
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            null,
+            "AWABA",
+            9.34,
+            1,
+            9.3,
+            1,
+            23.85,
+            1,
+            23.87,
+            1,
+            23.88,
+            1,
+            6.74,
+            0.99,
+            6.85,
+            0.99,
+            6.83,
+            0.99,
+            23.03,
+            0.99,
+            23.05,
+            0.99
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            null,
+            "BANKSTOWN",
+            71.47,
+            0.9,
+            73.23,
+            0.9,
+            72.91,
+            0.9,
+            72.71,
+            0.9,
+            72.97,
+            0.9,
+            66.82,
+            0.9,
+            67.03,
+            0.9,
+            68.72,
+            0.9,
+            68.68,
+            0.9,
+            68.64,
+            0.9
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            null,
+            "BERESFIELD",
+            88.97,
+            0.95,
+            90.83,
+            0.95,
+            90.63,
+            0.95,
+            91.53,
+            0.95,
+            89.97,
+            0.95,
+            72.03,
+            0.99,
+            70.42,
+            0.99,
+            72.16,
+            0.99,
+            72.34,
+            0.99,
+            73.52,
+            0.99
+          ]
+        }
+      ]
+    }
+  ]
+}
