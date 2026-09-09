@@ -67,7 +67,7 @@ def tiled_ids(url: str, where: str) -> set[int]:
             "returnIdsOnly": "true",
             "f": "json",
         })
-        ids.update(int(x) for x in data.get("objectIds", []))
+        ids.update(int(x) for x in (data.get("objectIds") or []))
     return ids
 
 
