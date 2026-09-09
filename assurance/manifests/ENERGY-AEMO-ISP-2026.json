@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "source_id": "ENERGY-AEMO-ISP-2026",
+  "map_required": false,
+  "inventory": {
+    "mode": "entity_count",
+    "expected_count": 21,
+    "count_basis": "table_rows",
+    "evidence_locator": "AEMO 2026 Integrated System Plan, Executive Summary Table 1 (PDF p.19 / parsed lines 618-662): QLD/NSW/VIC committed, actionable and future transmission projects; excludes SA/Tasmania projects and the separately classified NSW distribution-project rows.",
+    "independent_from_extraction": true,
+    "notes": "Independent inventory was rebuilt from AEMO Table 1 rather than from transmission_projects_seed.csv. VECA east-coast transmission scope includes QLD, NSW and VIC projects, including CopperString for Queensland system context."
+  },
+  "disposition": {
+    "mapped": 0,
+    "dataset_only": 17,
+    "excluded": 0,
+    "duplicate": 0,
+    "unresolved": 4
+  },
+  "verification": {
+    "state": "failed",
+    "checks": [
+      {
+        "field": "entity completeness",
+        "method": "Compare the independent AEMO Table 1 east-coast transmission inventory against project_name values in domains/energy/data/derived/transmission_projects_seed.csv.",
+        "evidence_locator": "AEMO 2026 ISP Table 1 versus transmission_projects_seed.csv EN-TR-001..EN-TR-017.",
+        "result": "17 of 21 scoped transmission projects are present. Four source-listed projects are absent and remain unresolved: Gladstone Project; Switching Station Near Wondalga; Gippsland Offshore Wind Transmission; Central to North Queensland Reinforcement Stage 2."
+      },
+      {
+        "field": "status/timing",
+        "method": "Spot-check source rows already represented in VECA against AEMO Table 1 status class and timing.",
+        "evidence_locator": "AEMO 2026 ISP Table 1, including HumeLink, Sydney Ring South, VNI West, Brisbane Area 275 kV Reinforcement and QNI Connect.",
+        "result": "Represented examples preserve the important committed/actionable/future distinction, but source completeness failure prevents this source from being marked reconciled or verified."
+      }
+    ]
+  },
+  "dataset_paths": [
+    "domains/energy/data/derived/transmission_projects_seed.csv"
+  ],
+  "map_layers": [],
+  "notes": "First migration of an existing VECA source through the assurance system. This deliberately records a failure rather than normalising 17/17 from the derived file. Distribution opportunities in AEMO Table 1 are outside this transmission-project manifest and should be handled as a separate source/layer if ingested."
+}
