@@ -36,7 +36,9 @@ def prop(props: dict, *names: str, default=""):
 def perpendicular_distance(p, a, b):
     if a == b:
         return math.hypot(p[0]-a[0], p[1]-a[1])
-    x, y = p; x1, y1 = a; x2, y2 = b
+    x, y = p
+    x1, y1 = a
+    x2, y2 = b
     t = ((x-x1)*(x2-x1)+(y-y1)*(y2-y1))/((x2-x1)**2+(y2-y1)**2)
     t = max(0.0, min(1.0, t))
     return math.hypot(x-(x1+t*(x2-x1)), y-(y1+t*(y2-y1)))
@@ -87,23 +89,29 @@ def rail_is_operational(props):
     return any(word in status for word in ("operational", "capable of operation", "open", "active"))
 
 
-def normalise_line_features(src: Path, domain: str, tolerance: float, min_length: float, operational_only=False):
+def normalise_line_features(src: Path, domain: str, tolerance: float, min_length: float = 0.0, operational_only=False):
     data = json.loads(src.read_text(encoding="utf-8"))
     out = []
+    line_features = 0
+    rejected_short = 0
+    rejected_status = 0
     for i, f in enumerate(data.get("features", [])):
         geom = f.get("geometry") or {}
         if geom.get("type") not in {"LineString", "MultiLineString"}:
             continue
+        line_features += 1
         props = f.get("properties") or {}
         if operational_only and not rail_is_operational(props):
+            rejected_status += 1
             continue
-        if geometry_length_degree(geom) < min_length:
+        if min_length > 0 and geometry_length_degree(geom) < min_length:
+            rejected_short += 1
             continue
-        name = prop(props, "name", "feature_name", "road_name", "route_name", "railway_name", default=f"{domain.title()} segment")
+        name = prop(props, "name", "feature_name", "road_name", "full_street_name", "route_name", "railway_name", default=f"{domain.title()} segment")
         source_status = prop(props, "operational_status", "oper_status", "status", default="")
         source_class = prop(props, "road_class", "hierarchy", "class", "featuretype", "featuresubtype", default="")
         retained = {str(k): v for k, v in props.items() if scalar(v) and str(k).lower() in {
-            "owner","gauge","track_gauge","operational_status","oper_status","status","road_class","hierarchy","class","featuretype","featuresubtype","source_jurisdiction","jurisdiction","length_km"
+            "owner","gauge","track_gauge","operational_status","oper_status","status","road_class","hierarchy","class","featuretype","featuresubtype","full_street_name","national_route","state_route","lane_count","speed","surface","source_jurisdiction","jurisdiction","state","length_km"
         }}
         retained.update({
             "entity_id": f"{domain.upper()}-{i}", "name": str(name), "domain": domain,
@@ -112,6 +120,7 @@ def normalise_line_features(src: Path, domain: str, tolerance: float, min_length
             "source_dataset": src.name,
         })
         out.append({"type":"Feature", "geometry": simplify_geometry(geom, tolerance), "properties": retained})
+    print(f"{domain}: source line features={line_features:,}; retained={len(out):,}; short-filtered={rejected_short:,}; status-filtered={rejected_status:,}")
     return {"type":"FeatureCollection", "features": out}
 
 
@@ -170,7 +179,9 @@ def main():
 
     manifest = {}
     manifest["rail"] = write_geojson("rail.geojson", normalise_line_features(RAIL, "rail", tolerance=0.002, min_length=0.003, operational_only=True))
-    manifest["roads"] = write_geojson("roads.geojson", normalise_line_features(ROADS, "roads", tolerance=0.004, min_length=0.015))
+    # Preserve every in-scope highway source segment. Short segments are topologically
+    # important at intersections/attribute boundaries; segment length is not road importance.
+    manifest["roads"] = write_geojson("roads.geojson", normalise_line_features(ROADS, "roads", tolerance=0.002, min_length=0.0))
 
     reg = registry()
     population = [f for row in read_csv(REGIONS) if (f := point_feature(row, reg, "population"))]
