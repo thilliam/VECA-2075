@@ -34,10 +34,10 @@
       "domain": "energy",
       "geography": "Western Sydney / Blue Mountains / Illawarra / South Coast",
       "source_type": "infrastructure_owner_intent",
-      "status": "ingested",
+      "status": "relevant",
       "priority": "P0",
       "map_relevance": true,
-      "known_gaps": ["Current batch is a selective high-consequence capacity/project signal set; full Rosetta asset/limitation inventory remains to be extracted."]
+      "known_gaps": ["Current batch is a selective high-consequence capacity/project signal set; full Rosetta asset/limitation inventory remains to be extracted before the source can be called ingested."]
     },
     {
       "source_id": "ENERGY-ENERGEX-DAPR-2025-DATA",
@@ -70,10 +70,10 @@
       "domain": "energy",
       "geography": "Eastern and northern Victoria",
       "source_type": "infrastructure_owner_intent",
-      "status": "ingested",
+      "status": "relevant",
       "priority": "P0",
       "map_relevance": true,
-      "known_gaps": ["Current batch extracts selected high-consequence augmentation/constraint signals; full zone-substation inventory and forecast table ingestion remains outstanding."]
+      "known_gaps": ["Current batch extracts selected high-consequence augmentation/constraint signals; full zone-substation inventory and forecast table ingestion remains outstanding before the source can be called ingested."]
     },
     {
       "source_id": "ENERGY-POWERCOR-DAPR-2025-DATA",
