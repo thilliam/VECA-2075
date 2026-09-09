@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "source_id": "ENERGY-AEMO-ISP-2026",
+  "map_required": false,
+  "inventory": {
+    "mode": "entity_count",
+    "expected_count": 21,
+    "count_basis": "table_rows",
+    "evidence_locator": "AEMO 2026 Integrated System Plan, Executive Summary Table 1 (PDF p.19 / parsed lines 618-662): QLD/NSW/VIC committed, actionable and future transmission projects; excludes SA/Tasmania projects and the separately classified NSW distribution-project rows.",
+    "independent_from_extraction": true,
+    "notes": "Independent inventory was rebuilt from AEMO Table 1 rather than from transmission_projects_seed.csv. VECA east-coast transmission scope includes QLD, NSW and VIC projects, including CopperString for Queensland system context."
+  },
+  "disposition": {
+    "mapped": 0,
+    "dataset_only": 21,
+    "excluded": 0,
+    "duplicate": 0,
+    "unresolved": 0
+  },
+  "verification": {
+    "state": "sampled",
+    "checks": [
+      {
+        "field": "entity completeness",
+        "method": "Compare the independent AEMO Table 1 east-coast transmission inventory against project_name values in domains/energy/data/derived/transmission_projects_seed.csv.",
+        "evidence_locator": "AEMO 2026 ISP Table 1 versus transmission_projects_seed.csv EN-TR-001..EN-TR-021.",
+        "result": "Initial comparison found 17 of 21. Four missing projects were added; all 21 independently inventoried transmission projects are now explicitly represented in the dataset."
+      },
+      {
+        "field": "status/timing",
+        "method": "Spot-check source rows against AEMO Table 1 status class and timing, including newly added omissions.",
+        "evidence_locator": "AEMO 2026 ISP Table 1, including HumeLink, Sydney Ring South, VNI West, Gladstone Project, Brisbane Area 275 kV Reinforcement and QNI Connect.",
+        "result": "Spot checks preserve committed/actionable/future distinctions and source timing semantics. Full field-by-field verification is still required before verification.state can be passed."
+      }
+    ]
+  },
+  "dataset_paths": [
+    "domains/energy/data/derived/transmission_projects_seed.csv"
+  ],
+  "map_layers": [],
+  "notes": "First existing VECA source reconciled through the assurance process. The process exposed four omissions before repair. Distribution opportunities in AEMO Table 1 remain outside this transmission-project manifest and should be handled as a separate source/layer if ingested."
+}
