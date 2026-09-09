@@ -1,0 +1,44 @@
+name: Apply DNSP assurance batch
+
+on:
+  push:
+    branches:
+      - feature/ingest-distribution-capacity-001
+    paths:
+      - "assurance/ingestion_batches/dnsp_distribution_2026.json"
+      - "tools/apply_assurance_batch.py"
+      - ".github/workflows/apply-dnsp-assurance-batch.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/ingest-distribution-capacity-001
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Apply declared assurance batch
+        run: python tools/apply_assurance_batch.py assurance/ingestion_batches/dnsp_distribution_2026.json
+      - name: Validate dataset register
+        run: python tools/validate_dataset_register.py
+      - name: Validate source assurance
+        run: python tools/validate_source_assurance.py --strict
+      - name: Commit canonical register updates
+        run: |
+          git config user.name "VECA assurance bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add assurance/source_register.json assurance/dataset_register.json
+          if git diff --cached --quiet; then
+            echo "No register changes"
+            exit 0
+          fi
+          git commit -m "Assurance: register DNSP distribution ingestion batch"
+          git pull --rebase origin feature/ingest-distribution-capacity-001
+          git push origin HEAD:feature/ingest-distribution-capacity-001
