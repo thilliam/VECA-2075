@@ -389,6 +389,21 @@
       "selection_policy": "Capture current east-coast conventional-rail capability-changing investments, funded corridor programs, Inland Rail section status and the next authoritative operating-capability sources needed to convert rail geometry into a usable capacity layer.",
       "completeness_test": "Every included row resolves to a current primary ARTC/Inland Rail source and distinguishes completed, in-progress, funded-program, approved/preserved and ingestion-target states. The dataset does not claim to contain every ARTC project, train path, loop or route-access parameter.",
       "canonical": true
+    },
+    {
+      "path": "domains/energy/data/derived/ergon_zone_substation_load_summary_2025-26.csv",
+      "domain": "energy",
+      "role": "imported_dataset",
+      "assurance_state": "reconciled",
+      "map_relevance": true,
+      "provenance": "Ergon Energy Network Zone Substation Load Data 2025-26 authoritative ZIP archive",
+      "observed_count": 265,
+      "independent_expected_count": 265,
+      "source_ids": [
+        "ENERGY-ERGON-ZS-LOAD-2025-26"
+      ],
+      "blocker": "Entity completeness reconciled 265/265. Numeric load scale remains sampled; historical load must not be treated as connection capacity.",
+      "canonical": true
     }
   ]
 }

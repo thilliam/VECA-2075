@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "source_id": "ENERGY-ERGON-ZS-LOAD-2025-26",
+  "map_required": false,
+  "inventory": {
+    "mode": "entity_count",
+    "expected_count": 265,
+    "count_basis": "official_index",
+    "evidence_locator": "assurance/source_profiles/ergon_substation_load_2025-26.json: authoritative archive member inventory, 265 CSV members",
+    "independent_from_extraction": true,
+    "notes": "Inventory established by a separate archive-profile pass before the source-specific summarising extractor. Source record identity is the authoritative CSV member path."
+  },
+  "disposition": {
+    "mapped": 0,
+    "dataset_only": 265,
+    "excluded": 0,
+    "duplicate": 0,
+    "unresolved": 0
+  },
+  "verification": {
+    "state": "sampled",
+    "checks": [
+      {
+        "field": "source_record_identity",
+        "method": "Compare independent archive-profile CSV member set with extractor-observed member set.",
+        "evidence_locator": "assurance/reconciliation/ergon_zone_substation_load_2025-26.json",
+        "result": "265 expected / 265 extracted / 0 missing / 0 extra; exact identity match."
+      },
+      {
+        "field": "period_and_observation_structure",
+        "method": "Inspect profiled/extracted substation files for half-hourly period coverage and row structure.",
+        "evidence_locator": "assurance/source_profiles/ergon_substation_load_2025-26.json plus derived summary",
+        "result": "Sampled files cover 2025-07-01 through 2026-06-30 with 17,520 half-hour observations where complete."
+      },
+      {
+        "field": "MW_MVA_numeric_scale",
+        "method": "Compare source-labelled MW/MVA magnitude against other Ergon/Powerlink planning evidence for comparable substations.",
+        "evidence_locator": "domains/energy/research/ergon_zone_substation_load_findings_2025-26.md",
+        "result": "Archive values appear systematically 1000x larger than physically/planning-consistent MW/MVA. Raw values retained; separate /1000 interpreted fields provided. Full field verification remains open."
+      }
+    ]
+  },
+  "dataset_paths": [
+    "domains/energy/data/derived/ergon_zone_substation_load_summary_2025-26.csv"
+  ],
+  "map_layers": [],
+  "notes": "Entity completeness is reconciled. Numeric load interpretation remains sampled because the source archive's field labels and magnitudes appear to have a systematic scale mismatch. Historical load is not connection headroom."
+}

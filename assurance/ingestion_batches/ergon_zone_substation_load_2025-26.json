@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "updated": "2026-09-09",
+  "replace_existing": false,
+  "sources": [
+    {
+      "source_id": "ENERGY-ERGON-ZS-LOAD-2025-26",
+      "title": "Ergon Energy Zone Substation Load Data 2025-26",
+      "publisher": "Ergon Energy Network",
+      "domain": "energy",
+      "geography": "Regional Queensland",
+      "source_type": "authoritative_reality",
+      "status": "reconciled",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Archive provides historical half-hourly load, not rated/firm capacity or guaranteed connection headroom.",
+        "Published numeric MW/MVA labels appear systematically inconsistent with magnitudes; raw values are retained and interpreted /1000 fields remain explicitly sampled rather than source-certified.",
+        "Substation coordinates and DAPR capacity/forecast attributes still require join to Ergon network/DAPR records."
+      ]
+    }
+  ],
+  "datasets": [
+    {
+      "path": "domains/energy/data/derived/ergon_zone_substation_load_summary_2025-26.csv",
+      "domain": "energy",
+      "role": "imported_dataset",
+      "assurance_state": "reconciled",
+      "map_relevance": true,
+      "provenance": "Ergon Energy Network Zone Substation Load Data 2025-26 authoritative ZIP archive",
+      "observed_count": 265,
+      "independent_expected_count": 265,
+      "source_ids": [
+        "ENERGY-ERGON-ZS-LOAD-2025-26"
+      ],
+      "blocker": "Entity completeness reconciled 265/265. Numeric load scale remains sampled; historical load must not be treated as connection capacity.",
+      "canonical": true
+    }
+  ]
+}

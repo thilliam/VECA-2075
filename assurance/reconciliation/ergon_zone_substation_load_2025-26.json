@@ -1,0 +1,12 @@
+{
+  "source": "Ergon Network Zone Substation Load Data 2025-26 archive",
+  "expected_csv_members": 265,
+  "extracted_records": 265,
+  "missing_source_record_ids": [],
+  "extra_source_record_ids": [],
+  "exact_identity_match": true,
+  "flagged_possible_scale_or_meter_anomaly": 245,
+  "source_scale_interpretation": "empirical_divide_by_1000_crosschecked_against_ergon_powerlink_planning_evidence",
+  "interpretation_factor": 0.001,
+  "interpretation_is_source_published_correction": false
+}
