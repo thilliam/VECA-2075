@@ -13,13 +13,15 @@ The governing doctrine is in `doctrine/design_principles.md`. The most important
 
 ## 2. Where the project is now
 
-VECA has moved beyond bootstrap/source reconnaissance. It now has a meaningful inherited-system evidence base, structured domain research, and a working layered-map POC. It has **not** yet selected candidate settlement regions, assigned settlement rankings, designed a VECA transport network, or performed whole-system economics.
+VECA has moved beyond bootstrap/source reconnaissance. It now has a meaningful inherited-system evidence base, structured domain research, a source-ingestion assurance control plane, and a working multi-generation layered-map POC. It has **not** yet selected candidate settlement regions, assigned settlement rankings, designed a VECA transport network, or performed whole-system economics.
 
 Current position:
 
 **EXP-001 inherited-system mapping: first coherent pass substantially established; enrichment remains.**  
 **EXP-002 habitat/resource screening: framework and source discovery established; material spatial screening is the next major analytical task.**  
 **Government intent/future capital optionality: first regional and asset-level evidence established.**  
+**Map POC: real transport, population, settlements and landscape context now demonstrated; next major analytical layer is energy.**  
+**Source assurance: cross-domain source/dataset register and reconciliation process now controls whether apparent map gaps are real or ingestion gaps.**  
 **Regional Anchor Cluster join: explicitly paused and placed in backlog until the physical survival screen is further advanced.**
 
 ## 3. What has been achieved
@@ -32,19 +34,42 @@ Current position:
 - Controlled infrastructure status logic established: completed, under construction, funded/committed, approved-not-started, planned-high-confidence, proposed, cancelled.
 - Future concepts documented but intentionally unweighted: Capital Gravity, infrastructure inheritance per additional resident, habitat/resource suitability, economic potential, network value, AI infrastructure/economic/social resilience, life accessibility and voluntary migration attractiveness.
 
+### Source coverage and ingestion assurance
+
+`assurance/` is now the research-source control plane. Its purpose is to ensure sparse map areas mean sparse evidence/infrastructure rather than forgotten ingestion.
+
+Established controls include:
+- cross-domain `source_register.json` with lifecycle `discovered -> triaged -> relevant -> ingestion_planned -> ingested -> reconciled -> verified`;
+- canonical `dataset_register.json` covering current derived datasets;
+- explicit distinction between `exhaustive_import`, `curated_synthesis`, `support_output` and deprecated legacy outputs;
+- independent expected-inventory rule for exhaustive imports;
+- entity dispositions: mapped / dataset_only / excluded / duplicate / unresolved;
+- reconciliation invariant so expected entities cannot silently disappear;
+- evidence-backed accuracy verification for identity, decision-critical fields and spatial sanity;
+- curated-dataset scope contracts so provenance-reconciled seed sets do not masquerade as exhaustive censuses.
+
+The source register now spans 20+ important source families across population, transport, energy, digital/compute, infrastructure capital, regional planning and connectivity. New map/data work should update assurance records as part of the same change.
+
 ### Population
 
 - ABS SA2 2001–2025 ERP layer materialised for QLD/NSW/ACT/VIC: 1,844 SA2s.
 - 2024–25 components and state validation captured.
 - Authoritative 1 km population-grid source preserved.
+- POC-003 joins authoritative SA2 geometry to 2025 ERP and renders density and 2020–25 growth.
+- ABS Urban Centres and Localities are now rendered as a semantic-zoom settlement hierarchy; major metropolitan functional centres are separately represented where contiguous metro UCLs are too coarse.
+- ABS 2025 LGA population geometry/data is now available as a separate population/growth lens so metropolitan systems can be viewed as Blacktown, Parramatta, Penrith, Liverpool, etc., rather than only as Greater Sydney.
 - Findings distinguish metropolitan-fringe growth, heterogeneous regional growth and one-year movement from long-run settlement suitability.
+- Future refinement: aggregate small outer localities into functional settlement clusters at medium zoom, dissolving to individual towns only at high zoom.
 
 ### Transport
 
 - Geoscience Australia east-coast rail and major-road geometry materialised and corrected to QLD/NSW/ACT/VIC scope.
-- Large authoritative GeoJSONs exist for rail and major roads.
+- Independent authoritative reconciliation now accounts for all 26,808 rail source features and all 75,581 road source features in the scoped extracts.
+- POC-002 proves real browser delivery from generated map derivatives: operational rail is reduced to 6,822 retained source segments; major roads retain all 75,581 source segments after short-segment deletion was shown to break network continuity.
+- Current road GeoJSON derivative is about 46 MB, confirming GeoJSON is a POC delivery mechanism rather than the production serving architecture.
+- Low-zoom network generalisation remains required: continuous strategic corridor representations should replace visual gaps at small scale, while authoritative detail replaces them at higher zoom.
 - Freight research distinguishes physical inheritance, observed utilisation and latent network option value.
-- Initial intermodal nodes, ports and airport activity represented.
+- Initial intermodal nodes, ports and airport activity represented in research datasets.
 - HSR/faster-rail evidence lineage assembled from VFT/Speedrail through the 2001 and 2013 Commonwealth studies to current HSRA work.
 - HSR cost and corridor-obstacle evidence seeded. This is evidence reuse, not a VECA route proposal.
 
@@ -56,10 +81,12 @@ Current position:
 
 ### Energy
 
-- AEMO 2026 ISP transmission pipeline structured, including HumeLink, Hunter-Central Coast REZ, Central-West Orana REZ, Western Renewables Link, VNI West, New England REZ and relevant Queensland/Victorian reinforcements.
-- REZ/network status distinctions documented.
+- AEMO 2026 ISP transmission pipeline structured and source-level reconciled at 21/21 east-coast scoped projects, including HumeLink, Hunter-Central Coast REZ, Central-West Orana REZ, Western Renewables Link, VNI West, New England REZ and relevant Queensland/Victorian reinforcements.
+- NSW declared REZs, Victorian proposed REZs and historical Queensland potential-REZ planning geography are structured with deliberately different status semantics.
 - Important finding: connection/transfer/storage/generation capacity are different quantities and must not be collapsed.
 - Asset-level generation/storage extraction remains outstanding.
+- Distribution-network capacity/constraint sources are now explicitly listed as P0 ingestion targets: Essential Energy, Ausgrid, Endeavour Energy, Energex, Ergon and Victorian DNSPs.
+- **Energy is the next major map-layer family:** first AEMO transmission/REZ geography, then DNSP substation/capacity/constraint data as it is ingested.
 
 ### Water
 
@@ -73,13 +100,15 @@ Current position:
 - Initial structured nodes include Western Sydney Aerotropolis/Bradfield, Parkes SAP/National Logistics Hub and Wagga/Bomen/RiFL SAP.
 - Port and intermodal research has begun to treat ports as inland catchment systems rather than waterfront points.
 - Broader QLD, Hunter, VIC and ACT node coverage remains incomplete.
+- ARTC conventional-rail investment, Inland Rail current-program status, long-haul fibre and data-centre/powered-land pipelines are now explicit assurance/source-backlog families rather than informal future ideas.
 
 ### Climate, hazard, terrain and land
 
 - EXP-002 framework established with staged gates rather than one score.
 - Climate/hazard source register and first findings established: warming is universal; southern water stress requires explicit future-yield treatment; extreme rainfall and drought can worsen together; fire weather is a major future spatial filter; national flood evidence requires local/state refinement.
 - Land source plan established for DEM/slope, ABARES land use, protected areas, native-title/ILUA context, agriculture, wetlands/floodplain and transformed land.
-- The actual 2050/2070 regional climate profiles, slope/terrain surfaces and land constraint overlays are not yet materialised. This is a major next-stage gap.
+- POC-003 now includes switchable satellite imagery and a live ABARES national land-use overlay, proving the map can combine analytical VECA data with physical-land context without copying national raster datasets into the repository.
+- The actual 2050/2070 regional climate profiles, slope/terrain surfaces and stronger constraint overlays are not yet materialised. This remains a major next-stage gap.
 
 ### Government intent and Future Capital Optionality
 
@@ -112,7 +141,20 @@ The economic question this enables is: **how much of the infrastructure needed b
 
 ### Mapping
 
-`maps/poc-001/` is a working layered-map proof of concept. It already demonstrates layer toggles, semantic zoom, time/status filtering, regional navigation and clickable evidence/interpretation panels. Hospital and tertiary assets are shown from the government-intent corpus; large road/rail datasets remain outside the browser POC and need tiled delivery for production-scale use.
+The map has progressed through three POC generations:
+
+- `maps/poc-001/` — interaction proof: layer toggles, semantic zoom, time/status filters, regional navigation and clickable evidence panels using simplified embedded features.
+- `maps/poc-002/` — real East Coast spatial foundation: reproducible derivatives from authoritative rail/road data plus corpus-backed infrastructure and education points, a spatial registry and explicit geometry-gap reporting.
+- `maps/poc-003/` — population, settlements and landscape: 1,844 SA2 population polygons, settlement hierarchy, metro functional centres, LGA population/growth lens, satellite imagery, live ABARES land use, and the POC-002 transport foundation.
+
+Important map-engineering findings:
+- network topology must be preserved before visual/generalisation optimisation; short road segments cannot simply be dropped;
+- semantic zoom needs different representations of the same network rather than fake detail or one geometry at every scale;
+- map geometry quality must be explicit (`authoritative_source`, `authoritative_source_simplified`, representative centroid, functional-centre inference, etc.);
+- generated browser derivatives should not become the corpus authority;
+- large static layers should move toward PMTiles/vector tiles and dynamic analytical layers toward a proper spatial serving boundary;
+- population needs multiple lenses: physical density, administrative LGA, and functional settlement hierarchy;
+- small-town/locality clutter should later aggregate into functional settlement clusters at medium zoom.
 
 The map is a view over evidence entities. It is not the analytical model itself.
 
@@ -127,6 +169,7 @@ The map is a view over evidence entities. It is not the analytical model itself.
 - Albury-Wodonga is a live example of capital moving from spatial optionality toward site lock-in.
 - Toowoomba's hospital relocation demonstrates that renewal capital can sometimes reshape service geography rather than simply reproduce it.
 - Universities and major hospitals can be city-shaping anchors; schools are more often population-following growth liabilities.
+- Population geography is usefully different when viewed through SA2 density, LGA administration and functional settlement systems; no single geography is sufficient for VECA.
 
 None of these findings authorises a preferred candidate.
 
@@ -142,6 +185,7 @@ Understand what already exists and what capital is already accumulating.
 
 Required close-out work:
 - energy generator/storage asset extraction;
+- distribution-network capacity/constraint extraction across NSW/QLD/VIC DNSPs;
 - water gaps: Toowoomba/Darling Downs, New England, Hunter/coastal;
 - broader industry/logistics nodes in QLD/Hunter/VIC/ACT;
 - port catchments;
@@ -166,7 +210,7 @@ First output is **pass / difficult / uncertain / major constraint by evidence fa
 Immediate work:
 - materialise 2050/2070 climate profiles;
 - derive terrain/slope/buildability surfaces;
-- add protected/agricultural/land-use/native-title context;
+- extend the existing ABARES land-use context with protected/agricultural/native-title and other structural constraint layers;
 - improve flood and bushfire evidence;
 - complete water feasibility/augmentation evidence;
 - render the survival layers on/alongside the existing map POC.
@@ -266,15 +310,22 @@ Good parallel tasks now include:
 **P0 — EXP-002 physical screening**
 - climate 2050/2070 regional profiles and spatial surfaces;
 - terrain/slope/buildability;
-- protected/agriculture/land-use constraints;
+- protected/agriculture/native-title/land-use constraints;
 - flood/bushfire evidence;
 - water augmentation/yield comparison.
 
+**P0 — Energy capacity and map enrichment**
+- map reconciled AEMO 2026 ISP transmission projects and REZ geography with status/time semantics;
+- ingest Essential Energy, Ausgrid, Endeavour, Energex, Ergon and Victorian DNSP capacity/constraint sources;
+- add generator/storage assets after authoritative extraction;
+- never treat transmission proximity as connection capacity.
+
 **P1 — Stage-1 enrichment**
-- AEMO generator/storage extraction;
 - Hunter/New England/Toowoomba water completion;
 - QLD/Hunter/VIC/ACT industry-logistics nodes;
 - port catchments;
+- ARTC conventional-rail capacity/investment program;
+- Inland Rail current delivered/active/preserved status;
 - transport capacity/utilisation;
 - clean capital census.
 
@@ -284,10 +335,21 @@ Good parallel tasks now include:
 - government-owned development land/corridors;
 - hospital/service renewal windows and site flexibility.
 
+**P1 — Emerging infrastructure/economic geography**
+- hyperscale data-centre campus and powered-land pipelines;
+- long-haul fibre/interconnection nodes;
+- private growth/development pipeline evidence where it changes infrastructure optionality.
+
 **P2 — Map/data engineering**
-- add authoritative derived layers to map serving pipeline;
-- tiled delivery for large road/rail/spatial surfaces;
-- provenance/status/time metadata preserved in map entities.
+- restore/integrate already-derived health and education anchors into the current POC-003 layer catalogue;
+- add AEMO transmission/REZ as the next major analytical layer family;
+- then major infrastructure/capital projects and intermodal/freight nodes;
+- add government-land/zoning polygons once geometry is authoritative enough;
+- move large road/rail/static surfaces from monolithic GeoJSON toward PMTiles/vector tiles;
+- add low/medium/high-zoom generalised transport representations;
+- preserve provenance/status/time/geometry-quality metadata in map entities;
+- add functional settlement clustering at medium zoom;
+- later replace broad rural SA2 appearance with the finer population grid/inhabited footprint.
 
 **PAUSED — Regional Anchor Clusters v1**
 - do not start until explicitly resumed.
@@ -308,10 +370,13 @@ Good parallel tasks now include:
 - BITRE airport-history extraction failed/was parked because the source workbook delivery was unreliable. Current airport activity is represented; history is not required to block current work.
 - Exact road/rail QA should rely on materialised summaries and source validation, not old conversational counts.
 - Seed datasets are structured research artefacts, not necessarily exhaustive asset censuses.
+- POC map derivatives are deliberately generated/not canonical. The research corpus and assurance records remain authoritative.
+- Current POC road GeoJSON is large (~46 MB); production delivery must not scale by piling more monolithic GeoJSON into the browser.
+- Some map-ready curated datasets still lack authoritative geometry; do not invent precise corridors/polygons merely to make them visible.
 
 ## 8. Rules for agents
 
-1. Read `README.md`, this document, `doctrine/design_principles.md`, and the relevant experiment/domain plan before work.
+1. Read `README.md`, this document, `doctrine/design_principles.md`, `assurance/README.md`, and the relevant experiment/domain plan before work.
 2. Search the repository before creating a new file or taxonomy.
 3. Prefer primary authoritative sources.
 4. Record provenance and source dates.
@@ -323,3 +388,4 @@ Good parallel tasks now include:
 10. Add findings and limitations, not just data.
 11. Avoid parallel agents editing the same canonical file; give agents bounded outputs that can be reviewed/merged.
 12. If a task reveals a doctrine-level decision, update `decisions/README.md` or propose a decision record rather than silently embedding it in code/data.
+13. New derived datasets and map inputs must be registered in `assurance/dataset_register.json`; exhaustive sources require independent inventory reconciliation before claiming completeness.
