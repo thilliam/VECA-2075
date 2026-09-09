@@ -39,7 +39,15 @@ function addSourceAndLayers(layer){
   map.addLayer({id,type:'circle',source:id,minzoom:layer.minZoom,paint:{'circle-radius':['interpolate',['linear'],['zoom'],3,4,10,8],'circle-color':['match',['get','status'],'existing',statusColours.existing,'committed',statusColours.committed,'planned',statusColours.planned,'scenario',statusColours.scenario,'#fff'],'circle-stroke-color':'#0d141a','circle-stroke-width':1.5}});
   map.addLayer({id:`${id}-labels`,type:'symbol',source:id,minzoom:Math.max(layer.minZoom+1,5),layout:{'text-field':['get','name'],'text-size':11,'text-offset':[0,1.2],'text-anchor':'top','text-allow-overlap':false},paint:{'text-color':'#f2f6f8','text-halo-color':'#111b22','text-halo-width':1.5}});
  }else if(type==='LineString'){
-  map.addLayer({id,type:'line',source:id,minzoom:layer.minZoom,paint:{'line-color':['match',['get','status'],'existing',statusColours.existing,'committed',statusColours.committed,'planned',statusColours.planned,'scenario',statusColours.scenario,'#fff'],'line-width':['interpolate',['linear'],['zoom'],3,2,10,5],'line-opacity':0.9,'line-dasharray':['case',['==',['get','status'],'scenario'],['literal',[2,2]],['literal',[1,0]]]}});
+  const isScenario=id==='scenario';
+  map.addLayer({id:`${id}-halo`,type:'line',source:id,minzoom:layer.minZoom,paint:{'line-color':'#0b1116','line-width':['interpolate',['linear'],['zoom'],3,5,10,9],'line-opacity':0.8}});
+  const paint={
+   'line-color':isScenario?statusColours.scenario:statusColours.existing,
+   'line-width':['interpolate',['linear'],['zoom'],3,3,10,6],
+   'line-opacity':0.98
+  };
+  if(isScenario)paint['line-dasharray']=[2,2];
+  map.addLayer({id,type:'line',source:id,minzoom:layer.minZoom,paint});
  }
  setLayerVisibility(id,enabledLayers.has(id));
 }
