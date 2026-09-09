@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "updated": "2026-09-09",
+  "purpose": "Bridge assurance dataset arrival to map readiness. Map absence must not be interpreted as data absence.",
+  "states": [
+    "mapped_authoritative",
+    "mapped_representative",
+    "map_ready_authoritative",
+    "map_ready_representative",
+    "blocked_spatial_join",
+    "not_spatial"
+  ],
+  "datasets": [
+    {
+      "dataset_path": "domains/digital-compute/data/derived/compute_campus_pipeline_seed.csv",
+      "map_candidate": true,
+      "spatial_state": "mapped_representative",
+      "geometry_status": "representative_locality_anchor",
+      "map_layer_id": "compute_campuses",
+      "mapped_poc": "005+",
+      "join_or_blocker": "Published locality is sufficient for POC context; parcel/site geometry remains future enrichment."
+    },
+    {
+      "dataset_path": "domains/digital-connectivity/data/derived/digital_backbone_routes_seed.csv",
+      "map_candidate": true,
+      "spatial_state": "mapped_representative",
+      "geometry_status": "generalised_endpoint_corridor",
+      "map_layer_id": "digital_backbone",
+      "mapped_poc": "005+",
+      "join_or_blocker": "Published endpoints support system-scale context only; route/on-ramp geometry required for access analysis."
+    },
+    {
+      "dataset_path": "domains/transport/data/derived/conventional_rail_capacity_investment_seed.csv",
+      "map_candidate": true,
+      "spatial_state": "mapped_representative",
+      "geometry_status": "generalised_corridor",
+      "map_layer_id": "rail_capacity_investment",
+      "mapped_poc": "005+",
+      "join_or_blocker": "Named corridors rendered over authoritative operational rail; project-specific alignments remain separate."
+    },
+    {
+      "dataset_path": "domains/industry/data/derived/port_catchments_seed.csv",
+      "map_candidate": true,
+      "spatial_state": "mapped_representative",
+      "geometry_status": "representative_port_anchor",
+      "map_layer_id": "port_systems",
+      "mapped_poc": "005+",
+      "join_or_blocker": "Port anchors sufficient for system comparison; estate and inland catchment polygons remain future geometry."
+    },
+    {
+      "dataset_path": "domains/energy/data/derived/distribution_capacity_signals_seed.csv",
+      "map_candidate": true,
+      "spatial_state": "mapped_representative",
+      "geometry_status": "representative_region_anchor",
+      "map_layer_id": "dnsp_capacity_signals",
+      "mapped_poc": "005+",
+      "join_or_blocker": "Curated planning signals mapped regionally; exact substation geometry must replace anchors before local capacity analysis."
+    },
+    {
+      "dataset_path": "domains/water/data/derived/water_systems_seed.csv",
+      "map_candidate": true,
+      "spatial_state": "mapped_representative",
+      "geometry_status": "representative_system_anchor",
+      "map_layer_id": "water_systems_expanded",
+      "mapped_poc": "005+",
+      "join_or_blocker": "System anchors represent inherited/diversified supply; asset, catchment and pipe geometry remains future work."
+    },
+    {
+      "dataset_path": "domains/energy/data/derived/aemo_generation_information_east_july_2026.csv",
+      "map_candidate": true,
+      "spatial_state": "blocked_spatial_join",
+      "geometry_status": "missing_authoritative_coordinates",
+      "map_layer_id": null,
+      "mapped_poc": null,
+      "join_or_blocker": "Direct import contains generator/storage identity and capacity but no authoritative coordinates in current derivative. Join to AEMO/authoritative station or connection-point geometry before mapping."
+    },
+    {
+      "dataset_path": "domains/energy/data/derived/ausgrid_substation_capacity_demand_2025.csv",
+      "map_candidate": true,
+      "spatial_state": "blocked_spatial_join",
+      "geometry_status": "missing_authoritative_coordinates",
+      "map_layer_id": null,
+      "mapped_poc": null,
+      "join_or_blocker": "Capacity/demand table is reconciled but non-spatial. Join substation inventory to authoritative Ausgrid network/DAPR geometry before mapping."
+    },
+    {
+      "dataset_path": "domains/energy/data/derived/ergon_zone_substation_load_summary_2025-26.csv",
+      "map_candidate": true,
+      "spatial_state": "blocked_spatial_join",
+      "geometry_status": "missing_authoritative_coordinates",
+      "map_layer_id": null,
+      "mapped_poc": null,
+      "join_or_blocker": "Load summary is available but current derivative lacks authoritative substation coordinates. Join to Ergon network/DAPR spatial inventory first."
+    }
+  ]
+}
