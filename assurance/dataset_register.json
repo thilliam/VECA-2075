@@ -417,6 +417,19 @@
       "selection_policy": "Capture the major east-coast port systems that materially affect VECA freight/economic geography: Brisbane, Botany, Kembla, Newcastle, Melbourne and Geelong. Preserve current throughput/capacity separately from rail/intermodal access and future expansion optionality.",
       "completeness_test": "Every row must resolve to primary port/operator sources and distinguish current capability from planned/optional expansion. This is not a census of every east-coast commercial port or berth.",
       "canonical": true
+    },
+    {
+      "path": "domains/digital-connectivity/data/derived/digital_backbone_routes_seed.csv",
+      "domain": "digital-connectivity",
+      "role": "imported_dataset",
+      "assurance_state": "provenance_reconciled",
+      "map_relevance": true,
+      "provenance": "primary carrier/operator network pages, releases and regulator context",
+      "blocker": null,
+      "selection_claim": "selective_east_coast_backbone_routes",
+      "selection_policy": "Capture material digital-backbone routes and network investments that affect VECA east-coast regional connectivity, data-centre geography and resilience. Keep operating terrestrial fibre, planned fibre, network-level reach and domestic subsea diversity as distinct record types.",
+      "completeness_test": "Every row must resolve to a primary operator source and preserve operating/planned status plus the published capacity definition. This is not a complete census of all carriers, metro fibre, NBN access infrastructure or cable landing stations.",
+      "canonical": true
     }
   ]
 }
