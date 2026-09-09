@@ -10,10 +10,10 @@
       "domain": "population",
       "geography": "QLD/NSW/ACT/VIC",
       "source_type": "authoritative_reality",
-      "status": "relevant",
+      "status": "reconciled",
       "priority": "P1",
       "map_relevance": true,
-      "known_gaps": ["Independent ABS FeatureServer code/value reconciliation is automated; status remains relevant until that workflow passes and publishes its manifest."]
+      "known_gaps": ["Independent ABS FeatureServer reconciliation matched all 1,844 SA2 identities and all ERP 2025 values; historical-year and migration-component fields have not all received a second independent field-by-field verification."]
     },
     {
       "source_id": "TRANSPORT-GA-EAST-RAIL",
@@ -22,10 +22,10 @@
       "domain": "transport",
       "geography": "QLD/NSW/ACT/VIC",
       "source_type": "authoritative_reality",
-      "status": "relevant",
+      "status": "reconciled",
       "priority": "P1",
       "map_relevance": true,
-      "known_gaps": ["Independent authoritative OBJECTID reconciliation is automated; status remains relevant until that workflow passes and publishes its manifest.", "Geometry alone does not establish corridor capacity/utilisation."]
+      "known_gaps": ["Independent authoritative OBJECTID inventory matched all 26,808 extracted features with zero missing/extra identities.", "Geometry/attribute field verification is not exhaustive, and geometry alone does not establish corridor capacity/utilisation."]
     },
     {
       "source_id": "TRANSPORT-GA-EAST-MAJOR-ROADS",
@@ -34,10 +34,10 @@
       "domain": "transport",
       "geography": "QLD/NSW/ACT/VIC",
       "source_type": "authoritative_reality",
-      "status": "relevant",
+      "status": "reconciled",
       "priority": "P1",
       "map_relevance": true,
-      "known_gaps": ["Independent authoritative OBJECTID reconciliation is automated; status remains relevant until that workflow passes and publishes its manifest.", "Capacity, congestion and bottleneck evidence remains incomplete."]
+      "known_gaps": ["Independent authoritative OBJECTID inventory matched all 75,581 extracted features with zero missing/extra identities.", "Geometry/attribute field verification is not exhaustive; capacity, congestion and bottleneck evidence remains incomplete."]
     },
     {
       "source_id": "TRANSPORT-BITRE-AIRPORTS",
