@@ -1,0 +1,1036 @@
+{
+  "source_file": "dapr-2025-bsp-zs-lines.xlsx",
+  "sheets": [
+    {
+      "name": "Disclaimer",
+      "dimension": "A1:A8",
+      "xml_row_count": 8,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "DISCLAIMER"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            "Essential Energy is registered as a Distribution Network Service Provider. This Distribution Annual Planning Report 2025 has been prepared and published by Essential Energy under clause 5.12.2 and 5.13.2 of the National Electricity Rules to notify Registered Participants and Interested Parties of the results of the distribution network annual planning review and should only be used for those purposes."
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "This document does not purport to contain all of the information that a prospective investor, participant or potential participant in the National Electricity Market, or any other person or interested parties may require. In preparing this document it is not possible, nor is it intended, for Essential Energy to have regard to the investment objectives, financial situation and particular needs of each person who reads or uses this document."
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "In all cases, anyone proposing to rely on or use the information in this document should independently verify and check the accuracy, completeness, reliability and suitability of that information for their own purposes."
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Accordingly, Essential Energy makes no representations or warranty as to the accuracy, reliability, completeness or suitability for particular purposes of the information in this document. Persons reading or utilising this document acknowledge that Essential Energy and their employees, agents and consultants shall have no liability (including liability to any person by reason of negligence or negligent misstatement) for any statements, opinions, information or matter (expressed or implied) arising out of, contained in or derived from, or for any omissions from, the information in this document, except in so far as liability under any New South Wales and Commonwealth statute cannot be excluded."
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Contact"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Version History",
+      "dimension": "A1:C15",
+      "xml_row_count": 15,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Date",
+            "Version",
+            "Comments"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            45992,
+            "V1",
+            "Initial Release"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            46235,
+            "V2",
+            "Load and Export Forecasts updated for"
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            null,
+            null,
+            "- ZS Trundle "
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            null,
+            null,
+            "- ZS Peak Hill"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            null,
+            null,
+            "- ST Line 898"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ZSSummer",
+      "dimension": "A1:R368",
+      "xml_row_count": 368,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Region",
+            "Substation",
+            "kV",
+            "Transformer Rating (MVA)",
+            null,
+            null,
+            "Transformer Max Nameplate Rating (MVA)",
+            null,
+            null,
+            "Firm Normal Cyclic Rating (MVA)",
+            "Forecast PF",
+            "Forecast (MVA)",
+            null,
+            null,
+            null,
+            null,
+            "Embedded Generation (MW)",
+            "95% Peak Load Exceeded  (Hrs)"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            null,
+            "Tx.1",
+            "Tx.2",
+            "Tx.3",
+            "Tx.1",
+            "Tx.2",
+            "Tx.3",
+            null,
+            null,
+            "25/26",
+            "26/27",
+            "27/28",
+            "28/29",
+            "29/30"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Terranora",
+            "Banora Point",
+            "66/11",
+            "24/30",
+            "24/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            0.999,
+            14.6,
+            14.74,
+            14.94,
+            15.18,
+            15.38,
+            17.04,
+            2.5
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Terranora",
+            "Cudgen 11kV",
+            "66/33/11",
+            "70/40/30",
+            "70/40/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            1,
+            17.35,
+            17.92,
+            18.45,
+            19,
+            19.45,
+            16.84,
+            3.5
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Terranora",
+            "Cudgen 33kV",
+            "66/33/11",
+            "70/40/30",
+            "70/40/30",
+            null,
+            40,
+            40,
+            null,
+            44,
+            1,
+            12.73,
+            12.77,
+            12.82,
+            12.84,
+            12.87,
+            0,
+            2.5
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Terranora",
+            "Hastings Point",
+            "33/11",
+            "15",
+            "15",
+            null,
+            15,
+            15,
+            null,
+            16.5,
+            1,
+            12.19,
+            12.23,
+            12.25,
+            12.26,
+            12.32,
+            18.14,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ZSWinter",
+      "dimension": "A1:R368",
+      "xml_row_count": 368,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Region",
+            "Substation",
+            "kV",
+            "Transformer Rating (MVA)",
+            null,
+            null,
+            "Transformer Max Nameplate Rating (MVA)",
+            null,
+            null,
+            "Firm Normal Cyclic Rating (MVA)",
+            "Forecast PF",
+            "Forecast (MVA)",
+            null,
+            null,
+            null,
+            null,
+            "Embedded Generation (MW)",
+            "95% Peak Load Exceeded  (Hrs)"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            null,
+            "Tx.1",
+            "Tx.2",
+            "Tx.3",
+            "Tx.1",
+            "Tx.2",
+            "Tx.3",
+            null,
+            null,
+            2026,
+            2027,
+            2028,
+            2029,
+            2030
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Terranora",
+            "Banora Point",
+            "66/11",
+            "24/30",
+            "24/30",
+            null,
+            30,
+            30,
+            null,
+            36,
+            0.991,
+            12.04,
+            12.06,
+            12.07,
+            12.09,
+            12.08,
+            17.04,
+            1.5
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Terranora",
+            "Cudgen 11kV",
+            "66/33/11",
+            "70/40/30",
+            "70/40/30",
+            null,
+            30,
+            30,
+            null,
+            36,
+            0.997,
+            14.86,
+            14.98,
+            15.11,
+            15.21,
+            15.31,
+            16.84,
+            5
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Terranora",
+            "Cudgen 33kV",
+            "66/33/11",
+            "70/40/30",
+            "70/40/30",
+            null,
+            40,
+            40,
+            null,
+            48,
+            0.997,
+            11.76,
+            11.77,
+            11.75,
+            11.77,
+            11.79,
+            0,
+            3.5
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Terranora",
+            "Hastings Point",
+            "33/11",
+            "15",
+            "15",
+            null,
+            15,
+            15,
+            null,
+            18,
+            0.997,
+            11.38,
+            11.37,
+            11.36,
+            11.36,
+            11.35,
+            18.14,
+            3.5
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lines",
+      "dimension": "A1:Q542",
+      "xml_row_count": 542,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Supply Area",
+            "Feeder #",
+            "Feeder Voltage kV",
+            "Feeder Origin",
+            "Feeder Destination",
+            "Summer",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "Winter"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "Line Rating",
+            "Line Forecast MVA",
+            null,
+            null,
+            null,
+            null,
+            "Line Rating",
+            "Line Forecast MVA"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "MVA",
+            "25/26",
+            "26/27",
+            "27/28",
+            "28/29",
+            "29/30",
+            "MVA",
+            2026,
+            2027,
+            2028,
+            2029,
+            2030
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Casino",
+            "96L",
+            132,
+            "Transgrid Casino 132kV 96L Tee",
+            "Casino ZS",
+            140,
+            32.15,
+            32.25,
+            32.26,
+            32.33,
+            32.31,
+            157,
+            23.89,
+            24.05,
+            24.21,
+            24.35,
+            24.49
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Casino",
+            6501,
+            66,
+            "Casino ZS",
+            "Rappville Tee",
+            16,
+            0.55,
+            0.55,
+            0.55,
+            0.56,
+            0.56,
+            25,
+            0.44,
+            0.44,
+            0.44,
+            0.45,
+            0.45
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Casino",
+            8401,
+            33,
+            "Casino ZS",
+            "Mallanganee ZS",
+            4,
+            2.58,
+            2.58,
+            2.57,
+            2.56,
+            2.56,
+            6,
+            2.69,
+            2.71,
+            2.72,
+            2.74,
+            2.76
+          ]
+        }
+      ]
+    },
+    {
+      "name": "BSP",
+      "dimension": "A1:N77",
+      "xml_row_count": 77,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Connection Point",
+            "Forecast PF",
+            "Summer Forecast (POE50 MVA)",
+            null,
+            null,
+            null,
+            null,
+            "Forecast PF",
+            "Winter Forecast (POE50 MVA)",
+            null,
+            null,
+            null,
+            null,
+            "Major Embedded Generation (MW)"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            "25/26",
+            "26/27",
+            "27/28",
+            "28/29",
+            "29/30",
+            null,
+            2026,
+            2027,
+            2028,
+            2029,
+            2030
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Albury (Corowa)",
+            0.965,
+            17.17,
+            17.15,
+            17.2,
+            17.23,
+            17.22,
+            0.983,
+            14.2,
+            14.37,
+            14.52,
+            14.66,
+            14.78,
+            30
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Albury (Mulwala)",
+            0.989,
+            13.01,
+            13.03,
+            13.1,
+            13.17,
+            13.24,
+            0.998,
+            11.19,
+            11.27,
+            11.35,
+            11.44,
+            11.5,
+            5
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Albury (Union Rd + Jelbart)",
+            0.998,
+            94.86,
+            96.22,
+            97.51,
+            98.72,
+            100.06,
+            0.996,
+            81.93,
+            82.63,
+            83.3,
+            83.85,
+            84.43,
+            0
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Armidale",
+            0.999,
+            27.01,
+            26.98,
+            26.92,
+            26.89,
+            26.87,
+            1,
+            48.69,
+            49.08,
+            49.42,
+            49.75,
+            50.16,
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ZS Export",
+      "dimension": "A1:R368",
+      "xml_row_count": 368,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Region",
+            "Substation",
+            "kV",
+            "Transformer Rating (MVA)",
+            null,
+            null,
+            "Transformer Max Nameplate Rating (MVA)",
+            null,
+            null,
+            "Firm Normal Cyclic Rating (MVA)",
+            "Forecast PF",
+            "Forecast (POE50 MW)",
+            null,
+            null,
+            null,
+            null,
+            "Embedded Generation (MW)",
+            "95% Peak Load Exceeded  (Hrs)"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            null,
+            "Tx.1",
+            "Tx.2",
+            "Tx.3",
+            "Tx.1",
+            "Tx.2",
+            "Tx.3",
+            null,
+            null,
+            "25/26",
+            "26/27",
+            "27/28",
+            "28/29",
+            "29/30"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Terranora",
+            "Banora Point",
+            "66/11",
+            "24/30",
+            "24/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            -0.999,
+            11.68,
+            12.35,
+            12.98,
+            13.58,
+            14.15,
+            17.04,
+            108
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Terranora",
+            "Cudgen 11kV",
+            "66/33/11",
+            "70/40/30",
+            "70/40/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            -0.97,
+            10.82,
+            11.45,
+            12.04,
+            12.61,
+            13.16,
+            16.84,
+            80
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Terranora",
+            "Cudgen 33kV",
+            "66/33/11",
+            "70/40/30",
+            "70/40/30",
+            null,
+            40,
+            40,
+            null,
+            44,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Terranora",
+            "Hastings Point",
+            "33/11",
+            "15",
+            "15",
+            null,
+            15,
+            15,
+            null,
+            16.5,
+            -0.996,
+            11.67,
+            12.33,
+            12.97,
+            13.57,
+            14.14,
+            18.14,
+            92
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lines Export",
+      "dimension": "A1:K542",
+      "xml_row_count": 542,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Supply Area",
+            "Feeder #",
+            "Feeder Voltage kV",
+            "Feeder Origin",
+            "Feeder Destination"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "Line Rating",
+            "Line Forecast MW"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "Summer MVA",
+            2026,
+            2027,
+            2028,
+            2029,
+            2030
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Casino",
+            "96L",
+            132,
+            "Transgrid Casino 132kV 96L Tee",
+            "Casino ZS",
+            140,
+            12.54,
+            13.22,
+            13.86,
+            14.47,
+            15.05
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Casino",
+            6501,
+            66,
+            "Casino ZS",
+            "Rappville Tee",
+            16,
+            0.43,
+            0.46,
+            0.48,
+            0.5,
+            0.53
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Casino",
+            8401,
+            33,
+            "Casino ZS",
+            "Mallanganee ZS",
+            4,
+            1.43,
+            1.49,
+            1.57,
+            1.63,
+            1.69
+          ]
+        }
+      ]
+    },
+    {
+      "name": "BSP Export",
+      "dimension": "A1:G77",
+      "xml_row_count": 77,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Connection Point",
+            "Forecast PF",
+            "Summer Forecast (POE50 MW)"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            "25/26",
+            "26/27",
+            "27/28",
+            "28/29",
+            "29/30"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Albury (Corowa)",
+            0.355,
+            39.72,
+            39.98,
+            40.23,
+            40.46,
+            40.69
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Albury (Mulwala)",
+            0.58,
+            9.62,
+            9.89,
+            10.15,
+            10.39,
+            10.63
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Albury (Union Rd + Jelbart)",
+            -0.82,
+            41.49,
+            44.17,
+            46.69,
+            49.08,
+            51.36
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Armidale",
+            -0.999,
+            26.19,
+            27.52,
+            28.78,
+            29.98,
+            31.12
+          ]
+        }
+      ]
+    },
+    {
+      "name": "System Limitations",
+      "dimension": "A1:A98",
+      "xml_row_count": 98,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Feeder  - Terranora - MWN3B2 Norco"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            "Feeder  - Lismore - AVE3B2 Alstonville 2"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Feeder  - Lismore - EWE3B1 Brunswick No.1"
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Feeder  - Lismore - MUL3B3 Mullumbimby West"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Feeder  - Lismore - MUL3B3 Mullumbimby West"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Feeder  - Lismore - WBN3B4 Broadwater"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Comments",
+      "dimension": "A1:A61",
+      "xml_row_count": 61,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "A 30MW biomass generator is located at Condong and is connected to the Terranora 110/66kV sub-transmission substation at 66kV via feeders 9504, 9514 and 9502."
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            "A 30MW biomass generator is located at Broadwater and is connected to the Lismore 132/66kV sub-transmission substation at 66kV via feeder 0892."
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "The Nymboida hydro generation has reached end of life so has been decommissioned."
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "The 5MW hydro generation at Oaky is presently decommissioned after failure of the dam wall."
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "A 5MW solar generator is connected to Galloway St zone substation on the 11kV network."
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "A 2.7MW solar generator is connected to Madgwick Drive zone substation on the 11kV network."
+          ]
+        }
+      ]
+    }
+  ]
+}

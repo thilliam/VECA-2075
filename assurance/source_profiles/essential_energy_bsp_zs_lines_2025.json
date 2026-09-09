@@ -1,0 +1,4742 @@
+{
+  "source_file": "dapr-2025-bsp-zs-lines.xlsx",
+  "sheets": [
+    {
+      "name": "Disclaimer",
+      "path": "xl/worksheets/sheet1.xml",
+      "dimension": "A1:A8",
+      "xml_row_count": 8,
+      "max_observed_columns": 1,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "DISCLAIMER"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            "Essential Energy is registered as a Distribution Network Service Provider. This Distribution Annual Planning Report 2025 has been prepared and published by Essential Energy under clause 5.12.2 and 5.13.2 of the National Electricity Rules to notify Registered Participants and Interested Parties of the results of the distribution network annual planning review and should only be used for those purposes."
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "This document does not purport to contain all of the information that a prospective investor, participant or potential participant in the National Electricity Market, or any other person or interested parties may require. In preparing this document it is not possible, nor is it intended, for Essential Energy to have regard to the investment objectives, financial situation and particular needs of each person who reads or uses this document."
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "In all cases, anyone proposing to rely on or use the information in this document should independently verify and check the accuracy, completeness, reliability and suitability of that information for their own purposes."
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Accordingly, Essential Energy makes no representations or warranty as to the accuracy, reliability, completeness or suitability for particular purposes of the information in this document. Persons reading or utilising this document acknowledge that Essential Energy and their employees, agents and consultants shall have no liability (including liability to any person by reason of negligence or negligent misstatement) for any statements, opinions, information or matter (expressed or implied) arising out of, contained in or derived from, or for any omissions from, the information in this document, except in so far as liability under any New South Wales and Commonwealth statute cannot be excluded."
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Contact"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "For all enquiries regarding the Distribution Annual Planning Report 2025 and for making written submissions contact:"
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "Essential Energy DM Coordinator PO Box 5730 Port Macquarie NSW 2444 Email: dmcoordinator@essentialenergy.com.au"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Version History",
+      "path": "xl/worksheets/sheet2.xml",
+      "dimension": "A1:C15",
+      "xml_row_count": 15,
+      "max_observed_columns": 3,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Date",
+            "Version",
+            "Comments"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            45992,
+            "V1",
+            "Initial Release"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            46235,
+            "V2",
+            "Load and Export Forecasts updated for"
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            null,
+            null,
+            "- ZS Trundle "
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            null,
+            null,
+            "- ZS Peak Hill"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            null,
+            null,
+            "- ST Line 898"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            null,
+            null,
+            "- ST Line 899"
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            null,
+            null,
+            "- ST Line 89G"
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            null,
+            null,
+            "- ST Line 89L"
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            null,
+            null,
+            "Transformer Rating updated"
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            null,
+            null,
+            "- Adaminaby 11kV"
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            null,
+            null,
+            "Line Rating updated"
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            null,
+            null,
+            "- 99U"
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            null,
+            null,
+            "- 9J6"
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            null,
+            null,
+            "Transformer maximum rating columns added"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ZSSummer",
+      "path": "xl/worksheets/sheet3.xml",
+      "dimension": "A1:R368",
+      "xml_row_count": 368,
+      "max_observed_columns": 18,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Region",
+            "Substation",
+            "kV",
+            "Transformer Rating (MVA)",
+            null,
+            null,
+            "Transformer Max Nameplate Rating (MVA)",
+            null,
+            null,
+            "Firm Normal Cyclic Rating (MVA)",
+            "Forecast PF",
+            "Forecast (MVA)",
+            null,
+            null,
+            null,
+            null,
+            "Embedded Generation (MW)",
+            "95% Peak Load Exceeded  (Hrs)"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            null,
+            "Tx.1",
+            "Tx.2",
+            "Tx.3",
+            "Tx.1",
+            "Tx.2",
+            "Tx.3",
+            null,
+            null,
+            "25/26",
+            "26/27",
+            "27/28",
+            "28/29",
+            "29/30"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Terranora",
+            "Banora Point",
+            "66/11",
+            "24/30",
+            "24/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            0.999,
+            14.6,
+            14.74,
+            14.94,
+            15.18,
+            15.38,
+            17.04,
+            2.5
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Terranora",
+            "Cudgen 11kV",
+            "66/33/11",
+            "70/40/30",
+            "70/40/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            1,
+            17.35,
+            17.92,
+            18.45,
+            19,
+            19.45,
+            16.84,
+            3.5
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Terranora",
+            "Cudgen 33kV",
+            "66/33/11",
+            "70/40/30",
+            "70/40/30",
+            null,
+            40,
+            40,
+            null,
+            44,
+            1,
+            12.73,
+            12.77,
+            12.82,
+            12.84,
+            12.87,
+            0,
+            2.5
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Terranora",
+            "Hastings Point",
+            "33/11",
+            "15",
+            "15",
+            null,
+            15,
+            15,
+            null,
+            16.5,
+            1,
+            12.19,
+            12.23,
+            12.25,
+            12.26,
+            12.32,
+            18.14,
+            3
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "Terranora",
+            "Murwillumbah",
+            "66/11",
+            "15/20/25",
+            "15/20/25",
+            null,
+            25,
+            25,
+            null,
+            27.5,
+            0.995,
+            21.41,
+            21.71,
+            22.08,
+            22.39,
+            22.73,
+            24.11,
+            2
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "Terranora",
+            "Terranora 110/66kV",
+            "110/66",
+            "70/100",
+            "70/100",
+            "70/100",
+            100,
+            100,
+            100,
+            220,
+            0.998,
+            97.37,
+            98.62,
+            99.65,
+            100.85,
+            102.16,
+            0,
+            2.5
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            "Terranora",
+            "Terranora 11kV",
+            "66/11",
+            "24/30",
+            "24/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            1,
+            7.91,
+            7.98,
+            8.03,
+            8.1,
+            8.17,
+            11.44,
+            2
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            "Terranora",
+            "Tweed Heads",
+            "66/11",
+            "25",
+            "25",
+            null,
+            25,
+            25,
+            null,
+            27.5,
+            0.997,
+            15.4,
+            15.4,
+            15.41,
+            15.4,
+            15.38,
+            5.28,
+            3
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            "Terranora",
+            "Tweed Heads South",
+            "66/11",
+            "20/30",
+            "20/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            1,
+            15.53,
+            15.64,
+            15.78,
+            15.92,
+            16.02,
+            17.15,
+            3.5
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            "Lismore",
+            "Alstonville",
+            "66/11",
+            "20",
+            "16/20",
+            null,
+            20,
+            20,
+            null,
+            22,
+            0.999,
+            11.62,
+            11.79,
+            11.9,
+            12.02,
+            12.17,
+            16.75,
+            1.5
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            "Lismore",
+            "Ballina",
+            "66/11",
+            "24/30",
+            "24/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            0.982,
+            27.47,
+            27.82,
+            27.97,
+            28.27,
+            28.55,
+            30.45,
+            1.5
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            "Lismore",
+            "Ballina 132kV",
+            "132/66",
+            "35/45/60",
+            null,
+            null,
+            60,
+            null,
+            null,
+            0,
+            0.947,
+            20.18,
+            20.54,
+            20.76,
+            21.06,
+            21.3,
+            0,
+            0.5
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            "Lismore",
+            "Dunoon",
+            "132/11",
+            "10",
+            "10",
+            null,
+            10,
+            10,
+            null,
+            11,
+            0.991,
+            6.03,
+            6.03,
+            6.03,
+            6.04,
+            6.01,
+            8.61,
+            2
+          ]
+        },
+        {
+          "row": 16,
+          "values": [
+            "Lismore",
+            "Ewingsdale",
+            "132/11",
+            "30/45",
+            "30/45",
+            null,
+            45,
+            45,
+            null,
+            49.5,
+            0.999,
+            18.81,
+            19.06,
+            19.27,
+            19.5,
+            19.67,
+            19.09,
+            1
+          ]
+        },
+        {
+          "row": 17,
+          "values": [
+            "Lismore",
+            "Kyogle",
+            "66/11",
+            "8/10",
+            "8/10",
+            null,
+            10,
+            10,
+            null,
+            11,
+            0.991,
+            7.45,
+            7.36,
+            7.27,
+            7.18,
+            7.13,
+            7.6,
+            3
+          ]
+        },
+        {
+          "row": 18,
+          "values": [
+            "Lismore",
+            "Lennox Head",
+            "132/11",
+            "16",
+            "16",
+            null,
+            16,
+            16,
+            null,
+            17.6,
+            0.993,
+            5.95,
+            6,
+            6.05,
+            6.09,
+            6.14,
+            8.71,
+            1.5
+          ]
+        },
+        {
+          "row": 19,
+          "values": [
+            "Lismore",
+            "Lismore 132/66kV",
+            "132/66",
+            "80/120",
+            "80/120",
+            "80/120",
+            120,
+            120,
+            120,
+            264,
+            0.983,
+            93.63,
+            94.55,
+            95.2,
+            95.75,
+            96.4,
+            0,
+            1
+          ]
+        },
+        {
+          "row": 20,
+          "values": [
+            "Lismore",
+            "Lismore East",
+            "66/11",
+            "15/19/23",
+            "15/20/25",
+            null,
+            23,
+            25,
+            null,
+            25.3,
+            0.998,
+            13.47,
+            13.4,
+            13.38,
+            13.35,
+            13.31,
+            17.07,
+            1.5
+          ]
+        },
+        {
+          "row": 21,
+          "values": [
+            "Lismore",
+            "Lismore South",
+            "66/11",
+            "15/19/25",
+            "15/19/23",
+            "20/25",
+            25,
+            23,
+            25,
+            52.8,
+            0.963,
+            7.47,
+            7.56,
+            7.54,
+            7.61,
+            7.68,
+            7.88,
+            4.5
+          ]
+        },
+        {
+          "row": 22,
+          "values": [
+            "Lismore",
+            "Lismore Uni",
+            "66/11",
+            "20/30",
+            "20/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            0.997,
+            22.08,
+            22.34,
+            22.63,
+            22.85,
+            23.04,
+            16.2,
+            4
+          ]
+        },
+        {
+          "row": 23,
+          "values": [
+            "Lismore",
+            "Mullumbimby",
+            "132/11",
+            "16",
+            "10",
+            null,
+            16,
+            10,
+            null,
+            11,
+            0.998,
+            7.98,
+            7.99,
+            8,
+            8.02,
+            8.05,
+            12.34,
+            2.5
+          ]
+        },
+        {
+          "row": 24,
+          "values": [
+            "Lismore",
+            "Suffolk Park",
+            "132/11",
+            "30",
+            null,
+            null,
+            30,
+            null,
+            null,
+            0,
+            1,
+            11.17,
+            11.41,
+            11.65,
+            11.91,
+            12.16,
+            13.8,
+            2
+          ]
+        },
+        {
+          "row": 25,
+          "values": [
+            "Lismore",
+            "Woodburn",
+            "66/11",
+            "8/10",
+            "8/10",
+            null,
+            10,
+            10,
+            null,
+            11,
+            0.999,
+            7.23,
+            7.28,
+            7.34,
+            7.37,
+            7.4,
+            8.14,
+            2
+          ]
+        },
+        {
+          "row": 26,
+          "values": [
+            "Casino",
+            "Bonalbo",
+            "33/11",
+            "3",
+            "2.5",
+            null,
+            3,
+            2.5,
+            null,
+            2.75,
+            0.914,
+            0.87,
+            0.87,
+            0.87,
+            0.87,
+            0.86,
+            0.97,
+            7
+          ]
+        },
+        {
+          "row": 27,
+          "values": [
+            "Casino",
+            "Casino 132/66kV",
+            "132/66",
+            "35/45/60",
+            null,
+            null,
+            60,
+            null,
+            null,
+            0,
+            0.991,
+            33.75,
+            33.68,
+            33.63,
+            33.63,
+            33.63,
+            0,
+            1
+          ]
+        },
+        {
+          "row": 28,
+          "values": [
+            "Casino",
+            "Casino 66/11kV",
+            "66/11",
+            "20/30",
+            "20/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            0.995,
+            25.66,
+            25.78,
+            25.87,
+            25.92,
+            26,
+            18.44,
+            3
+          ]
+        },
+        {
+          "row": 29,
+          "values": [
+            "Casino",
+            "Casino 66/33kV",
+            "66/33",
+            "8",
+            "3.5",
+            null,
+            8,
+            3.5,
+            null,
+            3.85,
+            0.996,
+            3.16,
+            3.13,
+            3.11,
+            3.08,
+            3.06,
+            0,
+            4.5
+          ]
+        },
+        {
+          "row": 30,
+          "values": [
+            "Casino",
+            "Mallanganee",
+            "33/11",
+            "5/8",
+            "2.5",
+            null,
+            8,
+            2.5,
+            null,
+            2.75,
+            1,
+            1.22,
+            1.21,
+            1.21,
+            1.2,
+            1.2,
+            1.02,
+            11.5
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ZSWinter",
+      "path": "xl/worksheets/sheet4.xml",
+      "dimension": "A1:R368",
+      "xml_row_count": 368,
+      "max_observed_columns": 18,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Region",
+            "Substation",
+            "kV",
+            "Transformer Rating (MVA)",
+            null,
+            null,
+            "Transformer Max Nameplate Rating (MVA)",
+            null,
+            null,
+            "Firm Normal Cyclic Rating (MVA)",
+            "Forecast PF",
+            "Forecast (MVA)",
+            null,
+            null,
+            null,
+            null,
+            "Embedded Generation (MW)",
+            "95% Peak Load Exceeded  (Hrs)"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            null,
+            "Tx.1",
+            "Tx.2",
+            "Tx.3",
+            "Tx.1",
+            "Tx.2",
+            "Tx.3",
+            null,
+            null,
+            2026,
+            2027,
+            2028,
+            2029,
+            2030
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Terranora",
+            "Banora Point",
+            "66/11",
+            "24/30",
+            "24/30",
+            null,
+            30,
+            30,
+            null,
+            36,
+            0.991,
+            12.04,
+            12.06,
+            12.07,
+            12.09,
+            12.08,
+            17.04,
+            1.5
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Terranora",
+            "Cudgen 11kV",
+            "66/33/11",
+            "70/40/30",
+            "70/40/30",
+            null,
+            30,
+            30,
+            null,
+            36,
+            0.997,
+            14.86,
+            14.98,
+            15.11,
+            15.21,
+            15.31,
+            16.84,
+            5
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Terranora",
+            "Cudgen 33kV",
+            "66/33/11",
+            "70/40/30",
+            "70/40/30",
+            null,
+            40,
+            40,
+            null,
+            48,
+            0.997,
+            11.76,
+            11.77,
+            11.75,
+            11.77,
+            11.79,
+            0,
+            3.5
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Terranora",
+            "Hastings Point",
+            "33/11",
+            "15",
+            "15",
+            null,
+            15,
+            15,
+            null,
+            18,
+            0.997,
+            11.38,
+            11.37,
+            11.36,
+            11.36,
+            11.35,
+            18.14,
+            3.5
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "Terranora",
+            "Murwillumbah",
+            "66/11",
+            "15/20/25",
+            "15/20/25",
+            null,
+            25,
+            25,
+            null,
+            30,
+            1,
+            17.56,
+            17.5,
+            17.43,
+            17.38,
+            17.31,
+            24.11,
+            11.5
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "Terranora",
+            "Terranora 110/66kV",
+            "110/66",
+            "70/100",
+            "70/100",
+            "70/100",
+            100,
+            100,
+            100,
+            240,
+            0.999,
+            80.71,
+            80.79,
+            80.81,
+            80.8,
+            80.77,
+            0,
+            3.5
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            "Terranora",
+            "Terranora 11kV",
+            "66/11",
+            "24/30",
+            "24/30",
+            null,
+            30,
+            30,
+            null,
+            36,
+            0.992,
+            6.38,
+            6.42,
+            6.46,
+            6.5,
+            6.56,
+            11.44,
+            2
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            "Terranora",
+            "Tweed Heads",
+            "66/11",
+            "25",
+            "25",
+            null,
+            25,
+            25,
+            null,
+            30,
+            1,
+            11.56,
+            11.55,
+            11.55,
+            11.56,
+            11.55,
+            5.28,
+            3
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            "Terranora",
+            "Tweed Heads South",
+            "66/11",
+            "20/30",
+            "20/30",
+            null,
+            30,
+            30,
+            null,
+            36,
+            1,
+            13.24,
+            13.25,
+            13.26,
+            13.25,
+            13.26,
+            17.15,
+            2
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            "Lismore",
+            "Alstonville",
+            "66/11",
+            "20",
+            "16/20",
+            null,
+            20,
+            20,
+            null,
+            24,
+            1,
+            11.63,
+            11.62,
+            11.62,
+            11.63,
+            11.62,
+            16.75,
+            5
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            "Lismore",
+            "Ballina",
+            "66/11",
+            "24/30",
+            "24/30",
+            null,
+            30,
+            30,
+            null,
+            36,
+            0.998,
+            25.27,
+            25.24,
+            25.2,
+            25.18,
+            25.14,
+            30.45,
+            4
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            "Lismore",
+            "Ballina 132kV",
+            "132/66",
+            "35/45/60",
+            null,
+            null,
+            60,
+            null,
+            null,
+            0,
+            0.995,
+            20.71,
+            20.88,
+            21.05,
+            21.19,
+            21.35,
+            0,
+            5
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            "Lismore",
+            "Dunoon",
+            "132/11",
+            "10",
+            "10",
+            null,
+            10,
+            10,
+            null,
+            12,
+            0.994,
+            6.52,
+            6.53,
+            6.55,
+            6.56,
+            6.57,
+            8.61,
+            4
+          ]
+        },
+        {
+          "row": 16,
+          "values": [
+            "Lismore",
+            "Ewingsdale",
+            "132/11",
+            "30/45",
+            "30/45",
+            null,
+            45,
+            45,
+            null,
+            54,
+            0.999,
+            18.4,
+            18.48,
+            18.56,
+            18.63,
+            18.73,
+            19.09,
+            8
+          ]
+        },
+        {
+          "row": 17,
+          "values": [
+            "Lismore",
+            "Kyogle",
+            "66/11",
+            "8/10",
+            "8/10",
+            null,
+            10,
+            10,
+            null,
+            12,
+            1,
+            6.81,
+            6.84,
+            6.88,
+            6.9,
+            6.93,
+            7.6,
+            7.5
+          ]
+        },
+        {
+          "row": 18,
+          "values": [
+            "Lismore",
+            "Lennox Head",
+            "132/11",
+            "16",
+            "16",
+            null,
+            16,
+            16,
+            null,
+            19.2,
+            0.988,
+            6.67,
+            6.69,
+            6.69,
+            6.69,
+            6.71,
+            8.71,
+            3
+          ]
+        },
+        {
+          "row": 19,
+          "values": [
+            "Lismore",
+            "Lismore 132/66kV",
+            "132/66",
+            "80/120",
+            "80/120",
+            "80/120",
+            120,
+            120,
+            120,
+            288,
+            1,
+            91.86,
+            92.35,
+            92.83,
+            93.28,
+            93.55,
+            0,
+            1
+          ]
+        },
+        {
+          "row": 20,
+          "values": [
+            "Lismore",
+            "Lismore East",
+            "66/11",
+            "15/19/23",
+            "15/20/25",
+            null,
+            23,
+            25,
+            null,
+            27.6,
+            1,
+            12.39,
+            12.55,
+            12.67,
+            12.79,
+            12.91,
+            17.07,
+            5.5
+          ]
+        },
+        {
+          "row": 21,
+          "values": [
+            "Lismore",
+            "Lismore South",
+            "66/11",
+            "15/19/25",
+            "15/19/23",
+            "20/25",
+            25,
+            23,
+            25,
+            57.6,
+            0.998,
+            6.89,
+            6.89,
+            6.88,
+            6.88,
+            6.88,
+            7.88,
+            7.5
+          ]
+        },
+        {
+          "row": 22,
+          "values": [
+            "Lismore",
+            "Lismore Uni",
+            "66/11",
+            "20/30",
+            "20/30",
+            null,
+            30,
+            30,
+            null,
+            36,
+            1,
+            19.18,
+            19.53,
+            19.87,
+            20.17,
+            20.45,
+            16.2,
+            12.5
+          ]
+        },
+        {
+          "row": 23,
+          "values": [
+            "Lismore",
+            "Mullumbimby",
+            "132/11",
+            "16",
+            "10",
+            null,
+            16,
+            10,
+            null,
+            12,
+            0.999,
+            11.58,
+            11.82,
+            12.02,
+            12.2,
+            12.35,
+            12.34,
+            2.5
+          ]
+        },
+        {
+          "row": 24,
+          "values": [
+            "Lismore",
+            "Suffolk Park",
+            "132/11",
+            "30",
+            null,
+            null,
+            30,
+            null,
+            null,
+            0,
+            0.999,
+            12.14,
+            12.1,
+            12.06,
+            12.06,
+            12.01,
+            13.8,
+            8
+          ]
+        },
+        {
+          "row": 25,
+          "values": [
+            "Lismore",
+            "Woodburn",
+            "66/11",
+            "8/10",
+            "8/10",
+            null,
+            10,
+            10,
+            null,
+            12,
+            0.999,
+            7.11,
+            7.18,
+            7.24,
+            7.3,
+            7.34,
+            8.14,
+            4
+          ]
+        },
+        {
+          "row": 26,
+          "values": [
+            "Casino",
+            "Bonalbo",
+            "33/11",
+            "3",
+            "2.5",
+            null,
+            3,
+            2.5,
+            null,
+            3,
+            0.901,
+            0.82,
+            0.82,
+            0.82,
+            0.83,
+            0.83,
+            0.97,
+            0.5
+          ]
+        },
+        {
+          "row": 27,
+          "values": [
+            "Casino",
+            "Casino 132/66kV",
+            "132/66",
+            "35/45/60",
+            null,
+            null,
+            60,
+            null,
+            null,
+            0,
+            0.998,
+            23.38,
+            23.57,
+            23.72,
+            23.86,
+            23.99,
+            0,
+            8
+          ]
+        },
+        {
+          "row": 28,
+          "values": [
+            "Casino",
+            "Casino 66/11kV",
+            "66/11",
+            "20/30",
+            "20/30",
+            null,
+            30,
+            30,
+            null,
+            36,
+            0.998,
+            19.61,
+            19.71,
+            19.76,
+            19.83,
+            19.91,
+            18.44,
+            9
+          ]
+        },
+        {
+          "row": 29,
+          "values": [
+            "Casino",
+            "Casino 66/33kV",
+            "66/33",
+            "8",
+            "3.5",
+            null,
+            8,
+            3.5,
+            null,
+            4.2,
+            1,
+            3.26,
+            3.28,
+            3.31,
+            3.33,
+            3.35,
+            0,
+            4
+          ]
+        },
+        {
+          "row": 30,
+          "values": [
+            "Casino",
+            "Mallanganee",
+            "33/11",
+            "5/8",
+            "2.5",
+            null,
+            8,
+            2.5,
+            null,
+            3,
+            0.997,
+            1.3,
+            1.32,
+            1.33,
+            1.34,
+            1.34,
+            1.02,
+            6
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lines",
+      "path": "xl/worksheets/sheet5.xml",
+      "dimension": "A1:Q542",
+      "xml_row_count": 542,
+      "max_observed_columns": 17,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Supply Area",
+            "Feeder #",
+            "Feeder Voltage kV",
+            "Feeder Origin",
+            "Feeder Destination",
+            "Summer",
+            null,
+            null,
+            null,
+            null,
+            null,
+            "Winter"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "Line Rating",
+            "Line Forecast MVA",
+            null,
+            null,
+            null,
+            null,
+            "Line Rating",
+            "Line Forecast MVA"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "MVA",
+            "25/26",
+            "26/27",
+            "27/28",
+            "28/29",
+            "29/30",
+            "MVA",
+            2026,
+            2027,
+            2028,
+            2029,
+            2030
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Casino",
+            "96L",
+            132,
+            "Transgrid Casino 132kV 96L Tee",
+            "Casino ZS",
+            140,
+            32.15,
+            32.25,
+            32.26,
+            32.33,
+            32.31,
+            157,
+            23.89,
+            24.05,
+            24.21,
+            24.35,
+            24.49
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Casino",
+            6501,
+            66,
+            "Casino ZS",
+            "Rappville Tee",
+            16,
+            0.55,
+            0.55,
+            0.55,
+            0.56,
+            0.56,
+            25,
+            0.44,
+            0.44,
+            0.44,
+            0.45,
+            0.45
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Casino",
+            8401,
+            33,
+            "Casino ZS",
+            "Mallanganee ZS",
+            4,
+            2.58,
+            2.58,
+            2.57,
+            2.56,
+            2.56,
+            6,
+            2.69,
+            2.71,
+            2.72,
+            2.74,
+            2.76
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "Casino",
+            8402,
+            33,
+            "Mallanganee ZS",
+            "Bonalbo ZS",
+            4,
+            1.68,
+            1.68,
+            1.67,
+            1.67,
+            1.67,
+            6,
+            1.71,
+            1.72,
+            1.73,
+            1.74,
+            1.74
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "Casino",
+            8403,
+            33,
+            "Bonalbo ZS",
+            "Urbenville ZS",
+            4,
+            0.83,
+            0.83,
+            0.83,
+            0.83,
+            0.83,
+            7,
+            0.95,
+            0.95,
+            0.96,
+            0.97,
+            0.97
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            "Coffs Harbour",
+            "96C/2(D)",
+            132,
+            "TransGrid 96C Armidale Coffs Harbour Dorrigo Tee",
+            "Dorrigo ZS",
+            41,
+            1.99,
+            1.95,
+            1.92,
+            1.89,
+            1.86,
+            76,
+            2.73,
+            2.74,
+            2.75,
+            2.77,
+            2.78
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            "Coffs Harbour",
+            702,
+            66,
+            "Boambee South 132/66kV STS",
+            "Sawtell ZS",
+            61,
+            9.59,
+            9.78,
+            9.95,
+            10.15,
+            10.33,
+            68,
+            10.5,
+            10.53,
+            10.56,
+            10.55,
+            10.6
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            "Coffs Harbour",
+            705,
+            66,
+            "TransGrid Coffs Harbour 132/66 kV STS",
+            "South Coffs ZS",
+            52,
+            15.73,
+            15.72,
+            15.71,
+            15.71,
+            15.72,
+            58,
+            16.07,
+            16.15,
+            16.25,
+            16.34,
+            16.43
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            "Coffs Harbour",
+            706,
+            66,
+            "TransGrid Coffs Harbour 132/66 kV STS",
+            "South Coffs ZS",
+            52,
+            17.92,
+            17.91,
+            17.89,
+            17.89,
+            17.9,
+            58,
+            18.3,
+            18.39,
+            18.5,
+            18.61,
+            18.71
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            "Coffs Harbour",
+            7501,
+            66,
+            "Nana Glen ZS",
+            "Woolgoolga ZS",
+            29,
+            5.87,
+            5.86,
+            5.86,
+            5.86,
+            5.86,
+            33,
+            5.99,
+            6.02,
+            6.06,
+            6.1,
+            6.13
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            "Coffs Harbour",
+            7502,
+            66,
+            "Nana Glen ZS",
+            "Ulong Tee",
+            9,
+            0.34,
+            0.34,
+            0.34,
+            0.34,
+            0.34,
+            15,
+            0.5,
+            0.51,
+            0.51,
+            0.51,
+            0.52
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            "Coffs Harbour",
+            "7502/1",
+            66,
+            "Ulong Tee",
+            "Ulong ZS",
+            9,
+            0.34,
+            0.34,
+            0.34,
+            0.34,
+            0.34,
+            15,
+            0.5,
+            0.51,
+            0.51,
+            0.51,
+            0.52
+          ]
+        },
+        {
+          "row": 16,
+          "values": [
+            "Coffs Harbour",
+            "7502/2",
+            66,
+            "Ulong Tee",
+            "Dorrigo ZS",
+            9,
+            0,
+            0,
+            0,
+            0,
+            0,
+            15,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "row": 17,
+          "values": [
+            "Coffs Harbour",
+            7509,
+            66,
+            "Moonee ZS",
+            "Woolgoolga ZS",
+            30,
+            11.23,
+            11.44,
+            11.64,
+            11.86,
+            12.05,
+            36,
+            13.21,
+            13.33,
+            13.41,
+            13.5,
+            13.59
+          ]
+        },
+        {
+          "row": 18,
+          "values": [
+            "Coffs Harbour",
+            7510,
+            66,
+            "North Coffs ZS",
+            "Moonee ZS",
+            61,
+            7.62,
+            7.61,
+            7.61,
+            7.6,
+            7.61,
+            68,
+            7.78,
+            7.82,
+            7.87,
+            7.91,
+            7.96
+          ]
+        },
+        {
+          "row": 19,
+          "values": [
+            "Coffs Harbour",
+            "703:NGN",
+            66,
+            "TransGrid Coffs Harbour 132/66 kV STS",
+            "Nana Glen ZS",
+            62,
+            9.61,
+            9.61,
+            9.6,
+            9.6,
+            9.61,
+            69,
+            9.82,
+            9.87,
+            9.93,
+            9.99,
+            10.04
+          ]
+        },
+        {
+          "row": 20,
+          "values": [
+            "Coffs Harbour",
+            "711:CHN",
+            66,
+            "TransGrid Coffs Harbour 132/66 kV STS",
+            "North Coffs ZS",
+            62,
+            19.35,
+            19.34,
+            19.33,
+            19.32,
+            19.34,
+            69,
+            19.77,
+            19.87,
+            19.99,
+            20.1,
+            20.21
+          ]
+        },
+        {
+          "row": 21,
+          "values": [
+            "Coffs Harbour",
+            "87C",
+            66,
+            "North Coffs ZS",
+            "South Coffs ZS",
+            68,
+            12.11,
+            12.1,
+            12.1,
+            12.09,
+            12.1,
+            68,
+            12.37,
+            12.43,
+            12.51,
+            12.58,
+            12.65
+          ]
+        },
+        {
+          "row": 22,
+          "values": [
+            "Grafton",
+            825,
+            66,
+            "TransGrid Koolkhan 132/66kV STS",
+            "Koolkhan ZS",
+            62,
+            20.21,
+            20.3,
+            20.42,
+            20.51,
+            20.56,
+            69,
+            18.09,
+            18.13,
+            18.16,
+            18.19,
+            18.23
+          ]
+        },
+        {
+          "row": 23,
+          "values": [
+            "Grafton",
+            826,
+            66,
+            "TransGrid Koolkhan 132/66kV STS",
+            "Grafton North ZS",
+            61,
+            16.49,
+            16.56,
+            16.67,
+            16.73,
+            16.77,
+            68,
+            14.4,
+            14.43,
+            14.45,
+            14.48,
+            14.51
+          ]
+        },
+        {
+          "row": 24,
+          "values": [
+            "Grafton",
+            6503,
+            66,
+            "Grafton North ZS",
+            "South Grafton ZS",
+            24,
+            10.77,
+            10.82,
+            10.89,
+            10.93,
+            10.96,
+            25,
+            8.42,
+            8.44,
+            8.45,
+            8.47,
+            8.49
+          ]
+        },
+        {
+          "row": 25,
+          "values": [
+            "Grafton",
+            6504,
+            66,
+            "Five Mile Sw Stn",
+            "South Grafton ZS",
+            61,
+            4.66,
+            4.68,
+            4.71,
+            4.73,
+            4.74,
+            68,
+            3.64,
+            3.65,
+            3.65,
+            3.66,
+            3.67
+          ]
+        },
+        {
+          "row": 26,
+          "values": [
+            "Grafton",
+            6505,
+            66,
+            "Koolkhan SS",
+            "Grafton ZS",
+            52,
+            17.93,
+            18.01,
+            18.12,
+            18.2,
+            18.24,
+            58,
+            15.54,
+            15.57,
+            15.6,
+            15.63,
+            15.66
+          ]
+        },
+        {
+          "row": 27,
+          "values": [
+            "Grafton",
+            6506,
+            66,
+            "Shannon Creek ZS",
+            "Nymboida ZS",
+            14,
+            0.28,
+            0.28,
+            0.28,
+            0.28,
+            0.28,
+            21,
+            0.42,
+            0.42,
+            0.42,
+            0.42,
+            0.42
+          ]
+        },
+        {
+          "row": 28,
+          "values": [
+            "Grafton",
+            6508,
+            66,
+            "Maclean ZS",
+            "Yamba ZS",
+            28,
+            11.2,
+            11.28,
+            11.39,
+            11.46,
+            11.56,
+            32,
+            11.55,
+            11.61,
+            11.66,
+            11.75,
+            11.81
+          ]
+        },
+        {
+          "row": 29,
+          "values": [
+            "Grafton",
+            6509,
+            66,
+            "Shannon Creek ZS",
+            "Five Mile Sw Stn",
+            14,
+            1.28,
+            1.28,
+            1.29,
+            1.3,
+            1.3,
+            21,
+            1.2,
+            1.2,
+            1.2,
+            1.2,
+            1.2
+          ]
+        },
+        {
+          "row": 30,
+          "values": [
+            "Grafton",
+            6510,
+            66,
+            "Grafton North ZS",
+            "Five Mile Sw Stn",
+            28,
+            5.83,
+            5.85,
+            5.89,
+            5.91,
+            5.93,
+            34,
+            4.52,
+            4.53,
+            4.54,
+            4.55,
+            4.56
+          ]
+        }
+      ]
+    },
+    {
+      "name": "BSP",
+      "path": "xl/worksheets/sheet6.xml",
+      "dimension": "A1:N77",
+      "xml_row_count": 77,
+      "max_observed_columns": 14,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Connection Point",
+            "Forecast PF",
+            "Summer Forecast (POE50 MVA)",
+            null,
+            null,
+            null,
+            null,
+            "Forecast PF",
+            "Winter Forecast (POE50 MVA)",
+            null,
+            null,
+            null,
+            null,
+            "Major Embedded Generation (MW)"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            "25/26",
+            "26/27",
+            "27/28",
+            "28/29",
+            "29/30",
+            null,
+            2026,
+            2027,
+            2028,
+            2029,
+            2030
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Albury (Corowa)",
+            0.965,
+            17.17,
+            17.15,
+            17.2,
+            17.23,
+            17.22,
+            0.983,
+            14.2,
+            14.37,
+            14.52,
+            14.66,
+            14.78,
+            30
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Albury (Mulwala)",
+            0.989,
+            13.01,
+            13.03,
+            13.1,
+            13.17,
+            13.24,
+            0.998,
+            11.19,
+            11.27,
+            11.35,
+            11.44,
+            11.5,
+            5
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Albury (Union Rd + Jelbart)",
+            0.998,
+            94.86,
+            96.22,
+            97.51,
+            98.72,
+            100.06,
+            0.996,
+            81.93,
+            82.63,
+            83.3,
+            83.85,
+            84.43,
+            0
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Armidale",
+            0.999,
+            27.01,
+            26.98,
+            26.92,
+            26.89,
+            26.87,
+            1,
+            48.69,
+            49.08,
+            49.42,
+            49.75,
+            50.16,
+            10
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "Balranald",
+            0.996,
+            3.99,
+            3.99,
+            3.99,
+            4,
+            4,
+            0.935,
+            3.35,
+            3.42,
+            3.48,
+            3.54,
+            3.59,
+            0
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "Beryl",
+            0.969,
+            78.62,
+            79.11,
+            79.48,
+            80.08,
+            80.55,
+            0.983,
+            80.17,
+            80.13,
+            80.16,
+            80.15,
+            80.09,
+            87
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            "Boambee South",
+            0.999,
+            17.61,
+            17.58,
+            17.63,
+            17.66,
+            17.61,
+            0.996,
+            19.22,
+            19.29,
+            19.39,
+            19.46,
+            19.51,
+            0
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            "Broken Hill 22kV",
+            0.996,
+            37.39,
+            38.06,
+            38.22,
+            38.39,
+            38.58,
+            1,
+            34.01,
+            35.09,
+            35.08,
+            35.08,
+            35.02,
+            50
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            "Casino",
+            0.98,
+            34.2,
+            34.31,
+            34.32,
+            34.4,
+            34.38,
+            0.979,
+            23.89,
+            24.05,
+            24.21,
+            24.35,
+            24.49,
+            0
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            "Coffs Harbour",
+            0.979,
+            62.43,
+            62.39,
+            62.35,
+            62.33,
+            62.38,
+            0.982,
+            63.76,
+            64.08,
+            64.48,
+            64.85,
+            65.21,
+            0
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            "Coleambally",
+            0.959,
+            14.73,
+            14.99,
+            15.18,
+            15.39,
+            15.57,
+            0.952,
+            9.64,
+            9.52,
+            9.4,
+            9.29,
+            9.18,
+            5
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            "Cooma 132kV",
+            0.924,
+            32.97,
+            32.92,
+            32.77,
+            32.69,
+            32.58,
+            0.917,
+            43.23,
+            43.01,
+            42.86,
+            42.52,
+            42.24,
+            118
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            "Cooma 66kV",
+            0.999,
+            13.16,
+            13.21,
+            13.25,
+            13.29,
+            13.34,
+            0.998,
+            26.39,
+            26.59,
+            26.78,
+            26.95,
+            27.14,
+            1.1
+          ]
+        },
+        {
+          "row": 16,
+          "values": [
+            "Cowra",
+            0.999,
+            36.93,
+            37.27,
+            37.55,
+            37.9,
+            38.23,
+            0.993,
+            26.77,
+            26.8,
+            26.83,
+            26.87,
+            26.87,
+            24
+          ]
+        },
+        {
+          "row": 17,
+          "values": [
+            "Darlington Point",
+            0.909,
+            26.69,
+            27.5,
+            28.25,
+            28.93,
+            29.61,
+            0.975,
+            24.05,
+            24.59,
+            25.24,
+            25.78,
+            26.35,
+            85
+          ]
+        },
+        {
+          "row": 18,
+          "values": [
+            "Deniliquin",
+            0.999,
+            50.24,
+            50.99,
+            51.44,
+            52.14,
+            52.8,
+            0.999,
+            36.71,
+            36.99,
+            37.22,
+            37.5,
+            37.69,
+            5
+          ]
+        },
+        {
+          "row": 19,
+          "values": [
+            "Dorrigo",
+            1,
+            2.07,
+            2.05,
+            2.03,
+            2.02,
+            2,
+            1,
+            2.68,
+            2.72,
+            2.74,
+            2.77,
+            2.79,
+            0
+          ]
+        },
+        {
+          "row": 20,
+          "values": [
+            "Dunoon",
+            0.991,
+            6.03,
+            6.04,
+            6.03,
+            6.03,
+            6.03,
+            0.994,
+            6.52,
+            6.53,
+            6.54,
+            6.56,
+            6.57,
+            0
+          ]
+        },
+        {
+          "row": 21,
+          "values": [
+            "Evans Lane",
+            1,
+            37.85,
+            37.81,
+            37.82,
+            37.89,
+            37.78,
+            1,
+            46.95,
+            46.76,
+            46.59,
+            46.49,
+            46.41,
+            0
+          ]
+        },
+        {
+          "row": 22,
+          "values": [
+            "Finley 132kV",
+            0.992,
+            73.59,
+            73.7,
+            73.82,
+            73.98,
+            74.1,
+            0.967,
+            74.31,
+            74.3,
+            74.32,
+            74.43,
+            74.33,
+            0
+          ]
+        },
+        {
+          "row": 23,
+          "values": [
+            "Finley 66kV",
+            0.998,
+            15.9,
+            15.94,
+            15.95,
+            15.94,
+            15.98,
+            0.985,
+            13.38,
+            13.51,
+            13.61,
+            13.72,
+            13.8,
+            2.5
+          ]
+        },
+        {
+          "row": 24,
+          "values": [
+            "Forbes",
+            0.999,
+            32.44,
+            32.32,
+            32.17,
+            32.02,
+            31.9,
+            0.999,
+            25.62,
+            25.76,
+            25.91,
+            26.02,
+            26.14,
+            54.1
+          ]
+        },
+        {
+          "row": 25,
+          "values": [
+            "Glen Innes",
+            0.922,
+            11.2,
+            11.3,
+            11.38,
+            11.47,
+            11.55,
+            0.987,
+            15.73,
+            15.86,
+            15.98,
+            16.09,
+            16.2,
+            5.5
+          ]
+        },
+        {
+          "row": 26,
+          "values": [
+            "Griffith",
+            1,
+            93.6,
+            93.91,
+            94.36,
+            94.52,
+            94.81,
+            0.994,
+            62.33,
+            62.85,
+            63.27,
+            63.62,
+            64,
+            0
+          ]
+        },
+        {
+          "row": 27,
+          "values": [
+            "Gunnedah 66kV",
+            0.998,
+            29.18,
+            29.31,
+            38.49,
+            38.58,
+            38.68,
+            0.957,
+            27.93,
+            28.33,
+            36.76,
+            37.02,
+            37.32,
+            7
+          ]
+        },
+        {
+          "row": 28,
+          "values": [
+            "Hawks Nest",
+            1,
+            8.45,
+            8.47,
+            8.46,
+            8.46,
+            8.45,
+            0.969,
+            8.73,
+            8.81,
+            8.87,
+            8.92,
+            8.96,
+            0
+          ]
+        },
+        {
+          "row": 29,
+          "values": [
+            "Herons Ck",
+            0.994,
+            13.06,
+            13.32,
+            13.53,
+            13.71,
+            13.87,
+            1,
+            11.74,
+            11.78,
+            11.82,
+            11.88,
+            11.89,
+            0
+          ]
+        },
+        {
+          "row": 30,
+          "values": [
+            "Inverell",
+            0.985,
+            36.13,
+            36.07,
+            36.12,
+            36.15,
+            36.16,
+            0.966,
+            35.83,
+            36.13,
+            36.33,
+            36.54,
+            36.76,
+            22.5
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ZS Export",
+      "path": "xl/worksheets/sheet7.xml",
+      "dimension": "A1:R368",
+      "xml_row_count": 368,
+      "max_observed_columns": 18,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Region",
+            "Substation",
+            "kV",
+            "Transformer Rating (MVA)",
+            null,
+            null,
+            "Transformer Max Nameplate Rating (MVA)",
+            null,
+            null,
+            "Firm Normal Cyclic Rating (MVA)",
+            "Forecast PF",
+            "Forecast (POE50 MW)",
+            null,
+            null,
+            null,
+            null,
+            "Embedded Generation (MW)",
+            "95% Peak Load Exceeded  (Hrs)"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            null,
+            "Tx.1",
+            "Tx.2",
+            "Tx.3",
+            "Tx.1",
+            "Tx.2",
+            "Tx.3",
+            null,
+            null,
+            "25/26",
+            "26/27",
+            "27/28",
+            "28/29",
+            "29/30"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Terranora",
+            "Banora Point",
+            "66/11",
+            "24/30",
+            "24/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            -0.999,
+            11.68,
+            12.35,
+            12.98,
+            13.58,
+            14.15,
+            17.04,
+            108
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Terranora",
+            "Cudgen 11kV",
+            "66/33/11",
+            "70/40/30",
+            "70/40/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            -0.97,
+            10.82,
+            11.45,
+            12.04,
+            12.61,
+            13.16,
+            16.84,
+            80
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Terranora",
+            "Cudgen 33kV",
+            "66/33/11",
+            "70/40/30",
+            "70/40/30",
+            null,
+            40,
+            40,
+            null,
+            44,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Terranora",
+            "Hastings Point",
+            "33/11",
+            "15",
+            "15",
+            null,
+            15,
+            15,
+            null,
+            16.5,
+            -0.996,
+            11.67,
+            12.33,
+            12.97,
+            13.57,
+            14.14,
+            18.14,
+            92
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "Terranora",
+            "Murwillumbah",
+            "66/11",
+            "15/20/25",
+            "15/20/25",
+            null,
+            25,
+            25,
+            null,
+            27.5,
+            -0.89,
+            14,
+            14.8,
+            15.56,
+            16.28,
+            16.97,
+            24.11,
+            21
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "Terranora",
+            "Terranora 110/66kV",
+            "110/66",
+            "70/100",
+            "70/100",
+            "70/100",
+            100,
+            100,
+            100,
+            220,
+            0.862,
+            29.95,
+            29.95,
+            29.95,
+            29.95,
+            29.95,
+            0,
+            6
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            "Terranora",
+            "Terranora 11kV",
+            "66/11",
+            "24/30",
+            "24/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            -0.995,
+            7.42,
+            7.85,
+            8.26,
+            8.65,
+            9.02,
+            11.44,
+            91
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            "Terranora",
+            "Tweed Heads",
+            "66/11",
+            "25",
+            "25",
+            null,
+            25,
+            25,
+            null,
+            27.5,
+            0.998,
+            3.63,
+            3.86,
+            4.08,
+            4.28,
+            4.48,
+            5.28,
+            46
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            "Terranora",
+            "Tweed Heads South",
+            "66/11",
+            "20/30",
+            "20/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            -0.992,
+            10.89,
+            11.53,
+            12.14,
+            12.72,
+            13.28,
+            17.15,
+            67
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            "Lismore",
+            "Alstonville",
+            "66/11",
+            "20",
+            "16/20",
+            null,
+            20,
+            20,
+            null,
+            22,
+            -0.994,
+            10.02,
+            10.59,
+            11.13,
+            11.65,
+            12.14,
+            16.75,
+            44
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            "Lismore",
+            "Ballina",
+            "66/11",
+            "24/30",
+            "24/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            -0.871,
+            20.71,
+            21.94,
+            23.11,
+            24.23,
+            25.29,
+            30.45,
+            61
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            "Lismore",
+            "Ballina 132kV",
+            "132/66",
+            "35/45/60",
+            null,
+            null,
+            60,
+            null,
+            null,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            "Lismore",
+            "Dunoon",
+            "132/11",
+            "10",
+            "10",
+            null,
+            10,
+            10,
+            null,
+            11,
+            -0.853,
+            4.59,
+            4.88,
+            5.15,
+            5.41,
+            5.65,
+            8.61,
+            34
+          ]
+        },
+        {
+          "row": 16,
+          "values": [
+            "Lismore",
+            "Ewingsdale",
+            "132/11",
+            "30/45",
+            "30/45",
+            null,
+            45,
+            45,
+            null,
+            49.5,
+            -0.686,
+            10.82,
+            11.45,
+            12.05,
+            12.62,
+            13.17,
+            19.09,
+            16
+          ]
+        },
+        {
+          "row": 17,
+          "values": [
+            "Lismore",
+            "Kyogle",
+            "66/11",
+            "8/10",
+            "8/10",
+            null,
+            10,
+            10,
+            null,
+            11,
+            -1,
+            4.5,
+            4.73,
+            4.96,
+            5.17,
+            5.37,
+            7.6,
+            14
+          ]
+        },
+        {
+          "row": 18,
+          "values": [
+            "Lismore",
+            "Lennox Head",
+            "132/11",
+            "16",
+            "16",
+            null,
+            16,
+            16,
+            null,
+            17.6,
+            -0.977,
+            5.27,
+            5.56,
+            5.84,
+            6.11,
+            6.36,
+            8.71,
+            6
+          ]
+        },
+        {
+          "row": 19,
+          "values": [
+            "Lismore",
+            "Lismore 132/66kV",
+            "132/66",
+            "80/120",
+            "80/120",
+            "80/120",
+            120,
+            120,
+            120,
+            264,
+            0.974,
+            29.69,
+            29.69,
+            29.69,
+            29.69,
+            29.69,
+            0,
+            74
+          ]
+        },
+        {
+          "row": 20,
+          "values": [
+            "Lismore",
+            "Lismore East",
+            "66/11",
+            "15/19/23",
+            "15/20/25",
+            null,
+            23,
+            25,
+            null,
+            25.3,
+            -0.994,
+            10.35,
+            10.96,
+            11.54,
+            12.09,
+            12.62,
+            17.07,
+            32
+          ]
+        },
+        {
+          "row": 21,
+          "values": [
+            "Lismore",
+            "Lismore South",
+            "66/11",
+            "15/19/25",
+            "15/19/23",
+            "20/25",
+            25,
+            23,
+            25,
+            52.8,
+            -0.462,
+            3.87,
+            4.09,
+            4.3,
+            4.5,
+            4.69,
+            7.88,
+            16
+          ]
+        },
+        {
+          "row": 22,
+          "values": [
+            "Lismore",
+            "Lismore Uni",
+            "66/11",
+            "20/30",
+            "20/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            0.701,
+            9.91,
+            10.49,
+            11.04,
+            11.57,
+            12.07,
+            16.2,
+            39
+          ]
+        },
+        {
+          "row": 23,
+          "values": [
+            "Lismore",
+            "Mullumbimby",
+            "132/11",
+            "16",
+            "10",
+            null,
+            16,
+            10,
+            null,
+            11,
+            -0.933,
+            6.89,
+            7.26,
+            7.61,
+            7.94,
+            8.26,
+            12.34,
+            25
+          ]
+        },
+        {
+          "row": 24,
+          "values": [
+            "Lismore",
+            "Suffolk Park",
+            "132/11",
+            "30",
+            null,
+            null,
+            30,
+            null,
+            null,
+            0,
+            -0.992,
+            7.92,
+            8.42,
+            8.89,
+            9.33,
+            9.75,
+            13.8,
+            15
+          ]
+        },
+        {
+          "row": 25,
+          "values": [
+            "Lismore",
+            "Woodburn",
+            "66/11",
+            "8/10",
+            "8/10",
+            null,
+            10,
+            10,
+            null,
+            11,
+            -0.962,
+            5.29,
+            5.6,
+            5.9,
+            6.18,
+            6.44,
+            8.14,
+            22
+          ]
+        },
+        {
+          "row": 26,
+          "values": [
+            "Casino",
+            "Bonalbo",
+            "33/11",
+            "3",
+            "2.5",
+            null,
+            3,
+            2.5,
+            null,
+            2.75,
+            0.9,
+            0.51,
+            0.53,
+            0.55,
+            0.57,
+            0.59,
+            0.97,
+            22
+          ]
+        },
+        {
+          "row": 27,
+          "values": [
+            "Casino",
+            "Casino 132/66kV",
+            "132/66",
+            "35/45/60",
+            null,
+            null,
+            60,
+            null,
+            null,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "row": 28,
+          "values": [
+            "Casino",
+            "Casino 66/11kV",
+            "66/11",
+            "20/30",
+            "20/30",
+            null,
+            30,
+            30,
+            null,
+            33,
+            0.612,
+            11.45,
+            12.05,
+            12.63,
+            13.18,
+            13.71,
+            18.44,
+            16
+          ]
+        },
+        {
+          "row": 29,
+          "values": [
+            "Casino",
+            "Casino 66/33kV",
+            "66/33",
+            "8",
+            "3.5",
+            null,
+            8,
+            3.5,
+            null,
+            3.85,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "row": 30,
+          "values": [
+            "Casino",
+            "Mallanganee",
+            "33/11",
+            "5/8",
+            "2.5",
+            null,
+            8,
+            2.5,
+            null,
+            2.75,
+            0.914,
+            0.57,
+            0.59,
+            0.62,
+            0.65,
+            0.67,
+            1.02,
+            40
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lines Export",
+      "path": "xl/worksheets/sheet8.xml",
+      "dimension": "A1:K542",
+      "xml_row_count": 542,
+      "max_observed_columns": 11,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Supply Area",
+            "Feeder #",
+            "Feeder Voltage kV",
+            "Feeder Origin",
+            "Feeder Destination"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "Line Rating",
+            "Line Forecast MW"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            null,
+            null,
+            null,
+            null,
+            null,
+            "Summer MVA",
+            2026,
+            2027,
+            2028,
+            2029,
+            2030
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Casino",
+            "96L",
+            132,
+            "Transgrid Casino 132kV 96L Tee",
+            "Casino ZS",
+            140,
+            12.54,
+            13.22,
+            13.86,
+            14.47,
+            15.05
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Casino",
+            6501,
+            66,
+            "Casino ZS",
+            "Rappville Tee",
+            16,
+            0.43,
+            0.46,
+            0.48,
+            0.5,
+            0.53
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Casino",
+            8401,
+            33,
+            "Casino ZS",
+            "Mallanganee ZS",
+            4,
+            1.43,
+            1.49,
+            1.57,
+            1.63,
+            1.69
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "Casino",
+            8402,
+            33,
+            "Mallanganee ZS",
+            "Bonalbo ZS",
+            4,
+            1.02,
+            1.07,
+            1.12,
+            1.16,
+            1.21
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "Casino",
+            8403,
+            33,
+            "Bonalbo ZS",
+            "Urbenville ZS",
+            4,
+            0.51,
+            0.54,
+            0.57,
+            0.59,
+            0.62
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            "Coffs Harbour",
+            "96C/2(D)",
+            132,
+            "TransGrid 96C Armidale Coffs Harbour Dorrigo Tee",
+            "Dorrigo ZS",
+            41,
+            1.72,
+            1.81,
+            1.9,
+            1.99,
+            2.07
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            "Coffs Harbour",
+            702,
+            66,
+            "Boambee South 132/66kV STS",
+            "Sawtell ZS",
+            61,
+            6.11,
+            6.54,
+            6.94,
+            7.32,
+            7.68
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            "Coffs Harbour",
+            705,
+            66,
+            "TransGrid Coffs Harbour 132/66 kV STS",
+            "South Coffs ZS",
+            52,
+            9.39,
+            10.02,
+            10.61,
+            11.17,
+            11.7
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            "Coffs Harbour",
+            706,
+            66,
+            "TransGrid Coffs Harbour 132/66 kV STS",
+            "South Coffs ZS",
+            52,
+            10.7,
+            11.41,
+            12.08,
+            12.72,
+            13.32
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            "Coffs Harbour",
+            7501,
+            66,
+            "Nana Glen ZS",
+            "Woolgoolga ZS",
+            29,
+            3.5,
+            3.74,
+            3.96,
+            4.17,
+            4.36
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            "Coffs Harbour",
+            7502,
+            66,
+            "Nana Glen ZS",
+            "Ulong Tee",
+            9,
+            0.37,
+            0.4,
+            0.43,
+            0.46,
+            0.48
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            "Coffs Harbour",
+            "7502/1",
+            66,
+            "Ulong Tee",
+            "Ulong ZS",
+            9,
+            0.37,
+            0.4,
+            0.43,
+            0.46,
+            0.48
+          ]
+        },
+        {
+          "row": 16,
+          "values": [
+            "Coffs Harbour",
+            "7502/2",
+            66,
+            "Ulong Tee",
+            "Dorrigo ZS",
+            9,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "row": 17,
+          "values": [
+            "Coffs Harbour",
+            7509,
+            66,
+            "Moonee ZS",
+            "Woolgoolga ZS",
+            30,
+            10.32,
+            11.02,
+            11.69,
+            12.32,
+            12.91
+          ]
+        },
+        {
+          "row": 18,
+          "values": [
+            "Coffs Harbour",
+            7510,
+            66,
+            "North Coffs ZS",
+            "Moonee ZS",
+            61,
+            4.55,
+            4.85,
+            5.14,
+            5.41,
+            5.66
+          ]
+        },
+        {
+          "row": 19,
+          "values": [
+            "Coffs Harbour",
+            "703:NGN",
+            66,
+            "TransGrid Coffs Harbour 132/66 kV STS",
+            "Nana Glen ZS",
+            62,
+            5.74,
+            6.12,
+            6.48,
+            6.82,
+            7.15
+          ]
+        },
+        {
+          "row": 20,
+          "values": [
+            "Coffs Harbour",
+            "711:CHN",
+            66,
+            "TransGrid Coffs Harbour 132/66 kV STS",
+            "North Coffs ZS",
+            62,
+            11.55,
+            12.33,
+            13.05,
+            13.74,
+            14.39
+          ]
+        },
+        {
+          "row": 21,
+          "values": [
+            "Coffs Harbour",
+            "87C",
+            66,
+            "North Coffs ZS",
+            "South Coffs ZS",
+            68,
+            7.23,
+            7.71,
+            8.17,
+            8.6,
+            9.01
+          ]
+        },
+        {
+          "row": 22,
+          "values": [
+            "Grafton",
+            825,
+            66,
+            "TransGrid Koolkhan 132/66kV STS",
+            "Koolkhan ZS",
+            62,
+            12.85,
+            13.59,
+            14.29,
+            14.96,
+            15.59
+          ]
+        },
+        {
+          "row": 23,
+          "values": [
+            "Grafton",
+            826,
+            66,
+            "TransGrid Koolkhan 132/66kV STS",
+            "Grafton North ZS",
+            61,
+            10.49,
+            11.09,
+            11.66,
+            12.2,
+            12.72
+          ]
+        },
+        {
+          "row": 24,
+          "values": [
+            "Grafton",
+            6503,
+            66,
+            "Grafton North ZS",
+            "South Grafton ZS",
+            24,
+            6.85,
+            7.24,
+            7.62,
+            7.97,
+            8.31
+          ]
+        },
+        {
+          "row": 25,
+          "values": [
+            "Grafton",
+            6504,
+            66,
+            "Five Mile Sw Stn",
+            "South Grafton ZS",
+            61,
+            2.97,
+            3.14,
+            3.3,
+            3.45,
+            3.6
+          ]
+        },
+        {
+          "row": 26,
+          "values": [
+            "Grafton",
+            6505,
+            66,
+            "Koolkhan SS",
+            "Grafton ZS",
+            52,
+            11.41,
+            12.06,
+            12.68,
+            13.27,
+            13.84
+          ]
+        },
+        {
+          "row": 27,
+          "values": [
+            "Grafton",
+            6506,
+            66,
+            "Shannon Creek ZS",
+            "Nymboida ZS",
+            14,
+            0.18,
+            0.19,
+            0.2,
+            0.21,
+            0.21
+          ]
+        },
+        {
+          "row": 28,
+          "values": [
+            "Grafton",
+            6508,
+            66,
+            "Maclean ZS",
+            "Yamba ZS",
+            28,
+            8.39,
+            8.93,
+            9.43,
+            9.91,
+            10.37
+          ]
+        },
+        {
+          "row": 29,
+          "values": [
+            "Grafton",
+            6509,
+            66,
+            "Shannon Creek ZS",
+            "Five Mile Sw Stn",
+            14,
+            0.81,
+            0.86,
+            0.9,
+            0.95,
+            0.99
+          ]
+        },
+        {
+          "row": 30,
+          "values": [
+            "Grafton",
+            6510,
+            66,
+            "Grafton North ZS",
+            "Five Mile Sw Stn",
+            28,
+            3.71,
+            3.92,
+            4.12,
+            4.31,
+            4.5
+          ]
+        }
+      ]
+    },
+    {
+      "name": "BSP Export",
+      "path": "xl/worksheets/sheet9.xml",
+      "dimension": "A1:G77",
+      "xml_row_count": 77,
+      "max_observed_columns": 7,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Connection Point",
+            "Forecast PF",
+            "Summer Forecast (POE50 MW)"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            null,
+            null,
+            "25/26",
+            "26/27",
+            "27/28",
+            "28/29",
+            "29/30"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Albury (Corowa)",
+            0.355,
+            39.72,
+            39.98,
+            40.23,
+            40.46,
+            40.69
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Albury (Mulwala)",
+            0.58,
+            9.62,
+            9.89,
+            10.15,
+            10.39,
+            10.63
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Albury (Union Rd + Jelbart)",
+            -0.82,
+            41.49,
+            44.17,
+            46.69,
+            49.08,
+            51.36
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Armidale",
+            -0.999,
+            26.19,
+            27.52,
+            28.78,
+            29.98,
+            31.12
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "Balranald",
+            0.258,
+            0.82,
+            0.83,
+            0.85,
+            0.87,
+            0.88
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "Beryl",
+            0.961,
+            99.64,
+            100.15,
+            100.63,
+            101.1,
+            101.54
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            "Boambee South",
+            -0.808,
+            12.88,
+            13.72,
+            14.52,
+            15.27,
+            15.99
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            "Broken Hill 22kV",
+            -0.995,
+            21.03,
+            22.44,
+            23.76,
+            25.02,
+            26.22
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            "Casino",
+            0.375,
+            13.34,
+            14.06,
+            14.74,
+            15.39,
+            16.01
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            "Coffs Harbour",
+            -0.281,
+            37.27,
+            39.76,
+            42.1,
+            44.31,
+            46.42
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            "Coleambally",
+            0.91,
+            6.92,
+            7.01,
+            7.1,
+            7.19,
+            7.27
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            "Cooma 132kV",
+            -0.938,
+            23.15,
+            24.7,
+            26.16,
+            27.54,
+            28.86
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            "Cooma 66kV",
+            -0.366,
+            5.99,
+            6.32,
+            6.62,
+            6.92,
+            7.2
+          ]
+        },
+        {
+          "row": 16,
+          "values": [
+            "Cowra",
+            0.828,
+            31.87,
+            32.88,
+            33.83,
+            34.74,
+            35.6
+          ]
+        },
+        {
+          "row": 17,
+          "values": [
+            "Darlington Point",
+            0.807,
+            91.33,
+            91.66,
+            91.97,
+            92.27,
+            92.55
+          ]
+        },
+        {
+          "row": 18,
+          "values": [
+            "Deniliquin",
+            0.879,
+            22.08,
+            23.12,
+            24.11,
+            25.06,
+            25.96
+          ]
+        },
+        {
+          "row": 19,
+          "values": [
+            "Dorrigo",
+            -0.512,
+            1.72,
+            1.81,
+            1.9,
+            1.99,
+            2.07
+          ]
+        },
+        {
+          "row": 20,
+          "values": [
+            "Dunoon",
+            -0.853,
+            4.59,
+            4.88,
+            5.15,
+            5.41,
+            5.65
+          ]
+        },
+        {
+          "row": 21,
+          "values": [
+            "Evans Lane",
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "row": 22,
+          "values": [
+            "Finley 132kV",
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "row": 23,
+          "values": [
+            "Finley 66kV",
+            -0.746,
+            1.47,
+            1.54,
+            1.6,
+            1.66,
+            1.72
+          ]
+        },
+        {
+          "row": 24,
+          "values": [
+            "Forbes",
+            0.764,
+            61.76,
+            62.38,
+            62.97,
+            63.54,
+            64.08
+          ]
+        },
+        {
+          "row": 25,
+          "values": [
+            "Glen Innes",
+            -0.679,
+            10.81,
+            11.25,
+            11.66,
+            12.05,
+            12.43
+          ]
+        },
+        {
+          "row": 26,
+          "values": [
+            "Griffith",
+            0.912,
+            50.69,
+            51.9,
+            53.06,
+            54.18,
+            55.24
+          ]
+        },
+        {
+          "row": 27,
+          "values": [
+            "Gunnedah 66kV",
+            -0.998,
+            16.97,
+            17.71,
+            18.41,
+            19.07,
+            19.69
+          ]
+        },
+        {
+          "row": 28,
+          "values": [
+            "Hawks Nest",
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "row": 29,
+          "values": [
+            "Herons Ck",
+            -0.974,
+            9.06,
+            9.57,
+            10.06,
+            10.52,
+            10.97
+          ]
+        },
+        {
+          "row": 30,
+          "values": [
+            "Inverell",
+            0.451,
+            34.22,
+            34.97,
+            35.7,
+            36.4,
+            37.07
+          ]
+        }
+      ]
+    },
+    {
+      "name": "System Limitations",
+      "path": "xl/worksheets/sheet10.xml",
+      "dimension": "A1:A98",
+      "xml_row_count": 98,
+      "max_observed_columns": 1,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Feeder  - Terranora - MWN3B2 Norco"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            "Feeder  - Lismore - AVE3B2 Alstonville 2"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Feeder  - Lismore - EWE3B1 Brunswick No.1"
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Feeder  - Lismore - MUL3B3 Mullumbimby West"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "Feeder  - Lismore - MUL3B3 Mullumbimby West"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "Feeder  - Lismore - WBN3B4 Broadwater"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "Feeder  - Lismore - WBN3B3 Coraki"
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "Feeder  - Casino - CSO3B3 Leeville"
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            "Feeder  - Grafton - SGN3B1 Armidale Rd"
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            "Feeder  - Grafton - SGN3B1 Armidale Rd"
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            "Feeder  - Grafton - MLN3B4 Townsend"
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            "Feeder  - Grafton - MLN3B5 Woodford Dale-Leigh"
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            "Feeder  - Grafton - YAM3B4 Yamba West"
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            "Feeder  - Coffs Harbour - NGN3B2 Coramba"
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            "Feeder  - Coffs Harbour - WGA3B6 Corindi"
+          ]
+        },
+        {
+          "row": 16,
+          "values": [
+            "Feeder  - Kempsey - MGA3B1 Turners Flat"
+          ]
+        },
+        {
+          "row": 17,
+          "values": [
+            "Feeder  - Kempsey - PSK3B4 Industrial"
+          ]
+        },
+        {
+          "row": 18,
+          "values": [
+            "Feeder  - Port Macquarie - LKC7781 Cathie Sth"
+          ]
+        },
+        {
+          "row": 19,
+          "values": [
+            "Feeder  - Port Macquarie - OPM3B1 Granite St"
+          ]
+        },
+        {
+          "row": 20,
+          "values": [
+            "Feeder  - Taree - BNK24787 Old Bar No.2"
+          ]
+        },
+        {
+          "row": 21,
+          "values": [
+            "Feeder  - Taree - HGN3B1 Crowdy Head"
+          ]
+        },
+        {
+          "row": 22,
+          "values": [
+            "Feeder  - Taree - WGM3B5 Hillside"
+          ]
+        },
+        {
+          "row": 23,
+          "values": [
+            "Feeder  - Stroud - BLH3B3 Bulahdelah Nth/Markwell/Newells Ck"
+          ]
+        },
+        {
+          "row": 24,
+          "values": [
+            "Feeder  - Hawks Nest - TEA3B4 Tea Gardens"
+          ]
+        },
+        {
+          "row": 25,
+          "values": [
+            "Feeder  - Hawks Nest - TEA3B3 Mineral Deposits"
+          ]
+        },
+        {
+          "row": 26,
+          "values": [
+            "Feeder  - Armidale - GLS3B2 Rockvale"
+          ]
+        },
+        {
+          "row": 27,
+          "values": [
+            "Feeder  - Armidale - GLS3B7 City Central"
+          ]
+        },
+        {
+          "row": 28,
+          "values": [
+            "Feeder  - Armidale - GLS3B1 Gara"
+          ]
+        },
+        {
+          "row": 29,
+          "values": [
+            "Feeder  - Armidale - HGE3B1 Grafton Rd"
+          ]
+        },
+        {
+          "row": 30,
+          "values": [
+            "Feeder  - Armidale - HGE3B1 Grafton Rd"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Comments",
+      "path": "xl/worksheets/sheet11.xml",
+      "dimension": "A1:A61",
+      "xml_row_count": 61,
+      "max_observed_columns": 1,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "A 30MW biomass generator is located at Condong and is connected to the Terranora 110/66kV sub-transmission substation at 66kV via feeders 9504, 9514 and 9502."
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            "A 30MW biomass generator is located at Broadwater and is connected to the Lismore 132/66kV sub-transmission substation at 66kV via feeder 0892."
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "The Nymboida hydro generation has reached end of life so has been decommissioned."
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "The 5MW hydro generation at Oaky is presently decommissioned after failure of the dam wall."
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            "A 5MW solar generator is connected to Galloway St zone substation on the 11kV network."
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            "A 2.7MW solar generator is connected to Madgwick Drive zone substation on the 11kV network."
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            "A 5.5MW hydro generator is located at Pindari Dam and is connected to the Transgrid Glen Innes 132/66kV sub-transmission substation at 66kV via feeders 6AE, 6NE, 886 and 887."
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            "A 23MW hydro generator is located at Copeton Dam and is connected to the Transgrid Inverell 132/66kV sub-transmission substation at 66kV via feeders 6BC, 734 and 735."
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            "A 56MW solar generator is located at Moree Solar Farm and is connected to Transgrid’s Moree 132/66kV sub-transmission substation at 66kV via feeder 876."
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            "A 5MW solar generator is located at Wenna on the 22kV network."
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            "A 5MW solar generator is located at Wathagar on the 22kV network."
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            "A 5MW solar generator is located at Ashley on the 22kV network."
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            "A 10MW and 6MW gas generator located at Wilga Park is connected to the Transgrid Narrabri 132/66kV sub-transmission substation at 66kV via feeder 861."
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            "A 7MW hydro generator is located at Lake Keepit and is connected to the Transgrid Gunnedah 132/66kV sub-transmission substation at 66kV via feeder 877."
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            "A 4.99MW solar generator is connected to Kootingal zone substation on the 11kV network."
+          ]
+        },
+        {
+          "row": 16,
+          "values": [
+            "A 4.99MW solar generator is connected to Werris Creek zone substation on the 11kV network."
+          ]
+        },
+        {
+          "row": 17,
+          "values": [
+            "A 4.95MW solar generator is connected to Manilla zone substation on the 11kV network."
+          ]
+        },
+        {
+          "row": 18,
+          "values": [
+            "A 1.76MW solar generator is connected to Goddard Lane zone substation on the 11kV network."
+          ]
+        },
+        {
+          "row": 19,
+          "values": [
+            "A 9.2MW solar generator is located at Narromine on the 22kV network, and a 14.5MW solar generator is connected at Dubbo South on the 11kV network."
+          ]
+        },
+        {
+          "row": 20,
+          "values": [
+            "A 105MW solar generator is located at Nevertire and is connected to the Dubbo 132/66kV sub-transmission substation at 132kV via the feeder 94W."
+          ]
+        },
+        {
+          "row": 21,
+          "values": [
+            "A 5MW solar generator is located at Nyngan Town on the 22kV network."
+          ]
+        },
+        {
+          "row": 22,
+          "values": [
+            "A 4.6MW solar generator is connected to Eulomogo zone substation on the 11kV network."
+          ]
+        },
+        {
+          "row": 23,
+          "values": [
+            "A 102MW solar generator is located at Nyngan Solar Farm and is connected to the Nyngan 132/66kV sub-transmission substation at 132kV via the feeder 9UT."
+          ]
+        },
+        {
+          "row": 24,
+          "values": [
+            "A 53MW solar generator is located at Broken Hill and is connected to the Transgrid Broken Hill 220/22kV sub-transmission substation at 22kV."
+          ]
+        },
+        {
+          "row": 25,
+          "values": [
+            "There have been changes to the water pump network with a new water supply now coming from Wentworth. It is unclear what the long-term configuration will be for the existing water pump infrastructure and whether it will affect peak loads."
+          ]
+        },
+        {
+          "row": 26,
+          "values": [
+            "A 145MW wind generator is located at Flyers Creek Wind Farm and is connected to Transgrid’s Orange North 132kV Switching Station through the Flyers Creek Switching Station via feeders 9MT and 9MC."
+          ]
+        },
+        {
+          "row": 27,
+          "values": [
+            "A 46.7MW solar generator is located at Manildra on the 11kV network."
+          ]
+        },
+        {
+          "row": 28,
+          "values": [
+            "A 10MW wind generator is located at Blayney wind farm and is connected to the Transgrid Panorama 132/66kV sub-transmission substation at 66kV via feeders 66:MAN and 81C."
+          ]
+        },
+        {
+          "row": 29,
+          "values": [
+            "A 4.99MW solar generator is located at Peak Hill on the 11kV network, and a 4.99MW solar generator is located at Trundle on the 22kV network."
+          ]
+        },
+        {
+          "row": 30,
+          "values": [
+            "A 50MW solar generator is located at West Jemalong and is connected to the Transgrid Forbes 132/66kV sub-transmission substation at 66kV via the feeder 89R."
+          ]
+        }
+      ]
+    }
+  ]
+}

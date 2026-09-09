@@ -464,6 +464,23 @@
       "source_ids": [
         "ENERGY-AUSGRID-DTAPR-2025-DATA"
       ]
+    },
+    {
+      "path": "domains/energy/data/derived/essential_energy_zone_substation_capacity_2025.csv",
+      "domain": "energy",
+      "role": "imported_dataset",
+      "assurance_state": "reconciled",
+      "map_relevance": true,
+      "provenance": "Essential Energy DAPR 2025 BSP, ZS and Lines Extract Summary V2 workbook; exhaustive matched ZSSummer/ZSWinter zone-substation inventory",
+      "blocker": null,
+      "selection_claim": "exhaustive_import",
+      "selection_policy": "Include every published zone-substation identity present in both ZSSummer and ZSWinter and preserve source summer/winter transformer, firm-rating, forecast, embedded-generation and peak-duration fields.",
+      "completeness_test": "Independent openpyxl identity inventory and separate stdlib/XML extraction must reconcile exactly with identical summer/winter identity sets and zero missing/extra/duplicate assets.",
+      "canonical": true,
+      "observed_count": 366,
+      "source_ids": [
+        "ENERGY-ESSENTIAL-DAPR-2025-DATA"
+      ]
     }
   ]
 }
