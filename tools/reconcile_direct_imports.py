@@ -3,16 +3,12 @@
 
 This intentionally does NOT call the existing extraction functions. It independently
 queries authoritative services and compares source identity sets against saved outputs.
-
-Sources:
-- ABS SA2 Regional Population 2025 FeatureServer vs XLSX-derived population CSV.
-- GA National Roads FeatureServer vs saved east strategic-highway GeoJSON.
-- GA Foundation Rail MapServer vs saved east rail GeoJSON.
 """
 from __future__ import annotations
 
 import csv
 import json
+import time
 from pathlib import Path
 from typing import Iterable
 
@@ -31,17 +27,38 @@ RAIL_QUERY = "https://services.ga.gov.au/gis/rest/services/Foundation_Rail_Infra
 
 
 def get_json(url: str, params: dict) -> dict:
-    r = requests.get(url, params=params, timeout=TIMEOUT)
-    r.raise_for_status()
-    data = r.json()
-    if "error" in data:
-        raise RuntimeError(f"ArcGIS error: {data['error']}")
-    return data
+    last: Exception | None = None
+    for attempt in range(1, 4):
+        try:
+            r = requests.get(url, params=params, timeout=TIMEOUT)
+            r.raise_for_status()
+            data = r.json()
+            if "error" in data:
+                raise RuntimeError(f"ArcGIS error: {data['error']}")
+            return data
+        except (requests.RequestException, RuntimeError, ValueError) as exc:
+            last = exc
+            if attempt < 3:
+                time.sleep(3 * attempt)
+    raise RuntimeError(f"Source query failed after retries: {last}")
 
 
 def batches(values: list[int], size: int = 500) -> Iterable[list[int]]:
     for i in range(0, len(values), size):
         yield values[i:i + size]
+
+
+def assurance_tiles() -> list[dict[str, float]]:
+    """Independent 2x2-degree tiling, deliberately different from production extractors."""
+    tiles = []
+    y = ENVELOPE["ymin"]
+    while y < ENVELOPE["ymax"]:
+        x = ENVELOPE["xmin"]
+        while x < ENVELOPE["xmax"]:
+            tiles.append({"xmin": x, "ymin": y, "xmax": min(x + 2.0, ENVELOPE["xmax"]), "ymax": min(y + 2.0, ENVELOPE["ymax"])})
+            x += 2.0
+        y += 2.0
+    return tiles
 
 
 def geojson_ids(path: Path) -> set[int]:
@@ -62,8 +79,6 @@ def geojson_ids(path: Path) -> set[int]:
 
 
 def abs_reconcile() -> dict:
-    # Independent source inventory comes from ABS's hosted feature layer, while the
-    # existing VECA CSV was built from the separate published XLSX cubes.
     data = get_json(ABS_QUERY, {
         "where": "state_code_2021 IN ('1','2','3','8')",
         "outFields": "sa2_code_2021,state_code_2021,erp_2025",
@@ -71,9 +86,8 @@ def abs_reconcile() -> dict:
         "resultRecordCount": 5000,
         "f": "json",
     })
-    features = data.get("features", [])
     source = {}
-    for f in features:
+    for f in data.get("features", []):
         a = f.get("attributes", {})
         code = str(a.get("sa2_code_2021") or "").strip()
         if code:
@@ -88,34 +102,33 @@ def abs_reconcile() -> dict:
 
     missing = sorted(set(source) - set(derived))
     extra = sorted(set(derived) - set(source))
-    value_mismatch = sorted(code for code in set(source) & set(derived)
-                            if source[code] is not None and derived[code] is not None and int(source[code]) != int(derived[code]))
-    passed = not missing and not extra and not value_mismatch
+    mismatch = sorted(code for code in set(source) & set(derived)
+                      if source[code] is not None and derived[code] is not None and int(source[code]) != int(derived[code]))
     return {
         "source_id": "POP-ABS-SA2-ERP-2001-2025",
-        "source_inventory_count": len(source),
-        "derived_count": len(derived),
-        "missing_codes": missing,
-        "extra_codes": extra,
-        "erp_2025_value_mismatches": value_mismatch,
-        "passed": passed,
+        "source_inventory_count": len(source), "derived_count": len(derived),
+        "missing_codes": missing, "extra_codes": extra, "erp_2025_value_mismatches": mismatch,
+        "passed": not missing and not extra and not mismatch,
         "inventory_evidence": "ABS SA2 Regional Population 2025 FeatureServer layer 3; state_code_2021 in 1,2,3,8",
     }
 
 
 def source_ids_with_attrs(url: str, where: str, fields: str) -> list[dict]:
-    ids_data = get_json(url, {
-        "where": where,
-        "geometry": json.dumps(ENVELOPE, separators=(",", ":")),
-        "geometryType": "esriGeometryEnvelope",
-        "inSR": 7844,
-        "spatialRel": "esriSpatialRelIntersects",
-        "returnIdsOnly": "true",
-        "f": "json",
-    })
-    ids = [int(x) for x in ids_data.get("objectIds", [])]
+    ids: set[int] = set()
+    for tile in assurance_tiles():
+        data = get_json(url, {
+            "where": where,
+            "geometry": json.dumps(tile, separators=(",", ":")),
+            "geometryType": "esriGeometryEnvelope",
+            "inSR": 7844,
+            "spatialRel": "esriSpatialRelIntersects",
+            "returnIdsOnly": "true",
+            "f": "json",
+        })
+        ids.update(int(x) for x in data.get("objectIds", []))
+
     attrs: list[dict] = []
-    for group in batches(ids):
+    for group in batches(sorted(ids)):
         data = get_json(url, {
             "objectIds": ",".join(map(str, group)),
             "outFields": fields,
@@ -127,81 +140,60 @@ def source_ids_with_attrs(url: str, where: str, fields: str) -> list[dict]:
 
 
 def road_reconcile() -> dict:
-    attrs = source_ids_with_attrs(
-        ROAD_QUERY,
-        "hierarchy = 'National or State Highway'",
-        "OBJECTID,status,state,hierarchy",
-    )
-    expected = {
-        int(a["OBJECTID"]) for a in attrs
-        if str(a.get("status") or "").strip().lower() == "operational"
-        and str(a.get("state") or "").strip().upper() in TARGET_STATES
-    }
+    attrs = source_ids_with_attrs(ROAD_QUERY, "hierarchy = 'National or State Highway'", "OBJECTID,status,state,hierarchy")
+    expected = {int(a["OBJECTID"]) for a in attrs
+                if str(a.get("status") or "").strip().lower() == "operational"
+                and str(a.get("state") or "").strip().upper() in TARGET_STATES}
     derived = geojson_ids(ROOT / "data/derived/transport/ga_major_roads_east.geojson")
     missing, extra = sorted(expected - derived), sorted(derived - expected)
     return {
         "source_id": "TRANSPORT-GA-EAST-MAJOR-ROADS",
-        "source_inventory_count": len(expected),
-        "derived_count": len(derived),
-        "missing_objectids": missing,
-        "extra_objectids": extra,
-        "passed": not missing and not extra,
-        "inventory_evidence": "GA National Roads service; one whole-envelope returnIdsOnly query, then independent operational/state filtering",
+        "source_inventory_count": len(expected), "derived_count": len(derived),
+        "missing_objectids": missing, "extra_objectids": extra, "passed": not missing and not extra,
+        "inventory_evidence": "GA National Roads service; independent 2x2-degree ID inventory, deduplicated, then operational/state filtering",
     }
 
 
 def rail_reconcile() -> dict:
     attrs = source_ids_with_attrs(RAIL_QUERY, "1=1", "OBJECTID,SOURCE_JURISDICTION")
-    expected = {
-        int(a["OBJECTID"]) for a in attrs
-        if str(a.get("SOURCE_JURISDICTION") or "").strip().upper() != "SA"
-    }
+    expected = {int(a["OBJECTID"]) for a in attrs if str(a.get("SOURCE_JURISDICTION") or "").strip().upper() != "SA"}
     derived = geojson_ids(ROOT / "data/derived/transport/ga_rail_east.geojson")
     missing, extra = sorted(expected - derived), sorted(derived - expected)
     return {
         "source_id": "TRANSPORT-GA-EAST-RAIL",
-        "source_inventory_count": len(expected),
-        "derived_count": len(derived),
-        "missing_objectids": missing,
-        "extra_objectids": extra,
-        "passed": not missing and not extra,
-        "inventory_evidence": "GA Foundation Rail Railway_Lines service; one whole-envelope returnIdsOnly query, independent SA-jurisdiction filtering",
+        "source_inventory_count": len(expected), "derived_count": len(derived),
+        "missing_objectids": missing, "extra_objectids": extra, "passed": not missing and not extra,
+        "inventory_evidence": "GA Foundation Rail Railway_Lines service; independent 2x2-degree ID inventory, deduplicated, then SA-jurisdiction filtering",
     }
 
 
 def write_manifest(result: dict, dataset: str, map_required: bool, field_check: str) -> None:
     count = result["source_inventory_count"]
+    unresolved = len(result.get("missing_codes", result.get("missing_objectids", []))) + len(result.get("extra_codes", result.get("extra_objectids", [])))
     manifest = {
         "schema_version": 1,
         "source_id": result["source_id"],
         "map_required": map_required,
         "inventory": {
-            "mode": "entity_count",
-            "expected_count": count,
+            "mode": "entity_count", "expected_count": count,
             "count_basis": "official_index" if result["source_id"].startswith("POP-") else "gis_feature_count",
-            "evidence_locator": result["inventory_evidence"],
-            "independent_from_extraction": True,
-            "notes": "Generated by independent reconciliation script; does not call the production extractor.",
+            "evidence_locator": result["inventory_evidence"], "independent_from_extraction": True,
+            "notes": "Generated by independent reconciliation script; does not call the production extractor."
         },
         "disposition": {
             "mapped": count if map_required and result["passed"] else 0,
             "dataset_only": count if (not map_required and result["passed"]) else 0,
-            "excluded": 0,
-            "duplicate": 0,
-            "unresolved": 0 if result["passed"] else len(result.get("missing_codes", result.get("missing_objectids", []))) + len(result.get("extra_codes", result.get("extra_objectids", []))),
+            "excluded": 0, "duplicate": 0, "unresolved": 0 if result["passed"] else unresolved,
         },
         "verification": {
             "state": "passed" if result["passed"] else "failed",
-            "checks": [{
-                "field": field_check,
-                "method": "Compare the complete independent authoritative identity set with the saved derived identity set; also compare 2025 ERP values for ABS.",
-                "evidence_locator": result["inventory_evidence"],
-                "result": f"source={result['source_inventory_count']}; derived={result['derived_count']}; passed={result['passed']}",
-            }],
+            "checks": [{"field": field_check,
+                        "method": "Compare complete independent authoritative identity set with saved derived identity set; ABS also compares every 2025 ERP value.",
+                        "evidence_locator": result["inventory_evidence"],
+                        "result": f"source={result['source_inventory_count']}; derived={result['derived_count']}; passed={result['passed']}"}],
         },
-        "dataset_paths": [dataset],
-        "map_layers": [],
-        "notes": "Machine-generated direct-import assurance manifest.",
+        "dataset_paths": [dataset], "map_layers": [],
+        "notes": "Machine-generated direct-import assurance manifest."
     }
     MANIFESTS.mkdir(parents=True, exist_ok=True)
     (MANIFESTS / f"{result['source_id']}.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
