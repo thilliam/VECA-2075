@@ -734,6 +734,22 @@
       "known_gaps": [
         "Staged Oaky/Malpas project and current high-risk status are structured; final approvals, funding, delivered secure yield and NEREZ demand outcomes remain unresolved."
       ]
+    },
+    {
+      "source_id": "ENERGY-ERGON-ZS-LOAD-2025-26",
+      "title": "Ergon Energy Zone Substation Load Data 2025-26",
+      "publisher": "Ergon Energy Network",
+      "domain": "energy",
+      "geography": "Regional Queensland",
+      "source_type": "authoritative_reality",
+      "status": "reconciled",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Archive provides historical half-hourly load, not rated/firm capacity or guaranteed connection headroom.",
+        "Published numeric MW/MVA labels appear systematically inconsistent with magnitudes; raw values are retained and interpreted /1000 fields remain explicitly sampled rather than source-certified.",
+        "Substation coordinates and DAPR capacity/forecast attributes still require join to Ergon network/DAPR records."
+      ]
     }
   ]
 }
