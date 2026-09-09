@@ -1,0 +1,79 @@
+name: Extract AEMO generation information
+on:
+  push:
+    branches: [feature/ingest-aemo-generation-assets-001]
+    paths:
+      - "tools/extract_aemo_generation_information.py"
+      - ".github/workflows/extract-aemo-generation-info.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: feature/ingest-aemo-generation-assets-001, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - name: Download authoritative workbook
+        run: |
+          mkdir -p _scratch/aemo assurance/inventories assurance/reconciliation domains/energy/data/derived
+          curl --fail --location --retry 3 \
+            'https://www.aemo.com.au/-/media/files/electricity/nem/planning_and_forecasting/generation_information/2026/nem-generation-information-july-2026.xlsx?rev=3455851f2bc945b7ab61c5ceed272992&sc_lang=en' \
+            -o _scratch/aemo/nem-generation-information-july-2026.xlsx
+      - name: Build independent expected-ID inventory with openpyxl
+        run: |
+          python -m pip install --disable-pip-version-check --quiet openpyxl
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import openpyxl
+          x='_scratch/aemo/nem-generation-information-july-2026.xlsx'
+          wb=openpyxl.load_workbook(x, read_only=True, data_only=False)
+          ws=wb['Generator Information']
+          headers=[str(c.value or '').strip() for c in next(ws.iter_rows(min_row=4,max_row=4))]
+          def ix(name): return headers.index(name)
+          region_i=ix('Region')
+          unit_i=ix('Gen Info Unit ID')
+          target={'QLD1','NSW1','VIC1'}
+          ids=[]; counts={}
+          for row in ws.iter_rows(min_row=5, values_only=True):
+              region=str(row[region_i] or '').strip()
+              if region not in target: continue
+              v=row[unit_i]
+              if v is None: continue
+              uid=str(int(v)) if isinstance(v,(int,float)) and float(v).is_integer() else str(v).strip()
+              ids.append(uid); counts[region]=counts.get(region,0)+1
+          dup=sorted({x for x in ids if ids.count(x)>1})
+          payload={
+              'source':'AEMO NEM Generation Information July 2026',
+              'inventory_method':'openpyxl independent workbook read',
+              'independent_from_extraction':True,
+              'scope_regions':sorted(target),
+              'expected_count':len(ids),
+              'unique_id_count':len(set(ids)),
+              'duplicate_ids':dup,
+              'counts_by_region':dict(sorted(counts.items())),
+              'gen_info_unit_ids':sorted(set(ids), key=lambda x:int(x) if x.isdigit() else x),
+          }
+          assert not dup
+          Path('assurance/inventories/aemo_generation_information_july_2026_unit_ids.json').write_text(json.dumps(payload,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps({k:v for k,v in payload.items() if k!='gen_info_unit_ids'},indent=2))
+          PY
+      - name: Extract with independent stdlib implementation and reconcile IDs
+        run: |
+          python tools/extract_aemo_generation_information.py \
+            _scratch/aemo/nem-generation-information-july-2026.xlsx \
+            assurance/inventories/aemo_generation_information_july_2026_unit_ids.json \
+            domains/energy/data/derived/aemo_generation_information_east_july_2026.csv \
+            assurance/reconciliation/aemo_generation_information_east_july_2026.json
+      - name: Publish extracted evidence
+        run: |
+          git config user.name "VECA ingestion bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add assurance/inventories/aemo_generation_information_july_2026_unit_ids.json assurance/reconciliation/aemo_generation_information_east_july_2026.json domains/energy/data/derived/aemo_generation_information_east_july_2026.csv
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Energy: materialise AEMO July 2026 generation and storage assets"
+          git pull --rebase --autostash origin feature/ingest-aemo-generation-assets-001
+          git push origin HEAD:feature/ingest-aemo-generation-assets-001
