@@ -932,6 +932,132 @@
       "known_gaps": [
         "Rail/service role and storage scale captured; annual terminal throughput not yet structured."
       ]
+    },
+    {
+      "source_id": "DIG-TEL-AURA-2025",
+      "title": "Telstra InfraCo opens first Intercity Fibre route",
+      "publisher": "Telstra InfraCo",
+      "domain": "digital-connectivity",
+      "geography": "Sydney-Canberra / Australia",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Route-level regional access-point inventory not yet extracted; product capacity is not local available capacity."
+      ]
+    },
+    {
+      "source_id": "DIG-TEL-AURA-SYDMEL",
+      "title": "Aura Sydney-Melbourne coastal route launch",
+      "publisher": "Telstra InfraCo",
+      "domain": "digital-connectivity",
+      "geography": "Sydney-Melbourne coastal",
+      "source_type": "committed_private_capital",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Approximate route only; detailed splice/access-site geography and actual utilisation are not public in this dataset."
+      ]
+    },
+    {
+      "source_id": "DIG-TEL-AURA-CURRENT",
+      "title": "Aura Network current product/network page",
+      "publisher": "Telstra InfraCo",
+      "domain": "digital-connectivity",
+      "geography": "Australia",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Operator map is approximate and mixes committed/potential routes; exact route geometry requires a separate evidence standard."
+      ]
+    },
+    {
+      "source_id": "DIG-TEL-1H26",
+      "title": "Telstra 1H26 investor briefing",
+      "publisher": "Telstra",
+      "domain": "digital-connectivity",
+      "geography": "Australia",
+      "source_type": "committed_private_capital",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": false,
+      "known_gaps": [
+        "Used for route status/capital program context; not a route geometry source."
+      ]
+    },
+    {
+      "source_id": "DIG-TEL-LONGHAUL",
+      "title": "Telstra InfraCo Long Haul",
+      "publisher": "Telstra InfraCo",
+      "domain": "digital-connectivity",
+      "geography": "Sydney-Wollongong / Melbourne-Geelong",
+      "source_type": "authoritative_reality",
+      "status": "relevant",
+      "priority": "P1",
+      "map_relevance": true,
+      "known_gaps": [
+        "Commercial offering proves route availability but not spare fibre count, latency or individual access-site locations."
+      ]
+    },
+    {
+      "source_id": "DIG-VOCUS-NETWORK",
+      "title": "Vocus Australian network",
+      "publisher": "Vocus",
+      "domain": "digital-connectivity",
+      "geography": "Australia",
+      "source_type": "authoritative_reality",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "51,000 km network total is network-scale evidence; exact route, fibre-count and access availability require further extraction."
+      ]
+    },
+    {
+      "source_id": "DIG-VOCUS-ADIP-2026",
+      "title": "Vocus ADIP Sydney-Melbourne development",
+      "publisher": "Vocus",
+      "domain": "digital-connectivity",
+      "geography": "Sydney-Melbourne",
+      "source_type": "private_development_pipeline",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Early works/development stage; target 2029 and capacity should not be represented as operating infrastructure."
+      ]
+    },
+    {
+      "source_id": "DIG-SUBCO-SMAP-2026",
+      "title": "SMAP hypercable ready for service",
+      "publisher": "SUBCO",
+      "domain": "digital-connectivity",
+      "geography": "Sydney-Melbourne-Adelaide-Perth",
+      "source_type": "authoritative_reality",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "System-level subsea capacity is not equivalent to available capacity at every landing/data-centre handoff."
+      ]
+    },
+    {
+      "source_id": "DIG-ACMA-SUBSEA-2026",
+      "title": "International submarine cables landing in Australia",
+      "publisher": "ACMA",
+      "domain": "digital-connectivity",
+      "geography": "Australia",
+      "source_type": "authoritative_reality",
+      "status": "ingestion_planned",
+      "priority": "P1",
+      "map_relevance": true,
+      "known_gaps": [
+        "Landing-point geography has been identified but not yet materialised as an exhaustive feature dataset."
+      ]
     }
   ]
 }
