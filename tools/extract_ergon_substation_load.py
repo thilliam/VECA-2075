@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 """Summarise Ergon annual zone-substation half-hourly load archive.
 
-The source labels load fields MW/MVA. Values are preserved exactly as reported;
-this tool does not rescale suspicious values. Robust percentiles and QA flags are
-included so raw SCADA/meter anomalies remain visible instead of being corrected
-silently.
+The source labels load fields MW/MVA. Values are preserved exactly as reported.
+A separate interpreted /1000 view is emitted because cross-checks against other
+Ergon/Powerlink planning evidence show the archive values are systematically
+three orders of magnitude larger than plausible zone-substation MW/MVA loads.
+The interpreted fields are explicitly marked as an empirical scale interpretation,
+not an Ergon-published correction. Raw fields remain authoritative source evidence.
 """
 from __future__ import annotations
 
@@ -17,6 +19,9 @@ import re
 import statistics
 import zipfile
 from pathlib import Path
+
+SCALE_INTERPRETATION_FACTOR = 0.001
+SCALE_INTERPRETATION = "empirical_divide_by_1000_crosschecked_against_ergon_powerlink_planning_evidence"
 
 
 def pct(values: list[float], p: float) -> float | None:
@@ -44,6 +49,10 @@ def fnum(value: str) -> float | None:
 def base_name(member: str) -> str:
     name = Path(member).stem
     return re.sub(r"_EECL_20252026$", "", name, flags=re.I).strip()
+
+
+def scaled(value: float | None) -> float | str:
+    return round(value * SCALE_INTERPRETATION_FACTOR, 6) if value is not None else ""
 
 
 def main() -> int:
@@ -80,10 +89,16 @@ def main() -> int:
                 mw.append(a); mva.append(b)
                 if a < 0 or b < 0:
                     negative += 1
+
+            mean_mw = statistics.fmean(mw) if mw else None
+            p95_mw = pct(mw, 0.95)
             p99_mw = pct(mw, 0.99)
+            peak_mw = max(mw) if mw else None
+            mean_mva = statistics.fmean(mva) if mva else None
+            p95_mva = pct(mva, 0.95)
             p99_mva = pct(mva, 0.99)
-            # QA only: a zone-substation 99th percentile above 500 reported MW/MVA
-            # warrants checking source scale/meter quality. No correction is made.
+            peak_mva = max(mva) if mva else None
+
             scale_flag = bool((p99_mw is not None and abs(p99_mw) > 500) or (p99_mva is not None and abs(p99_mva) > 500))
             rows_out.append({
                 "source_record_id": member,
@@ -95,16 +110,26 @@ def main() -> int:
                 "invalid_or_missing_rows": invalid,
                 "negative_rows": negative,
                 "reported_units": "MW/MVA",
-                "reported_mean_mw": round(statistics.fmean(mw), 6) if mw else "",
-                "reported_p95_mw": round(pct(mw, 0.95), 6) if mw else "",
+                "reported_mean_mw": round(mean_mw, 6) if mean_mw is not None else "",
+                "reported_p95_mw": round(p95_mw, 6) if p95_mw is not None else "",
                 "reported_p99_mw": round(p99_mw, 6) if p99_mw is not None else "",
-                "reported_peak_mw": round(max(mw), 6) if mw else "",
-                "reported_mean_mva": round(statistics.fmean(mva), 6) if mva else "",
-                "reported_p95_mva": round(pct(mva, 0.95), 6) if mva else "",
+                "reported_peak_mw": round(peak_mw, 6) if peak_mw is not None else "",
+                "reported_mean_mva": round(mean_mva, 6) if mean_mva is not None else "",
+                "reported_p95_mva": round(p95_mva, 6) if p95_mva is not None else "",
                 "reported_p99_mva": round(p99_mva, 6) if p99_mva is not None else "",
-                "reported_peak_mva": round(max(mva), 6) if mva else "",
+                "reported_peak_mva": round(peak_mva, 6) if peak_mva is not None else "",
                 "possible_scale_or_meter_anomaly": str(scale_flag).lower(),
-                "interpretation_note": "Raw Ergon reported MW/MVA; no rescaling or spike correction applied.",
+                "source_scale_interpretation": SCALE_INTERPRETATION,
+                "interpretation_factor": SCALE_INTERPRETATION_FACTOR,
+                "interpreted_mean_mw": scaled(mean_mw),
+                "interpreted_p95_mw": scaled(p95_mw),
+                "interpreted_p99_mw": scaled(p99_mw),
+                "interpreted_peak_mw": scaled(peak_mw),
+                "interpreted_mean_mva": scaled(mean_mva),
+                "interpreted_p95_mva": scaled(p95_mva),
+                "interpreted_p99_mva": scaled(p99_mva),
+                "interpreted_peak_mva": scaled(peak_mva),
+                "interpretation_note": "Raw source values retained. Interpreted fields divide by 1000 based on cross-source scale validation; Ergon has not been found to publish an explicit correction notice.",
             })
 
     missing = sorted(expected - observed)
@@ -123,6 +148,9 @@ def main() -> int:
         "extra_source_record_ids": extra,
         "exact_identity_match": not missing and not extra and len(rows_out) == len(expected),
         "flagged_possible_scale_or_meter_anomaly": sum(r["possible_scale_or_meter_anomaly"] == "true" for r in rows_out),
+        "source_scale_interpretation": SCALE_INTERPRETATION,
+        "interpretation_factor": SCALE_INTERPRETATION_FACTOR,
+        "interpretation_is_source_published_correction": False,
     }
     args.reconciliation.parent.mkdir(parents=True, exist_ok=True)
     args.reconciliation.write_text(json.dumps(recon, indent=2) + "\n", encoding="utf-8")
