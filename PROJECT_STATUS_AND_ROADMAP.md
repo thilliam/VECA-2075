@@ -13,11 +13,12 @@ The governing doctrine is in `doctrine/design_principles.md`. The most important
 
 ## 2. Where the project is now
 
-VECA has moved beyond bootstrap/source reconnaissance. It now has a meaningful inherited-system evidence base, structured domain research, and a working layered-map POC. It has **not** yet selected candidate settlement regions, assigned settlement rankings, designed a VECA transport network, or performed whole-system economics.
+VECA has moved beyond bootstrap/source reconnaissance. It now has a meaningful inherited-system evidence base, structured domain research, a working layered-map POC, and a repository-level source-ingestion assurance system. It has **not** yet selected candidate settlement regions, assigned settlement rankings, designed a VECA transport network, or performed whole-system economics.
 
 Current position:
 
 **EXP-001 inherited-system mapping: first coherent pass substantially established; enrichment remains.**  
+**Existing imported datasets: assurance migration complete for the current 25 source-bearing sets.**  
 **EXP-002 habitat/resource screening: framework and source discovery established; material spatial screening is the next major analytical task.**  
 **Government intent/future capital optionality: first regional and asset-level evidence established.**  
 **Regional Anchor Cluster join: explicitly paused and placed in backlog until the physical survival screen is further advanced.**
@@ -31,6 +32,21 @@ Current position:
 - Evidence/inference/hypothesis separation established.
 - Controlled infrastructure status logic established: completed, under construction, funded/committed, approved-not-started, planned-high-confidence, proposed, cancelled.
 - Future concepts documented but intentionally unweighted: Capital Gravity, infrastructure inheritance per additional resident, habitat/resource suitability, economic potential, network value, AI infrastructure/economic/social resilience, life accessibility and voluntary migration attractiveness.
+
+### Data/source assurance
+
+- A canonical `assurance/dataset_register.json` now inventories every current derived dataset/support output and its assurance state.
+- Source-ingestion assurance now distinguishes **exhaustive imports** from **curated syntheses** so a selective evidence file cannot silently masquerade as a complete universe.
+- The four current exhaustive imports are independently reconciled:
+  - ABS east-coast SA2 population: **1,844 / 1,844**, zero missing/extra codes and zero 2025 ERP mismatches;
+  - Geoscience Australia major roads: **75,581 / 75,581**, zero missing/extra feature IDs;
+  - Geoscience Australia rail: **26,808 / 26,808**, zero missing/extra feature IDs;
+  - AEMO 2026 ISP scoped east-coast transmission projects: **21 / 21** entities reconciled.
+- Nineteen canonical curated datasets now have explicit scope/selection contracts and row-level provenance reconciliation.
+- Two legacy `domains/government_intent/` datasets are deprecated, non-canonical and excluded from map use.
+- The assurance pass fixed real defects: missing canonical provenance IDs, multi-source provenance parsing, malformed sparse CSV rows, and the prior aggregation of Queensland's twelve historical potential REZs into one map entity.
+- CI now requires dataset-register and source-assurance validation for data/source changes.
+- `reconciled` means entity/inventory completeness has been established; it does **not** imply every attribute, capacity or geometry field has independently passed engineering-grade verification.
 
 ### Population
 
@@ -60,6 +76,7 @@ Current position:
 - REZ/network status distinctions documented.
 - Important finding: connection/transfer/storage/generation capacity are different quantities and must not be collapsed.
 - Asset-level generation/storage extraction remains outstanding.
+- A major new evidence gap is now explicit: transmission proximity is not enough. Local distribution capacity, forecast load, constraints, retirement and augmentation need to be represented from DNSP planning/capacity data.
 
 ### Water
 
@@ -73,6 +90,13 @@ Current position:
 - Initial structured nodes include Western Sydney Aerotropolis/Bradfield, Parkes SAP/National Logistics Hub and Wagga/Bomen/RiFL SAP.
 - Port and intermodal research has begun to treat ports as inland catchment systems rather than waterfront points.
 - Broader QLD, Hunter, VIC and ACT node coverage remains incomplete.
+
+### Digital/compute and non-government forward intent
+
+- Source reconnaissance has identified a previously underrepresented evidence family: **non-government forward intent** from infrastructure owners, developers, investors, industry bodies and consortiums.
+- High-value source families now registered include data-centre operators/developers, electricity DNSPs, ARTC/conventional-rail investment, infrastructure-investment monitors, regional-development bodies, property/development groups and digital/fibre network owners.
+- Data centres are now treated as strategic infrastructure evidence rather than only an AI topic: site location, operational/committed/ultimate MW, grid connection, cooling/water, fibre, land, timing and capital can materially change future regional opportunity and grid demand.
+- These source families are discovered/registered but not yet ingested into canonical asset datasets.
 
 ### Climate, hazard, terrain and land
 
@@ -112,9 +136,9 @@ The economic question this enables is: **how much of the infrastructure needed b
 
 ### Mapping
 
-`maps/poc-001/` is a working layered-map proof of concept. It already demonstrates layer toggles, semantic zoom, time/status filtering, regional navigation and clickable evidence/interpretation panels. Hospital and tertiary assets are shown from the government-intent corpus; large road/rail datasets remain outside the browser POC and need tiled delivery for production-scale use.
+`maps/poc-001/` is a working layered-map proof of concept. It already demonstrates layer toggles, semantic zoom, time/status filtering, regional navigation and clickable evidence/interpretation panels. Subsequent POC work is extending the real east-coast foundation and population/settlement landscape. Large authoritative road/rail datasets require production-style tiled/served delivery rather than browser loading as monolithic GeoJSONs.
 
-The map is a view over evidence entities. It is not the analytical model itself.
+The map is a view over evidence entities. It is not the analytical model itself. Sparse map areas must not imply sparse real-world infrastructure when source coverage is incomplete; assurance/provenance state must remain visible to the mapping pipeline.
 
 ## 4. Important findings so far — not conclusions
 
@@ -127,6 +151,8 @@ The map is a view over evidence entities. It is not the analytical model itself.
 - Albury-Wodonga is a live example of capital moving from spatial optionality toward site lock-in.
 - Toowoomba's hospital relocation demonstrates that renewal capital can sometimes reshape service geography rather than simply reproduce it.
 - Universities and major hospitals can be city-shaping anchors; schools are more often population-following growth liabilities.
+- A transmission corridor or REZ near a candidate does not prove usable local power capacity; distribution constraints and competing major loads may dominate.
+- Large new compute/data-centre loads can become city-scale infrastructure facts and may either create regional opportunity or consume scarce grid/land/water capacity.
 
 None of these findings authorises a preferred candidate.
 
@@ -136,15 +162,23 @@ None of these findings authorises a preferred candidate.
 
 Define question, scope, evidence standard, status taxonomies, anti-bias rules and repository discipline.
 
+Source Coverage & Ingestion Assurance is now part of Stage-0 doctrine: every new entity-bearing ingestion must establish its source inventory/scope and pass the assurance contract before it is treated as complete.
+
 ### Stage 1 — Inherited system — SUBSTANTIALLY COMPLETE, ENRICHMENT ACTIVE
 
 Understand what already exists and what capital is already accumulating.
 
-Required close-out work:
+The current imported-set assurance migration is complete. Stage-1 enrichment should now add **new evidence families**, not repeatedly re-audit the old corpus.
+
+Required close-out / expansion work:
+- electricity distribution capacity and constraints from DNSPs;
 - energy generator/storage asset extraction;
+- data-centre/compute campuses and committed development pipeline;
+- conventional rail/freight capacity and committed network investment;
 - water gaps: Toowoomba/Darling Downs, New England, Hunter/coastal;
 - broader industry/logistics nodes in QLD/Hunter/VIC/ACT;
-- port catchments;
+- port/intermodal catchments;
+- digital/fibre backbone and major interconnection nodes;
 - clean non-double-counted capital register;
 - transport utilisation/capacity enrichment;
 - production-scale map delivery when useful.
@@ -270,13 +304,38 @@ Good parallel tasks now include:
 - flood/bushfire evidence;
 - water augmentation/yield comparison.
 
-**P1 — Stage-1 enrichment**
-- AEMO generator/storage extraction;
-- Hunter/New England/Toowoomba water completion;
-- QLD/Hunter/VIC/ACT industry-logistics nodes;
-- port catchments;
-- transport capacity/utilisation;
-- clean capital census.
+**P0 — Next Stage-1 ingestion wave**
+
+1. **Electricity distribution capacity / constraints — FIRST**
+   - Essential Energy, Ausgrid, Endeavour Energy, Energex, Ergon and Victorian DNSPs.
+   - Ingest bulk/zone substations, rated capacity where published, peak/forecast load, constraints, planned augmentation and retirement/replacement signals.
+   - Map output must distinguish transmission proximity from actual local connection capability.
+
+2. **Data-centre / compute infrastructure pipeline — SECOND**
+   - NEXTDC, CDC, AirTrunk, Goodman and other material east-coast operators/developers as sources justify.
+   - Capture campus/site, operator, status, operational/committed/ultimate MW, secured power/grid relationship, water/cooling evidence, fibre context, land footprint where available, capex and commissioning horizon.
+   - Preserve operating, contracted/committed, approved and speculative capacities separately.
+
+3. **Conventional rail/freight investment and capacity — THIRD**
+   - ARTC Network Investment Program, Inland Rail current delivery/preservation state, state rail infrastructure owners/operators, and ARA pipeline evidence where useful.
+   - Capture loops, signalling, axle/load/train-length constraints, resilience works, corridor capacity/utilisation evidence and committed upgrades.
+   - This is conventional network evidence, not VECA HSR design.
+
+4. **Water-system completion — FOURTH**
+   - Toowoomba/Darling Downs, New England, Hunter/coastal.
+   - Functional-system data: source/storage, treatment, transfer, sustainable yield where defensible, current demand, augmentation options, recycling/desalination/groundwater and climate sensitivity.
+
+5. **Ports/intermodal + industry/logistics expansion — FIFTH**
+   - Port of Brisbane/SEQ, Newcastle/Hunter, Port Botany/Western Sydney interfaces, Melbourne/Geelong and important inland intermodal nodes.
+   - Treat ports as inland catchment/logistics systems; capture rail/road interfaces and material expansion constraints/projects.
+
+**P1 — Following ingestion wave**
+- digital/fibre backbone, major interconnection facilities and subsea landing context;
+- private/institutional infrastructure pipeline via Infrastructure Partnerships Australia and major infrastructure owners/investors;
+- regional-development/settlement-planning evidence from RAI and comparable bodies;
+- property/development-sector growth-corridor and serviced-land evidence;
+- broader generation/storage asset census;
+- clean non-double-counted capital census.
 
 **P1 — Government intent**
 - new-school reservations/major school pipeline rather than all schools;
@@ -287,7 +346,7 @@ Good parallel tasks now include:
 **P2 — Map/data engineering**
 - add authoritative derived layers to map serving pipeline;
 - tiled delivery for large road/rail/spatial surfaces;
-- provenance/status/time metadata preserved in map entities.
+- provenance/status/time and assurance metadata preserved in map entities.
 
 **PAUSED — Regional Anchor Clusters v1**
 - do not start until explicitly resumed.
@@ -302,16 +361,16 @@ Good parallel tasks now include:
 
 ## 7. Known repository/QA issues
 
-- Canonical organisation is domain-first, but older `research/` and `data/` paths remain because the automated migration push was blocked by GitHub workflow-update permissions. Do not duplicate large datasets merely to make the tree look tidy.
-- Both `domains/government-intent/` and an older `domains/government_intent/` currently exist. **Use `domains/government-intent/` for all new work.** The underscore directory is legacy and must be consolidated carefully; do not add new evidence there.
-- `research/EXP-001-layer-status.md` and the original EXP-001 README became stale as work progressed; they are being updated as part of this documentation pass.
-- BITRE airport-history extraction failed/was parked because the source workbook delivery was unreliable. Current airport activity is represented; history is not required to block current work.
-- Exact road/rail QA should rely on materialised summaries and source validation, not old conversational counts.
-- Seed datasets are structured research artefacts, not necessarily exhaustive asset censuses.
+- Canonical organisation is domain-first, while older `research/` and `data/` paths remain live legacy material. Do not duplicate large datasets merely to make the tree look tidy.
+- Both `domains/government-intent/` and an older `domains/government_intent/` currently exist. **Use `domains/government-intent/` for all new work.** The underscore datasets are now explicitly deprecated/non-canonical and must not receive new evidence.
+- Exact road/rail entity completeness is now independently reconciled; future QA should focus on material attributes, geometry sanity, capacity/utilisation and freshness rather than repeating row-count census work.
+- BITRE airport extraction tooling exists, but no current airport dataset is present in the canonical derived-data tree. Treat airport ingestion as planned rather than already complete.
+- Seed datasets are structured research artefacts and many are intentionally selective syntheses. Their `selection_policy` / `completeness_test` in `assurance/dataset_register.json` defines what completeness means.
+- New derived datasets must be registered in `assurance/dataset_register.json` and pass `python tools/validate_dataset_register.py` plus `python tools/validate_source_assurance.py --strict` where applicable.
 
 ## 8. Rules for agents
 
-1. Read `README.md`, this document, `doctrine/design_principles.md`, and the relevant experiment/domain plan before work.
+1. Read `README.md`, this document, `doctrine/design_principles.md`, `assurance/README.md`, and the relevant experiment/domain plan before work.
 2. Search the repository before creating a new file or taxonomy.
 3. Prefer primary authoritative sources.
 4. Record provenance and source dates.
@@ -323,3 +382,4 @@ Good parallel tasks now include:
 10. Add findings and limitations, not just data.
 11. Avoid parallel agents editing the same canonical file; give agents bounded outputs that can be reviewed/merged.
 12. If a task reveals a doctrine-level decision, update `decisions/README.md` or propose a decision record rather than silently embedding it in code/data.
+13. For entity-bearing ingestion, independently establish source inventory/scope and reconcile every expected entity before calling the source complete.
