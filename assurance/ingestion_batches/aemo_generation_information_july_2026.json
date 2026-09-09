@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "updated": "2026-09-09",
+  "replace_existing": false,
+  "sources": [
+    {
+      "source_id": "ENERGY-AEMO-GENINFO-2026-07",
+      "title": "AEMO NEM Generation Information July 2026",
+      "publisher": "Australian Energy Market Operator",
+      "domain": "energy",
+      "geography": "NEM / VECA scope NSW1 QLD1 VIC1",
+      "source_type": "authoritative_reality",
+      "status": "reconciled",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Exhaustive unit-level source observations are reconciled, but site-level geometry/location joins remain to be materialised before map rendering.",
+        "AEMO third-party submitted future-project information is not independently verified simply because the source ingestion is reconciled.",
+        "ACT is represented inside NSW1 in AEMO's NEM-region field and requires a site/location join for ACT-specific map filtering."
+      ]
+    }
+  ],
+  "datasets": [
+    {
+      "path": "domains/energy/data/derived/aemo_generation_information_east_july_2026.csv",
+      "domain": "energy",
+      "role": "imported_dataset",
+      "assurance_state": "reconciled",
+      "map_relevance": true,
+      "provenance": "AEMO NEM Generation Information July 2026 Generator Information sheet; NSW1/QLD1/VIC1 exhaustive unit-level extraction with independent identity inventory",
+      "blocker": null,
+      "selection_claim": "exhaustive_import",
+      "selection_policy": "Include every Generator Information row in AEMO NEM regions NSW1, QLD1 and VIC1 that has a Gen Info Unit ID; preserve all 165 source columns and source-native commitment/status semantics.",
+      "completeness_test": "Independent openpyxl inventory and separate stdlib XML extraction must have exact composite source_record_id set equality with zero missing, extra or duplicate records.",
+      "canonical": true,
+      "observed_count": 1415,
+      "source_ids": ["ENERGY-AEMO-GENINFO-2026-07"]
+    }
+  ]
+}
