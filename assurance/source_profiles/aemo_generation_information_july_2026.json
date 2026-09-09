@@ -1,0 +1,1548 @@
+{
+  "source_file": "nem-generation-information-july-2026.xlsx",
+  "sheets": [
+    {
+      "name": "Disclaimer",
+      "path": "xl/worksheets/sheet1.xml",
+      "dimension": "A1:C78",
+      "xml_row_count": 8,
+      "max_observed_columns": 3,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            null,
+            "Disclaimer"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            null,
+            "Purpose\nThe purpose of this publication is to report information on technical and operational parameters as submitted to AEMO by the owners, operators or developers of existing, committed, and proposed  generation or storage projects that are registered, or intend to seek registration in the National Electricity Market (NEM). It is collected and published under clauses 3.7F, 3.13.3A, 2.1B.3, 2.10.1 and 3.13.3(a)(2A) of the National Electricity Rules."
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            null,
+            "Disclaimer\nAEMO has made reasonable efforts to ensure the quality of the information in this publication but cannot guarantee that information, forecasts and assumptions are accurate, complete or appropriate for your circumstances. \n\nThis publication contains data provided by third parties, including forecasts of the timing and capacity of future generation. This data is included “as is” and may not be free from errors or omissions. Modelling work performed as part of preparing this publication inherently requires assumptions about future behaviours and market interactions, which may result in forecasts that deviate from future conditions. There will usually be differences between estimated and actual results, because events and circumstances frequently do not occur as expected, and those differences may be material. \n\nAnyone proposing to use the information in this publication (which includes information and forecasts from third parties) should independently verify its accuracy, completeness and suitability for purpose, and obtain independent and specific advice from appropriate experts. Accordingly, to the maximum extent permitted by law, AEMO and its officers, employees and consultants involved in the preparation of this document:\n•   make no representation or warranty, express or implied, as to the currency, accuracy, reliability or completeness of the information in this document; and\n•   are not liable (whether by reason of negligence or otherwise) for any statements, opinions, information or other matters contained in or derived from this publication, or any omissions from it, or in respect of a person’s use of the information in this publication."
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            null,
+            "Copyright\n© 2026 Australian Energy Market Operator Limited. The material in this publication may be used in accordance with the copyright permissions on AEMO's website."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Background Information",
+      "path": "xl/worksheets/sheet2.xml",
+      "dimension": "A1:C193",
+      "xml_row_count": 73,
+      "max_observed_columns": 3,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            null,
+            "Background Information"
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            null,
+            "Worksheet index "
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            null,
+            "Worksheet",
+            "Description"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            null,
+            "Generator Information",
+            "This page lists specific technical and operational generation information as submitted by operators and developers."
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            null,
+            "Summary",
+            "This page summarises the generation capacity by Region, Fuel - Technology Category and Commitment Status."
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            null,
+            "Change log",
+            "This page lists material changes in submitted data between releases."
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            null,
+            "Field name descriptions"
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            null,
+            "Data Field Names and related Terms",
+            "Explanation/Definition"
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            null,
+            "Existing Generators",
+            "Existing generators include \"In Commissioning\", \"In Service\" and \"Announced Withdrawal\" generators. "
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            null,
+            "New Developments",
+            "New Developments include \"Publicly Announced\", \"Anticipated\" and \"Committed\"."
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            null,
+            "AEMO Survey ID",
+            "This is a special ID number at site level only used in AEMO Generation Information Page publication."
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            null,
+            "Site Name",
+            "Site Name of the generation project / power station, as to be Registered with AEMO in 'Application for Registration as a Generator in the NEM' document"
+          ]
+        },
+        {
+          "row": 16,
+          "values": [
+            null,
+            "AEMO KCI ID",
+            "This is a special ID numbers used by AEMO in the Key Connection Information (KCI) spreadsheet available on the AEMO Generation Information Page."
+          ]
+        },
+        {
+          "row": 17,
+          "values": [
+            null,
+            "Site Owner",
+            "Name / Trading name of the organisation that financially owns the Generation Project / Generating System at the site."
+          ]
+        },
+        {
+          "row": 18,
+          "values": [
+            null,
+            "Custodian",
+            "MSATS Participant ID of the organisation that has been delegated custody of this Survey. "
+          ]
+        },
+        {
+          "row": 19,
+          "values": [
+            null,
+            "Region",
+            "NEM region."
+          ]
+        },
+        {
+          "row": 20,
+          "values": [
+            null,
+            "Max Site Capacity (AC)",
+            "Maximum Capacity that the generator is registered to dispatch up to, as per the Generator Performance Standard. This represents the maximum generation of the generating system, taking into consideration multiple generation technology type units, and any operating constraints required to ensure power system security as determined during commissioning."
+          ]
+        },
+        {
+          "row": 21,
+          "values": [
+            null,
+            "Gen Info Unit ID",
+            "This is a special ID number at generating unit level only used in AEMO Generation Information Page publication."
+          ]
+        },
+        {
+          "row": 22,
+          "values": [
+            null,
+            "Unit Name",
+            "This is the generating unit name only used in AEMO Generation Information Page publication and provided by generator survey participants at the survey. It is not necessarily unique. It, together with Gen Info Unit ID, helps identify the unique ID and name of a generating unit. "
+          ]
+        },
+        {
+          "row": 23,
+          "values": [
+            null,
+            "Technology Type",
+            "The type (category) of electricity generation (or energy storage) technology used to convert (or store) energy from the given fuel. "
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Change Log",
+      "path": "xl/worksheets/sheet3.xml",
+      "dimension": "A1:H2406",
+      "xml_row_count": 2406,
+      "max_observed_columns": 8,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Change Log"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            "This sheet lists material changes to submitted data between releases. The scope of reported changes is outlined in the Change Log Documentation Method section of the Background Information sheet."
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "Note: To identify 'Site name updates', please choose the 'Site name update' option from the 'Type of Change' header (Column 'C') in the dataset below."
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            "Publication Date",
+            "Region",
+            "Type of Change",
+            "Site Name",
+            "Owner",
+            "DUID(s)",
+            "Note",
+            "Gen Info Unit ID"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            46227,
+            "NSW1",
+            "Expected Closure Year",
+            "Coleambally BESS",
+            "Coleambally BESS Trust",
+            null,
+            "Expected Closure Year Updated To 2064",
+            194001
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            46227,
+            "NSW1",
+            "Expected Closure Year",
+            "Dunedoo Solar Farm",
+            "Flow Power / Dunedoo Energy Project Pty Ltd",
+            null,
+            "Expected Closure Year Updated To 2063",
+            163201
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            46227,
+            "NSW1",
+            "Expected Closure Year",
+            "Hay Sun Farm",
+            "Hay Solar Farm Pty Ltd as Trustee of the Hay Solar Farm Trust",
+            null,
+            "Expected Closure Year Updated To 2068",
+            145101
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            46227,
+            "NSW1",
+            "Expected Closure Year",
+            "Keepit",
+            "GSP Energy Pty Ltd",
+            "KEEPIT",
+            "Expected Closure Year Updated To 2050",
+            110201
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            46227,
+            "NSW1",
+            "Expected Closure Year",
+            "Lockhart Solar and BESS",
+            "Glas Service Co Pty Ltd",
+            null,
+            "Expected Closure Year Updated From 2056 To 2060",
+            262601
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            46227,
+            "NSW1",
+            "Expected Closure Year",
+            "Mugga Lane Renewable Hybrid",
+            "LGIGEN",
+            null,
+            "Expected Closure Year Updated To 2044",
+            280702
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            46227,
+            "NSW1",
+            "Expected Closure Year",
+            "Mugga Lane Renewable Hybrid",
+            "LGIGEN",
+            null,
+            "Expected Closure Year Updated To 2044",
+            280703
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            46227,
+            "NSW1",
+            "Expected Closure Year",
+            "Muswellbrook Solar Farm",
+            "Ox2",
+            null,
+            "Expected Closure Year Updated To 2058",
+            279401
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            46227,
+            "NSW1",
+            "Expected Closure Year",
+            "Silver City Energy Storage",
+            "A-CAES NSW PTY LTD",
+            null,
+            "Expected Closure Year Updated From 2058 To 2060",
+            203001
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            46227,
+            "NSW1",
+            "Expected Closure Year",
+            "Tamworth BESS Project 1 Pty Ltd",
+            "Tamworth BESS Project 1 Pty Ltd",
+            null,
+            "Expected Closure Year Updated From 2047 To 2049",
+            251701
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            46227,
+            "NSW1",
+            "Expected Closure Year",
+            "Upper Hunter Energy Park - Wind",
+            "Upper Hunter Energy Park Pty Ltd",
+            null,
+            "Expected Closure Year Updated From 2051 To 2052",
+            127501
+          ]
+        },
+        {
+          "row": 16,
+          "values": [
+            46227,
+            "NSW1",
+            "Full Commercial Use Date",
+            "Bulabul BESS 1",
+            "WEBESS01 ProjectCo Pty Ltd as trustee for WEBESS01 Project Trust",
+            null,
+            "FCUD Updated From 2027-03-26 To 2027-04-12",
+            302501
+          ]
+        },
+        {
+          "row": 17,
+          "values": [
+            46227,
+            "NSW1",
+            "Full Commercial Use Date",
+            "Carag Solar Farm",
+            "Enerparc Australia Pty Ltd",
+            null,
+            "FCUD Updated From 2027-08-31 To 2027-12-31",
+            191001
+          ]
+        },
+        {
+          "row": 18,
+          "values": [
+            46227,
+            "NSW1",
+            "Full Commercial Use Date",
+            "Coleambally BESS",
+            "Coleambally BESS Trust",
+            null,
+            "FCUD Updated To 2029-04-30",
+            194001
+          ]
+        },
+        {
+          "row": 19,
+          "values": [
+            46227,
+            "NSW1",
+            "Full Commercial Use Date",
+            "Dunedoo Solar Farm",
+            "Flow Power / Dunedoo Energy Project Pty Ltd",
+            null,
+            "FCUD Updated To 2028-06-30",
+            163201
+          ]
+        },
+        {
+          "row": 20,
+          "values": [
+            46227,
+            "NSW1",
+            "Full Commercial Use Date",
+            "Goulburn River BESS",
+            " Lightsource Development Services Australia Pty Ltd",
+            null,
+            "FCUD Updated From 2029-08-01 To 2028-08-01",
+            219101
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Summary",
+      "path": "xl/worksheets/sheet4.xml",
+      "dimension": "A1:M49",
+      "xml_row_count": 49,
+      "max_observed_columns": 13,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            null,
+            "Summary"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            null,
+            "This sheet includes a Summary Chart and Table of the data within this file."
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            null,
+            null,
+            "Region"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            null,
+            null,
+            "NEM"
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            null,
+            null,
+            "Dispatch Type"
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            null,
+            null,
+            "Operational generators"
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            null,
+            "Summary Chart:  Operational generators (MW) - Existing and New Developments by Fuel-Technology Category"
+          ]
+        },
+        {
+          "row": 31,
+          "values": [
+            null,
+            "Summary Table:  NEM Operational generators (MW) - Existing* and New Developments by Fuel-Technology Category"
+          ]
+        },
+        {
+          "row": 32,
+          "values": [
+            null,
+            null,
+            null,
+            "Fuel - Technology Category"
+          ]
+        },
+        {
+          "row": 33,
+          "values": [
+            null,
+            null,
+            "Commitment Status",
+            "Coal",
+            "Gas Turbine",
+            "Hydro",
+            "Solar PV",
+            "Wind",
+            "Battery Storage",
+            "Other",
+            "Total"
+          ]
+        },
+        {
+          "row": 34,
+          "values": [
+            null,
+            null,
+            "Existing",
+            21335,
+            12479.380000000003,
+            7702.12,
+            13044.529999999997,
+            14689.740000000003,
+            7753.74,
+            0,
+            77004.51000000001
+          ]
+        },
+        {
+          "row": 35,
+          "values": [
+            null,
+            null,
+            "Announced Withdrawal",
+            6010,
+            1116.5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            7126.5
+          ]
+        },
+        {
+          "row": 36,
+          "values": [
+            null,
+            null,
+            "In Service",
+            15325,
+            10612.880000000003,
+            7702.12,
+            11337.189999999997,
+            12507.340000000004,
+            5945.179999999999,
+            0,
+            63429.71000000001
+          ]
+        },
+        {
+          "row": 37,
+          "values": [
+            null,
+            null,
+            "In Commissioning",
+            0,
+            750,
+            0,
+            1707.34,
+            2182.4,
+            1808.56,
+            0,
+            6448.299999999999
+          ]
+        },
+        {
+          "row": 38,
+          "values": [
+            null,
+            null,
+            "Committed",
+            0,
+            0,
+            2452,
+            1340.12,
+            1424.56,
+            5500.550000000001,
+            0,
+            10717.230000000001
+          ]
+        },
+        {
+          "row": 39,
+          "values": [
+            null,
+            null,
+            "Committed*",
+            0,
+            0,
+            0,
+            970.1,
+            204.6,
+            1923.73,
+            0,
+            3098.4300000000003
+          ]
+        },
+        {
+          "row": 40,
+          "values": [
+            null,
+            null,
+            "Anticipated",
+            0,
+            516.6,
+            1998,
+            6140.42,
+            4841.4,
+            12609.11,
+            189,
+            26294.53
+          ]
+        },
+        {
+          "row": 41,
+          "values": [
+            null,
+            null,
+            "Publicly Announced",
+            0,
+            8014,
+            15464,
+            53176.35000000001,
+            112396.45999999998,
+            147521.62,
+            7166,
+            343738.43
+          ]
+        },
+        {
+          "row": 42,
+          "values": [
+            null,
+            null,
+            "Notes:"
+          ]
+        },
+        {
+          "row": 43,
+          "values": [
+            null,
+            null,
+            "'Existing' Commitment Status is an aggregate of Announced Withdrawal, In Service, and In Commissioning Status."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Generator Information",
+      "path": "xl/worksheets/sheet5.xml",
+      "dimension": "A1:FI1751",
+      "xml_row_count": 1751,
+      "max_observed_columns": 165,
+      "sample_nonempty_rows": [
+        {
+          "row": 1,
+          "values": [
+            "Existing Generators & New Developments"
+          ]
+        },
+        {
+          "row": 2,
+          "values": [
+            "Since the October 2025 release, updates have been made to the formatting of column order and additional information is now available (such as DC capacity, Scheduled Storage Capacity for Winter and Summer, Max Site Capacity, Custodian, Gen Info Unit ID, Unit Name)."
+          ]
+        },
+        {
+          "row": 3,
+          "values": [
+            "For seasonal capacity trends, scroll right to column AA onwards."
+          ]
+        },
+        {
+          "row": 4,
+          "values": [
+            " Survey ID",
+            "Site Name",
+            " KCI Id",
+            "Site Owner",
+            "Custodian",
+            "Region",
+            "Max Site Capacity (AC)",
+            "Gen Info Unit ID",
+            "Unit Name",
+            "Technology Type",
+            "Technology Detail",
+            "Gas Turbine Fuel Type",
+            "DUID",
+            "Dispatch Type",
+            "Unit Count",
+            "Unit Capacity (MW DC)",
+            "Unit Capacity (MW AC)",
+            "Aggregated Nameplate Capacity (MW DC)",
+            "Aggregated Nameplate Capacity (MW AC)",
+            "Agg Nameplate Storage Capacity (MWh)",
+            "Commitment Status",
+            "Full Commercial Use Date",
+            "Expected Closure Year",
+            "Closure Date",
+            "Survey Last Requested Date",
+            "Survey Latest Update Date",
+            "Scheduled Capacity (MW) Winter 2026",
+            "Scheduled Capacity (MW) Summer Typical 2026-27",
+            "Scheduled Capacity (MW) Summer Peak 2026-27",
+            "Scheduled Capacity (MW) Winter 2027",
+            "Scheduled Capacity (MW) Summer Typical 2027-28",
+            "Scheduled Capacity (MW) Summer Peak 2027-28",
+            "Scheduled Capacity (MW) Winter 2028",
+            "Scheduled Capacity (MW) Summer Typical 2028-29",
+            "Scheduled Capacity (MW) Summer Peak 2028-29",
+            "Scheduled Capacity (MW) Winter 2029",
+            "Scheduled Capacity (MW) Summer Typical 2029-30",
+            "Scheduled Capacity (MW) Summer Peak 2029-30",
+            "Scheduled Capacity (MW) Winter 2030",
+            "Scheduled Capacity (MW) Summer Typical 2030-31",
+            "Scheduled Capacity (MW) Summer Peak 2030-31",
+            "Scheduled Capacity (MW) Winter 2031",
+            "Scheduled Capacity (MW) Summer Typical 2031-32",
+            "Scheduled Capacity (MW) Summer Peak 2031-32",
+            "Scheduled Capacity (MW) Winter 2032",
+            "Scheduled Capacity (MW) Summer Typical 2032-33",
+            "Scheduled Capacity (MW) Summer Peak 2032-33",
+            "Scheduled Capacity (MW) Winter 2033",
+            "Scheduled Capacity (MW) Summer Typical 2033-34",
+            "Scheduled Capacity (MW) Summer Peak 2033-34",
+            "Scheduled Capacity (MW) Winter 2034",
+            "Scheduled Capacity (MW) Summer Typical 2034-35",
+            "Scheduled Capacity (MW) Summer Peak 2034-35",
+            "Scheduled Capacity (MW) Winter 2035",
+            "Scheduled Capacity (MW) Summer Typical 2035-36",
+            "Scheduled Capacity (MW) Summer Peak 2035-36",
+            "Scheduled Storage Capacity (MWh) Winter 2026",
+            "Scheduled Storage Capacity (MWh) Summer 2026-27",
+            "Scheduled Storage Capacity (MWh) Winter 2027",
+            "Scheduled Storage Capacity (MWh) Summer 2027-28",
+            "Scheduled Storage Capacity (MWh) Winter 2028",
+            "Scheduled Storage Capacity (MWh) Summer 2028-29",
+            "Scheduled Storage Capacity (MWh) Winter 2029",
+            "Scheduled Storage Capacity (MWh) Summer 2029-30",
+            "Scheduled Storage Capacity (MWh) Winter 2030",
+            "Scheduled Storage Capacity (MWh) Summer 2030-31",
+            "Scheduled Storage Capacity (MWh) Winter 2031",
+            "Scheduled Storage Capacity (MWh) Summer 2031-32",
+            "Scheduled Storage Capacity (MWh) Winter 2032",
+            "Scheduled Storage Capacity (MWh) Summer 2032-33",
+            "Scheduled Storage Capacity (MWh) Winter 2033",
+            "Scheduled Storage Capacity (MWh) Summer 2033-34",
+            "Scheduled Storage Capacity (MWh) Winter 2034",
+            "Scheduled Storage Capacity (MWh) Summer 2034-35",
+            "Scheduled Storage Capacity (MWh) Winter 2035",
+            "Scheduled Storage Capacity (MWh) Summer 2035-36"
+          ]
+        },
+        {
+          "row": 5,
+          "values": [
+            2489,
+            "Abermain BESS",
+            "Q00086",
+            "Firm Power P/L",
+            "agl_nr",
+            "QLD1",
+            125,
+            248901,
+            "AMBS_GU1",
+            "Battery Storage",
+            "Lithium-ion",
+            null,
+            null,
+            "Scheduled",
+            66,
+            1.93,
+            1.93,
+            127.38,
+            127.38,
+            254.1,
+            "Publicly Announced",
+            47480,
+            2049,
+            null,
+            46361,
+            46164.56862268518
+          ]
+        },
+        {
+          "row": 6,
+          "values": [
+            1934,
+            "ACT BESS",
+            "N00010",
+            "Berrybank 2 Asset Pty Ltd as Trustee for Berrybank 2 Asset Trust",
+            "BERBANK",
+            "NSW1",
+            10,
+            193402,
+            "QBESS",
+            "Battery Storage",
+            "Lithium-ion",
+            null,
+            "QBYNB1",
+            "Scheduled",
+            1,
+            null,
+            10,
+            null,
+            10,
+            20,
+            "In Service",
+            null,
+            2033,
+            null,
+            46091,
+            46099.69997685185,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            20,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "row": 7,
+          "values": [
+            1844,
+            "Adelaide Desalination Plant",
+            null,
+            "South Australian Water Corporation",
+            "SAWCML",
+            "SA1",
+            26,
+            184401,
+            "ADPBA1",
+            "Battery Storage",
+            "Lithium-ion",
+            null,
+            "ADPBA1",
+            "Scheduled",
+            1,
+            null,
+            6.3,
+            null,
+            6.3,
+            12.6,
+            "In Service",
+            null,
+            2041,
+            null,
+            46091,
+            46099.64518518518,
+            6.1,
+            6.05,
+            6,
+            6.1,
+            6.05,
+            6,
+            6.1,
+            6.05,
+            6,
+            6.1,
+            6.05,
+            6,
+            6.1,
+            6.05,
+            6,
+            6.1,
+            6.05,
+            6,
+            6.1,
+            6.05,
+            6,
+            6.1,
+            6.05,
+            6,
+            6.1,
+            6.05,
+            6,
+            6.1,
+            6.05,
+            6,
+            12.2,
+            12,
+            12.2,
+            12,
+            12.2,
+            12,
+            12.2,
+            12,
+            12.2,
+            12,
+            12.2,
+            12,
+            12.2,
+            12,
+            12.2,
+            12,
+            12.2,
+            12,
+            12.2,
+            12
+          ]
+        },
+        {
+          "row": 8,
+          "values": [
+            1844,
+            "Adelaide Desalination Plant",
+            null,
+            "South Australian Water Corporation",
+            "SAWCML",
+            "SA1",
+            26,
+            184406,
+            "ADVMH1",
+            "Hydro",
+            "Run of River",
+            null,
+            "ADPMH1",
+            "Non-scheduled",
+            1,
+            null,
+            1.44,
+            null,
+            1.44,
+            null,
+            "In Service",
+            null,
+            2050,
+            null,
+            46091,
+            46099.64518518518
+          ]
+        },
+        {
+          "row": 9,
+          "values": [
+            1844,
+            "Adelaide Desalination Plant",
+            null,
+            "South Australian Water Corporation",
+            "SAWCML",
+            "SA1",
+            26,
+            184407,
+            "ADPPV2",
+            "Solar PV",
+            "Fixed",
+            null,
+            "ADPPV2",
+            "Semi-scheduled",
+            5,
+            null,
+            2.75,
+            null,
+            13.75,
+            null,
+            "In Service",
+            null,
+            2041,
+            null,
+            46091,
+            46099.64518518518,
+            11.75,
+            10.75,
+            10.5,
+            11.75,
+            10.75,
+            10.5,
+            11.75,
+            10.75,
+            10.5,
+            11.75,
+            10.75,
+            10.5,
+            11.75,
+            10.75,
+            10.5,
+            11.75,
+            10.75,
+            10.5,
+            11.75,
+            10.75,
+            10.5,
+            11.75,
+            10.75,
+            10.5,
+            11.75,
+            10.75,
+            10.5,
+            11.75,
+            10.75,
+            10.5
+          ]
+        },
+        {
+          "row": 10,
+          "values": [
+            1844,
+            "Adelaide Desalination Plant",
+            null,
+            "South Australian Water Corporation",
+            "SAWCML",
+            "SA1",
+            26,
+            184408,
+            "ADPPV1",
+            "Solar PV",
+            "Fixed",
+            null,
+            "ADPPV1",
+            "Semi-scheduled",
+            4,
+            null,
+            2.75,
+            null,
+            11,
+            null,
+            "In Service",
+            null,
+            2041,
+            null,
+            46091,
+            46099.64518518518,
+            9.4,
+            8.6,
+            8.4,
+            9.4,
+            8.6,
+            8.4,
+            9.4,
+            8.6,
+            8.4,
+            9.4,
+            8.6,
+            8.4,
+            9.4,
+            8.6,
+            8.4,
+            9.4,
+            8.6,
+            8.4,
+            9.4,
+            8.6,
+            8.4,
+            9.4,
+            8.6,
+            8.4,
+            9.4,
+            8.6,
+            8.4,
+            9.4,
+            8.6,
+            8.4
+          ]
+        },
+        {
+          "row": 11,
+          "values": [
+            1547,
+            "Alberton Wind Farm",
+            null,
+            "Synergy Wind Pty Ltd",
+            "exceed-energy_NR",
+            "VIC1",
+            null,
+            154701,
+            "Alberton Wind Farm:1 - 34",
+            "Wind",
+            "Onshore",
+            null,
+            null,
+            "Semi-scheduled",
+            34,
+            null,
+            3.6,
+            null,
+            122.4,
+            null,
+            "Publicly Announced",
+            null,
+            null,
+            null,
+            46091,
+            43246.69291666667
+          ]
+        },
+        {
+          "row": 12,
+          "values": [
+            3255,
+            "Albury Mill BESS - KCI",
+            "N00287",
+            "VISY PULP AND PAPER PTY. LTD.",
+            "visy_NR",
+            "NSW1",
+            350,
+            325501,
+            "Albury Mill BESS",
+            "Battery Storage",
+            "Lithium-ion",
+            null,
+            null,
+            "Scheduled",
+            1,
+            null,
+            350,
+            null,
+            350,
+            null,
+            "Publicly Announced",
+            null,
+            null,
+            null,
+            46091,
+            46119.639328703706
+          ]
+        },
+        {
+          "row": 13,
+          "values": [
+            2591,
+            "Aldoga BESS",
+            "Q00118",
+            "Acciona Energy Australia Global",
+            "acciona_NR",
+            "QLD1",
+            400,
+            259101,
+            "ADBS_GU1",
+            "Battery Storage",
+            "Lithium-ion",
+            null,
+            null,
+            "Scheduled",
+            1,
+            null,
+            400,
+            null,
+            400,
+            800,
+            "Publicly Announced",
+            47848,
+            2055,
+            null,
+            46361,
+            46174.57990740741
+          ]
+        },
+        {
+          "row": 14,
+          "values": [
+            1509,
+            "Aldoga Solar Farm",
+            "Q00036",
+            "Acciona Energy Australia Global Pty Ltd",
+            "acciona_NR",
+            "QLD1",
+            387,
+            150901,
+            "ADSF_GU1",
+            "Solar PV",
+            "Single Axis Tracking",
+            null,
+            "ALDGASF1",
+            "Semi-scheduled",
+            157,
+            3.09,
+            2.47,
+            485.13,
+            387.79,
+            null,
+            "In Service",
+            45929,
+            2051,
+            null,
+            46091,
+            46094.437731481485,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005,
+            387.005
+          ]
+        },
+        {
+          "row": 15,
+          "values": [
+            3069,
+            "Alligator Creek BESS",
+            "Q00239",
+            "Alligator Creek BESS Pty Ltd",
+            null,
+            "QLD1",
+            120,
+            306901,
+            "ACBS_GU1",
+            "Battery Storage",
+            "Lithium-ion",
+            null,
+            null,
+            "Scheduled",
+            1,
+            null,
+            120,
+            null,
+            120,
+            null,
+            "Publicly Announced",
+            null,
+            null,
+            null,
+            46091,
+            45840.98260416667
+          ]
+        },
+        {
+          "row": 16,
+          "values": [
+            1002,
+            "Angaston",
+            null,
+            "Snowy Hydro Ltd",
+            "SNOWY",
+            "SA1",
+            50,
+            100201,
+            "Angaston:Units 1-30",
+            "Gas Turbine",
+            "OCGT",
+            "Diesel/ Fuel Oil",
+            "ANGAST1",
+            "Scheduled",
+            1,
+            null,
+            30.8,
+            null,
+            30.8,
+            null,
+            "In Service",
+            null,
+            2070,
+            null,
+            46091,
+            46105.36209490741,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72,
+            27.72
+          ]
+        },
+        {
+          "row": 17,
+          "values": [
+            1002,
+            "Angaston",
+            null,
+            "Snowy Hydro Ltd",
+            "SNOWY",
+            "SA1",
+            50,
+            100202,
+            "Angaston:Units 13-24",
+            "Gas Turbine",
+            "OCGT",
+            "Diesel/ Fuel Oil",
+            "ANGAST1",
+            "Scheduled",
+            1,
+            null,
+            15.4,
+            null,
+            15.4,
+            null,
+            "In Service",
+            null,
+            2070,
+            null,
+            46091,
+            46105.36209490741,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48,
+            18.48
+          ]
+        },
+        {
+          "row": 18,
+          "values": [
+            1003,
+            "Appin",
+            null,
+            "EDL CSM NSW Pty Ltd",
+            "EDLGRPOP",
+            "NSW1",
+            55,
+            100301,
+            "Appin:1-54",
+            "Other",
+            "Other",
+            "Landfill Gas",
+            "APPIN",
+            "Non-scheduled",
+            54,
+            null,
+            1.03,
+            null,
+            55.62,
+            null,
+            "In Service",
+            null,
+            2036,
+            null,
+            46091,
+            46108.68335648148
+          ]
+        },
+        {
+          "row": 19,
+          "values": [
+            2200,
+            "Apsley BESS Project",
+            "N00063",
+            "BW Ess Australia Pty Ltd",
+            "bw-ess_nr",
+            "NSW1",
+            120,
+            220001,
+            "ABESS_G1",
+            "Battery Storage",
+            "Lithium-ion",
+            null,
+            null,
+            "Scheduled",
+            1,
+            null,
+            120,
+            null,
+            120,
+            260,
+            "Publicly Announced",
+            null,
+            null,
+            null,
+            46361,
+            46170.62701388889
+          ]
+        },
+        {
+          "row": 20,
+          "values": [
+            1957,
+            "Aquila Wind",
+            "N00038",
+            "ACEN Australia Pty Ltd",
+            "acenaustralia_NR",
+            "NSW1",
+            200,
+            195701,
+            "AquilWin",
+            "Wind",
+            "Onshore",
+            null,
+            null,
+            "Semi-scheduled",
+            28,
+            7.2,
+            7.2,
+            201.6,
+            201.6,
+            null,
+            "Publicly Announced",
+            48549,
+            2080,
+            null,
+            46361,
+            46155.57486111111
+          ]
+        }
+      ]
+    }
+  ]
+}
