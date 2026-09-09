@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "updated": "2026-09-09",
+  "replace_existing": false,
+  "sources": [
+    {"source_id":"WATER-TOOWOOMBA-SYSTEM-2026","title":"Toowoomba bulk water system and Water Vision 2071","publisher":"Toowoomba Regional Council / Seqwater","domain":"water","geography":"Toowoomba / Darling Downs","source_type":"government_intent","status":"relevant","priority":"P0","map_relevance":true,"known_gaps":["System components, transfer capacity and long-term augmentation are structured; secure yield under future climate remains to be quantified."]},
+    {"source_id":"WATER-LOWER-HUNTER-2026","title":"Lower Hunter Water Security Plan and Belmont desalination delivery","publisher":"Hunter Water / NSW Government","domain":"water","geography":"Lower Hunter","source_type":"government_intent","status":"relevant","priority":"P0","map_relevance":true,"known_gaps":["Belmont 30 ML/day augmentation is structured; full current source yields, recycled-water capacities and Upper Hunter connection economics remain to be normalized."]},
+    {"source_id":"WATER-TAMWORTH-SECURITY-2026","title":"Tamworth current supply, entitlement and drought-security evidence","publisher":"Tamworth Regional Council / WaterNSW","domain":"water","geography":"Tamworth / New England","source_type":"authoritative_reality","status":"relevant","priority":"P0","map_relevance":true,"known_gaps":["Entitlements and current augmentation are structured; climate-adjusted secure yield and treatment/transfer bottlenecks remain to be quantified."]},
+    {"source_id":"WATER-ARMIDALE-SECURITY-2026","title":"Armidale Regional Water Security Project and current system evidence","publisher":"Armidale Regional Council / NSW Planning Portal","domain":"water","geography":"Armidale / Guyra / Uralla / New England","source_type":"government_intent","status":"relevant","priority":"P0","map_relevance":true,"known_gaps":["Staged Oaky/Malpas project and current high-risk status are structured; final approvals, funding, delivered secure yield and NEREZ demand outcomes remain unresolved."]}
+  ]
+}
