@@ -1,0 +1,51 @@
+entity_id,longitude,latitude,geometry_quality,geometry_note
+EN-TR-001,147.37,-35.12,representative_project_anchor,HumeLink represented at Wagga Wagga network anchor; not project alignment
+EN-TR-002,151.65,-32.90,representative_project_anchor,Hunter-Central Coast REZ network represented at regional anchor; not project alignment
+EN-TR-003,149.10,-32.60,representative_project_anchor,Central-West Orana REZ network represented at regional anchor; not project alignment
+EN-TR-004,144.00,-37.20,representative_project_anchor,Western Renewables Link represented at western Victoria regional anchor; not project alignment
+EN-TR-005,144.50,-20.00,representative_project_anchor,CopperString represented by corridor midpoint; not project alignment
+EN-TR-006,151.00,-30.50,representative_project_anchor,New England REZ network represented at regional anchor; not project alignment
+EN-TR-007,151.20,-33.30,representative_project_anchor,Sydney Ring North represented by Hunter-to-Sydney regional anchor; not project alignment
+EN-TR-008,150.90,-34.10,representative_project_anchor,Sydney Ring South represented by southern Sydney regional anchor; not project alignment
+EN-TR-009,144.80,-35.00,representative_project_anchor,VNI West represented by corridor midpoint; not project alignment
+EN-TR-010,143.00,-37.00,representative_project_anchor,Western Victoria Reinforcement represented at regional anchor; not project alignment
+EN-TR-011,147.00,-22.00,representative_project_anchor,Central to North Queensland reinforcement represented by corridor midpoint; not project alignment
+EN-TR-012,153.03,-27.47,representative_project_anchor,Brisbane Area reinforcement represented at Brisbane network anchor; not project alignment
+EN-TR-013,149.10,-32.60,representative_project_anchor,Central-West Orana expansion represented at regional anchor; not project alignment
+EN-TR-014,151.50,-29.00,representative_project_anchor,QNI Connect represented by QLD-NSW corridor midpoint; not project alignment
+EN-TR-015,151.10,-27.70,representative_project_anchor,South West to SEQ reinforcement represented by corridor midpoint; not project alignment
+EN-TR-016,146.00,-38.00,representative_project_anchor,Eastern Victoria reinforcement represented at regional anchor; not project alignment
+EN-TR-017,142.50,-38.00,representative_project_anchor,South West Victoria expansion represented at regional anchor; not project alignment
+EN-TR-018,151.25,-23.85,representative_project_anchor,Gladstone project represented at Gladstone; not project alignment
+EN-TR-019,148.50,-35.40,representative_project_anchor,Wondalga switching station represented approximately from project locality; validate exact site
+EN-TR-020,147.00,-38.10,representative_project_anchor,Gippsland offshore wind transmission represented at Gippsland coast anchor; not project alignment
+EN-TR-021,147.00,-21.50,representative_project_anchor,Central to North Queensland stage 2 represented by corridor midpoint; not project alignment
+EN-NSW-CWO,149.50,-32.50,representative_zone_anchor,Central-West Orana REZ regional anchor; not zone polygon
+EN-NSW-NE,151.00,-30.30,representative_zone_anchor,New England REZ regional anchor; not zone polygon
+EN-NSW-HCC,151.50,-32.90,representative_zone_anchor,Hunter-Central Coast REZ regional anchor; not zone polygon
+EN-NSW-ILL,150.80,-34.50,representative_zone_anchor,Illawarra REZ regional anchor; not zone polygon
+EN-NSW-SW,145.50,-34.70,representative_zone_anchor,South West REZ regional anchor; not zone polygon
+EN-VIC-CH,143.80,-37.30,representative_zone_anchor,Central Highlands proposed REZ regional anchor; not zone polygon
+EN-VIC-CN,144.80,-36.40,representative_zone_anchor,Central North proposed REZ regional anchor; not zone polygon
+EN-VIC-GIP,147.00,-38.10,representative_zone_anchor,Gippsland proposed REZ regional anchor; not zone polygon
+EN-VIC-NW,142.50,-35.50,representative_zone_anchor,North West proposed REZ regional anchor; not zone polygon
+EN-VIC-SW,142.50,-38.00,representative_zone_anchor,South West proposed REZ regional anchor; not zone polygon
+EN-VIC-W,143.50,-37.60,representative_zone_anchor,Western proposed REZ regional anchor; not zone polygon
+INF-QLD-CRR,153.03,-27.47,representative_project_anchor,Cross River Rail represented at Brisbane CBD
+INF-QLD-LGFR,153.15,-27.75,representative_project_anchor,Logan-Gold Coast Faster Rail represented by corridor midpoint
+INF-QLD-WAVE1,153.05,-26.80,representative_project_anchor,Wave Stage 1 represented near Beerwah-Caloundra corridor
+INF-QLD-COOMERA1,153.34,-27.95,representative_project_anchor,Coomera Connector Stage 1 represented by corridor midpoint
+INF-AUS-INLAND-SOUTH,148.50,-34.00,representative_project_anchor,Inland Rail Beveridge-Parkes priority delivery represented by broad corridor midpoint
+INF-NSW-METROWEST,151.00,-33.82,representative_project_anchor,Sydney Metro West represented at Parramatta
+INF-NSW-WHT,151.20,-33.85,representative_project_anchor,Western Harbour Tunnel represented at Sydney harbour corridor
+INF-NSW-COFFS,153.10,-30.30,representative_project_anchor,Coffs Harbour Bypass represented at Coffs Harbour
+INF-NSW-M1RT,151.75,-32.75,representative_project_anchor,M1 extension represented at Raymond Terrace
+INF-NSW-CWO-TRANS,149.10,-32.60,representative_project_anchor,Central-West Orana transmission represented at regional anchor
+INF-NSW-HUMELINK,147.37,-35.12,representative_project_anchor,HumeLink represented at Wagga Wagga network anchor
+INF-VIC-METROTUNNEL,144.96,-37.81,representative_project_anchor,Metro Tunnel represented at Melbourne CBD
+INF-VIC-NEL,145.10,-37.73,representative_project_anchor,North East Link represented at Melbourne north-east
+IMT-BNE-BMT,153.18,-27.38,approximate_asset_point,Port of Brisbane multimodal terminal approximate site
+IMT-BNE-AR,153.00,-27.58,approximate_asset_point,Acacia Ridge intermodal terminal approximate site
+IMT-BNE-BROM,152.96,-27.98,approximate_asset_point,Bromelton terminal precinct approximate site
+IMT-NSW-RIFL,147.45,-35.06,approximate_asset_point,RiFL Bomen approximate site
+IMT-NSW-PARKES,148.18,-33.14,approximate_asset_point,Parkes logistics/Goobang complex approximate site
