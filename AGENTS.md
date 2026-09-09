@@ -51,6 +51,7 @@ Cross-domain source assurance lives under:
 
 `assurance/source_register.json`  
 `assurance/dataset_register.json`  
+`assurance/curated_dataset_contracts.json`  
 `assurance/manifests/`
 
 Older `research/` and `data/` content is still live legacy material while workflow-dependent migration is unresolved. Search both before assuming evidence is absent.
@@ -63,13 +64,18 @@ Do not duplicate large files merely to satisfy the target directory layout.
 
 Prefer primary government/statistical/network/authority sources, while also tracking infrastructure-owner intent, committed/private development, industry propositions and market analysis as distinct source types. Capture source title, publisher, publication/data date, geography, status and limitations. A source register is part of the research output, not optional administration.
 
-**Do not call an ingestion complete because the output looks plausible.** For every entity-bearing source, establish an independent source inventory before/independently of extraction, then account for every expected entity as `mapped`, `dataset_only`, `excluded`, `duplicate` or `unresolved`.
+**First declare what the dataset claims to be.**
 
-The required invariant is:
+- An **exhaustive import** claims to reproduce a defined source inventory. Establish an independent source inventory before/independently of extraction, then account for every expected entity as `mapped`, `dataset_only`, `excluded`, `duplicate` or `unresolved`.
+- A **curated synthesis** intentionally selects evidence. Do not invent a false 27/27 universe for it. Instead ensure every included row resolves to source provenance and give the dataset an explicit selection claim/policy/completeness test in `assurance/curated_dataset_contracts.json`.
+
+For exhaustive imports the required invariant is:
 
 `expected_count == mapped + dataset_only + excluded + duplicate + unresolved`
 
 The expected count may not simply be the row count produced by the same extractor being tested. Record its independent basis and evidence locator in the source manifest. A source cannot become `verified` while unresolved entities remain.
+
+`provenance_reconciled` on a curated set means all included rows are structurally sourced and its scope is explicit. It does **not** mean all possible real-world entities of that type have been discovered.
 
 Completeness also does not prove correctness. Verify identity/location and decision-critical fields such as status, capacity, MW, value and timing against evidence, and use spatial sanity checks where relevant.
 
@@ -78,11 +84,12 @@ Completeness also does not prove correctness. Verify identity/location and decis
 Run for data/source changes:
 
 ```bash
+python tools/audit_current_datasets.py
 python tools/validate_dataset_register.py
 python tools/validate_source_assurance.py --strict
 ```
 
-See `assurance/README.md` for the full source contract and manifest template. See `assurance/migration/current_imported_sets_2026-09-09.md` for the baseline census of the 25 source-bearing datasets that existed when dataset-level assurance was introduced.
+See `assurance/README.md` for the full contract. See `assurance/migration/current_imported_sets_2026-09-09.md` for the baseline census of the 25 source-bearing datasets that existed when dataset-level assurance was introduced.
 
 When a source gives multiple capacities or dollar values, preserve their definitions rather than choosing the most convenient number.
 
@@ -93,7 +100,7 @@ Parallel agents should receive bounded domains/regions/outputs. Avoid multiple a
 A good source-ingestion task normally produces:
 - `assurance/source_register.json` additions/status updates;
 - `assurance/dataset_register.json` additions/status updates for any derived file;
-- a source-specific `assurance/manifests/*.json` reconciliation record;
+- a source-specific `assurance/manifests/*.json` record for exhaustive imports, or a curated dataset scope contract for selective synthesis;
 - a structured derived dataset where appropriate;
 - a concise findings/limitations note;
 - explicit unresolved questions/known gaps;
@@ -106,7 +113,7 @@ If new work conflicts with doctrine or an existing decision, stop and surface th
 
 `maps/poc-001/` proves the layered-map interaction model. Do not rebuild it as part of a research task unless mapping is the assigned task. Preserve provenance/status/time semantics when adding spatial data.
 
-A sparse map layer must not silently imply sparse real-world infrastructure when source coverage is incomplete. Map/data tasks should expose or preserve assurance status so `verified`, partial and not-yet-researched coverage can be distinguished.
+A sparse map layer must not silently imply sparse real-world infrastructure when source coverage is incomplete. Map/data tasks should expose or preserve assurance status so `verified`, exhaustive/reconciled, curated/provenance-reconciled, partial and not-yet-researched coverage can be distinguished.
 
 Large authoritative road/rail files already exist under legacy `data/derived/transport/`; production browser delivery should use tiling/serving rather than loading whole files.
 

@@ -12,7 +12,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTER = ROOT / "assurance" / "dataset_register.json"
-VALID_STATES = {"reconciled", "verified", "inventory_required", "source_decomposition_required", "support_output", "stale"}
+CONTRACTS = ROOT / "assurance" / "curated_dataset_contracts.json"
+VALID_STATES = {
+    "reconciled", "verified", "inventory_required", "source_decomposition_required",
+    "provenance_reconciled", "legacy_deprecated", "support_output", "stale"
+}
 VALID_ROLES = {"imported_dataset", "support_output"}
 
 
@@ -41,6 +45,14 @@ def main() -> int:
         print("dataset register schema invalid", file=sys.stderr)
         return 1
 
+    contracts: dict[str, dict] = {}
+    if CONTRACTS.exists():
+        cdata = json.loads(CONTRACTS.read_text(encoding="utf-8"))
+        for contract in cdata.get("contracts", []):
+            path = contract.get("path")
+            if isinstance(path, str):
+                contracts[path] = contract
+
     registered: dict[str, dict] = {}
     for i, item in enumerate(data["datasets"]):
         where = f"dataset_register datasets[{i}]"
@@ -56,16 +68,33 @@ def main() -> int:
         registered[path] = item
         if item.get("role") not in VALID_ROLES:
             errors.append(f"{where}: invalid role {item.get('role')!r}")
-        if item.get("assurance_state") not in VALID_STATES:
-            errors.append(f"{where}: invalid assurance_state {item.get('assurance_state')!r}")
+        state = item.get("assurance_state")
+        if state not in VALID_STATES:
+            errors.append(f"{where}: invalid assurance_state {state!r}")
         if not isinstance(item.get("domain"), str) or not item.get("domain"):
             errors.append(f"{where}: domain required")
         if not isinstance(item.get("map_relevance"), bool):
             errors.append(f"{where}: map_relevance must be boolean")
-        if item.get("role") == "imported_dataset" and item.get("assurance_state") not in {"reconciled", "verified"}:
-            blocker = item.get("blocker")
-            if not isinstance(blocker, str) or not blocker.strip():
-                errors.append(f"{where}: incomplete imported dataset requires blocker")
+
+        if item.get("role") == "imported_dataset":
+            if state in {"inventory_required", "source_decomposition_required", "stale"}:
+                blocker = item.get("blocker")
+                if not isinstance(blocker, str) or not blocker.strip():
+                    errors.append(f"{where}: incomplete imported dataset requires blocker")
+            if state == "provenance_reconciled":
+                contract = contracts.get(path)
+                if not contract:
+                    errors.append(f"{where}: provenance_reconciled dataset requires curated contract")
+                elif contract.get("canonical") is not True:
+                    errors.append(f"{where}: provenance_reconciled dataset contract must be canonical")
+                for field in ("selection_claim", "selection_policy", "completeness_test"):
+                    if not isinstance(item.get(field), str) or not item.get(field):
+                        errors.append(f"{where}: provenance_reconciled dataset requires {field}")
+            if state == "legacy_deprecated":
+                if item.get("canonical") is not False:
+                    errors.append(f"{where}: legacy_deprecated dataset must set canonical=false")
+                if item.get("map_relevance") is True:
+                    errors.append(f"{where}: legacy_deprecated dataset cannot be a canonical map input; set map_relevance=false")
 
     actual = discover()
     reg_paths = set(registered)

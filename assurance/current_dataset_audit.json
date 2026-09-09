@@ -1,0 +1,800 @@
+{
+  "schema_version": 1,
+  "dataset_count": 28,
+  "kind_counts": {
+    "curated_synthesis": 21,
+    "exhaustive_import": 4,
+    "support_output": 3
+  },
+  "curated_structural_provenance_failures": 0,
+  "datasets": [
+    {
+      "path": "data/derived/energy_zones_seed.csv",
+      "domain": "energy",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": true,
+      "blocker": "Reconcile each included zone/project against its primary source inventory rather than accepting curated seed row count.",
+      "record_count": 23,
+      "columns": [
+        "zone_id",
+        "name",
+        "state",
+        "zone_type",
+        "current_interpretation",
+        "status",
+        "source_id",
+        "notes"
+      ],
+      "provenance_fields": [
+        "source_id"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "data/derived/hsr_corridor_obstacles_seed.csv",
+      "domain": "transport",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": true,
+      "blocker": "Each obstacle/evidence family needs source-level inventory and citation reconciliation.",
+      "record_count": 7,
+      "columns": [
+        "obstacle_id",
+        "study_id",
+        "geography",
+        "obstacle_type",
+        "observed_constraint",
+        "engineering_treatment_considered",
+        "vega_relevance",
+        "source_url",
+        "evidence_status"
+      ],
+      "provenance_fields": [
+        "source_url"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "data/derived/hsr_studies_seed.csv",
+      "domain": "transport",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": false,
+      "blocker": "Reconcile study inventory against an independently defined authoritative/bibliographic study list.",
+      "record_count": 8,
+      "columns": [
+        "study_id",
+        "year",
+        "title",
+        "sponsor",
+        "status",
+        "scope",
+        "evidence_value",
+        "source_url"
+      ],
+      "provenance_fields": [
+        "source_url"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "data/derived/hsr_study_evidence_seed.csv",
+      "domain": "transport",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": false,
+      "blocker": "Evidence rows must be reconciled to the specific study/table/page inventories they represent.",
+      "record_count": 22,
+      "columns": [
+        "study_id",
+        "study_year",
+        "study_name",
+        "study_scope",
+        "evidence_type",
+        "metric",
+        "value",
+        "unit",
+        "price_year",
+        "source_url",
+        "notes"
+      ],
+      "provenance_fields": [
+        "source_url"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "data/derived/infrastructure_projects_seed.csv",
+      "domain": "cross-domain-capital",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": true,
+      "blocker": "Project completeness cannot be established from the curated file itself; decompose by authoritative project/program source.",
+      "record_count": 13,
+      "columns": [
+        "project_id",
+        "name",
+        "state_or_territory",
+        "region",
+        "sector",
+        "status",
+        "ownership",
+        "reported_value_aud",
+        "value_scope",
+        "completion_or_opening",
+        "source_id",
+        "evidence_note"
+      ],
+      "provenance_fields": [
+        "source_id"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "data/derived/population_sa2_east.csv",
+      "domain": "population",
+      "role": "imported_dataset",
+      "dataset_kind": "exhaustive_import",
+      "assurance_state": "inventory_required",
+      "map_relevance": true,
+      "blocker": "Need independent ABS target-state SA2 code inventory and code-set reconciliation; existing 1,844 count is extractor-derived.",
+      "record_count": 1844,
+      "columns": [
+        "sa2_code",
+        "sa2_name",
+        "state",
+        "state_code",
+        "erp_2001",
+        "erp_2010",
+        "erp_2015",
+        "erp_2020",
+        "erp_2024",
+        "erp_2025",
+        "change_2015_25_abs",
+        "change_2015_25_pct",
+        "change_2020_25_abs",
+        "change_2020_25_pct",
+        "change_2024_25_abs",
+        "change_2024_25_pct",
+        "natural_increase_2024_25",
+        "net_internal_migration_2024_25",
+        "net_overseas_migration_2024_25",
+        "source_id",
+        "geography_version"
+      ],
+      "provenance_fields": [
+        "source_id"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "data/derived/population_state_validation.csv",
+      "domain": "population",
+      "role": "support_output",
+      "dataset_kind": "support_output",
+      "assurance_state": "support_output",
+      "map_relevance": false,
+      "blocker": null,
+      "record_count": 4,
+      "columns": [
+        "state",
+        "sa2_rows",
+        "erp_2024",
+        "erp_2025",
+        "change_2024_25_abs",
+        "change_2024_25_pct"
+      ],
+      "provenance_fields": [],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": false
+    },
+    {
+      "path": "data/derived/transport/ga_major_roads_east.geojson",
+      "domain": "transport",
+      "role": "imported_dataset",
+      "dataset_kind": "exhaustive_import",
+      "assurance_state": "inventory_required",
+      "map_relevance": true,
+      "blocker": "Need independent authoritative API count and feature-ID set reconciliation using identical scope rules.",
+      "record_count": 75581,
+      "object_id_count": 75581,
+      "unique_object_id_count": 75581,
+      "duplicate_object_ids": 0,
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "data/derived/transport/ga_major_roads_east_summary.csv",
+      "domain": "transport",
+      "role": "support_output",
+      "dataset_kind": "support_output",
+      "assurance_state": "support_output",
+      "map_relevance": false,
+      "blocker": null,
+      "record_count": 82,
+      "columns": [
+        "dimension",
+        "value",
+        "feature_count"
+      ],
+      "provenance_fields": [],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": false
+    },
+    {
+      "path": "data/derived/transport/ga_rail_east.geojson",
+      "domain": "transport",
+      "role": "imported_dataset",
+      "dataset_kind": "exhaustive_import",
+      "assurance_state": "inventory_required",
+      "map_relevance": true,
+      "blocker": "Need independent authoritative API count plus OBJECTID-set reconciliation using identical envelope/SA exclusion rules.",
+      "record_count": 26808,
+      "object_id_count": 26808,
+      "unique_object_id_count": 26808,
+      "duplicate_object_ids": 0,
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "data/derived/transport/ga_rail_east_summary.csv",
+      "domain": "transport",
+      "role": "support_output",
+      "dataset_kind": "support_output",
+      "assurance_state": "support_output",
+      "map_relevance": false,
+      "blocker": null,
+      "record_count": 33,
+      "columns": [
+        "dimension",
+        "value",
+        "feature_count",
+        "source_length_km_sum"
+      ],
+      "provenance_fields": [],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": false
+    },
+    {
+      "path": "data/derived/transport/intermodal_terminals_seed.csv",
+      "domain": "transport",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": true,
+      "blocker": "Define authoritative/operator inventory by state/corridor and reconcile terminals individually.",
+      "record_count": 5,
+      "columns": [
+        "terminal_id",
+        "name",
+        "state",
+        "locality",
+        "status",
+        "function",
+        "network_role",
+        "evidence_date",
+        "source_url",
+        "notes"
+      ],
+      "provenance_fields": [
+        "source_url"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "data/derived/transport_system_metrics_seed.csv",
+      "domain": "transport",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": false,
+      "blocker": "Metrics require source-specific completeness/definition checks; this is not a single enumerable source.",
+      "record_count": 20,
+      "columns": [
+        "metric_id",
+        "asset_or_system",
+        "asset_type",
+        "geography",
+        "period",
+        "metric",
+        "value",
+        "unit",
+        "source_url",
+        "confidence",
+        "notes"
+      ],
+      "provenance_fields": [
+        "source_url"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "domains/energy/data/derived/transmission_projects_seed.csv",
+      "domain": "energy",
+      "role": "imported_dataset",
+      "dataset_kind": "exhaustive_import",
+      "assurance_state": "reconciled",
+      "map_relevance": true,
+      "blocker": "Entity completeness reconciled 21/21; field verification remains sampled, not fully passed.",
+      "record_count": 21,
+      "columns": [
+        "project_id",
+        "project_name",
+        "jurisdiction",
+        "status_class",
+        "in_service_timing",
+        "full_capacity_timing",
+        "veca_relevance",
+        "source_id",
+        "notes"
+      ],
+      "provenance_fields": [
+        "source_id"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/anchor_assets_seed.csv",
+      "domain": "government-intent",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": true,
+      "blocker": "Split by underlying hospital/education/government-land source inventory and reconcile each family.",
+      "record_count": 19,
+      "columns": [
+        "asset_id",
+        "region",
+        "asset_name",
+        "asset_type",
+        "jurisdiction",
+        "current_role",
+        "status",
+        "reported_value_aud",
+        "spatial_lock_in",
+        "optionality_class",
+        "veca_interpretation",
+        "source_url"
+      ],
+      "provenance_fields": [
+        "source_url"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/education_assets_seed.csv",
+      "domain": "government-intent",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": true,
+      "blocker": "Establish independent institution/campus inventory per authoritative provider/state source and reconcile.",
+      "record_count": 20,
+      "columns": [
+        "asset_id",
+        "region",
+        "asset_name",
+        "asset_type",
+        "jurisdiction",
+        "current_role",
+        "status",
+        "reported_value_aud",
+        "spatial_lock_in",
+        "optionality_class",
+        "veca_interpretation",
+        "source_url"
+      ],
+      "provenance_fields": [
+        "source_url"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/government_land_education_seed.csv",
+      "domain": "government-intent",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": true,
+      "blocker": "Mixed evidence families require source-level inventories and explicit exclusions.",
+      "record_count": 14,
+      "columns": [
+        "record_id",
+        "region",
+        "place",
+        "record_type",
+        "asset_or_area",
+        "owner_or_controller",
+        "status",
+        "spatial_flexibility",
+        "vega_relevance",
+        "source_url",
+        "notes"
+      ],
+      "provenance_fields": [
+        "source_url"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/health_capital_optionality_seed.csv",
+      "domain": "government-intent",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": true,
+      "blocker": "Reconcile each jurisdiction health-capital program/report independently.",
+      "record_count": 6,
+      "columns": [
+        "asset_id",
+        "asset_or_program",
+        "jurisdiction",
+        "region",
+        "planning_horizon_or_timing",
+        "current_state",
+        "planned_state",
+        "optionality_class",
+        "flexibility",
+        "veca_question",
+        "source_note",
+        "source_ids"
+      ],
+      "provenance_fields": [
+        "source_ids"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/health_capital_signals_v1.csv",
+      "domain": "government-intent",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": true,
+      "blocker": "Signal completeness is source-specific; define program inventories before declaring complete.",
+      "record_count": 11,
+      "columns": [
+        "asset_id",
+        "jurisdiction",
+        "region",
+        "facility_or_program",
+        "capital_status",
+        "reported_value_aud",
+        "completion_or_horizon",
+        "service_role",
+        "redirectability_class",
+        "veca_interpretation",
+        "source_url",
+        "notes"
+      ],
+      "provenance_fields": [
+        "source_url"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/land_zoning_optionality_seed.csv",
+      "domain": "government-intent",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": true,
+      "blocker": "Reconcile against each state/regional statutory planning source and growth-area inventory.",
+      "record_count": 6,
+      "columns": [
+        "area_id",
+        "area_or_program",
+        "jurisdiction",
+        "region",
+        "planning_horizon",
+        "status",
+        "mechanism",
+        "optionality_type",
+        "veca_relevance",
+        "source_note",
+        "source_ids"
+      ],
+      "provenance_fields": [
+        "source_ids"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/regional_growth_baselines_seed.csv",
+      "domain": "government-intent",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": true,
+      "blocker": "Need plan-by-plan inventory and geographic coverage test.",
+      "record_count": 10,
+      "columns": [
+        "region_id",
+        "region",
+        "jurisdiction",
+        "plan_horizon",
+        "current_or_base_population",
+        "future_population",
+        "additional_people",
+        "dwelling_requirement_or_target",
+        "spatial_intent",
+        "capital_implication",
+        "source_note",
+        "source_ids"
+      ],
+      "provenance_fields": [
+        "source_ids"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/regional_health_assets_seed.csv",
+      "domain": "government-intent",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": true,
+      "blocker": "Need independent authoritative hospital/major-health-asset inventory for each scoped region.",
+      "record_count": 6,
+      "columns": [
+        "asset_id",
+        "asset_name",
+        "region",
+        "jurisdiction",
+        "current_or_recent_investment",
+        "status",
+        "site_strategy",
+        "future_expansion_signal",
+        "flexibility",
+        "veca_interpretation",
+        "source_note",
+        "source_ids"
+      ],
+      "provenance_fields": [
+        "source_ids"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/regional_plan_assumptions_v1.csv",
+      "domain": "government-intent",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": false,
+      "blocker": "Reconcile assumptions to each source plan/table/page and verify no scoped plans are omitted.",
+      "record_count": 8,
+      "columns": [
+        "region_id",
+        "jurisdiction",
+        "plan_name",
+        "plan_horizon",
+        "current_or_base_population",
+        "projected_population",
+        "housing_or_growth_requirement",
+        "spatial_intent",
+        "infrastructure_intent",
+        "capital_optionality_signal",
+        "source_url",
+        "notes"
+      ],
+      "provenance_fields": [
+        "source_url"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "domains/government-intent/data/derived/school_growth_seed.csv",
+      "domain": "government-intent",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": true,
+      "blocker": "Need state education-capital/growth program inventories; intentionally not a catalogue of every school.",
+      "record_count": 6,
+      "columns": [
+        "record_id",
+        "region",
+        "program_or_area",
+        "jurisdiction",
+        "school_evidence_type",
+        "status",
+        "spatial_signal",
+        "optionality_class",
+        "veca_interpretation",
+        "source_url"
+      ],
+      "provenance_fields": [
+        "source_url"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "domains/industry/data/derived/industry_logistics_nodes_seed.csv",
+      "domain": "industry",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": true,
+      "blocker": "Current seed is selective; define operator/government/port/intermodal source inventories by region before completeness claim.",
+      "record_count": 3,
+      "columns": [
+        "node_id",
+        "name",
+        "jurisdiction",
+        "region",
+        "node_type",
+        "current_state",
+        "public_enabling",
+        "private_investment_signal",
+        "strategic_functions",
+        "source_ids",
+        "notes"
+      ],
+      "provenance_fields": [
+        "source_ids"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "domains/water/data/derived/water_systems_seed.csv",
+      "domain": "water",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": true,
+      "blocker": "Reconcile source/storage/treatment/transfer/augmentation components against each utility/system plan; known regional coverage gaps remain.",
+      "record_count": 7,
+      "columns": [
+        "system_id",
+        "system_name",
+        "jurisdiction",
+        "region",
+        "primary_sources",
+        "diversification",
+        "known_capacity_or_scale",
+        "augmentation_or_option",
+        "status",
+        "source_ids",
+        "notes"
+      ],
+      "provenance_fields": [
+        "source_ids"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "domains/government_intent/data/derived/future_capital_optionality_seed.csv",
+      "domain": "government-intent",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": true,
+      "blocker": "Legacy path must be reconciled/de-duplicated against canonical domains/government-intent datasets before verification.",
+      "record_count": 9,
+      "columns": [
+        "item_id",
+        "jurisdiction",
+        "region",
+        "asset_or_need",
+        "sector",
+        "current_plan_signal",
+        "likely_spend_reason",
+        "flexibility_class",
+        "redirectability_note",
+        "source_url",
+        "status"
+      ],
+      "provenance_fields": [
+        "source_url"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    },
+    {
+      "path": "domains/government_intent/data/derived/government_intent_seed.csv",
+      "domain": "government-intent",
+      "role": "imported_dataset",
+      "dataset_kind": "curated_synthesis",
+      "assurance_state": "source_decomposition_required",
+      "map_relevance": true,
+      "blocker": "Legacy path must be reconciled/de-duplicated against canonical domains/government-intent datasets before verification.",
+      "record_count": 9,
+      "columns": [
+        "intent_id",
+        "jurisdiction",
+        "plan_or_program",
+        "horizon",
+        "intent_class",
+        "geography",
+        "population_or_housing_assumption",
+        "embedded_infrastructure_or_service_signal",
+        "decision_flexibility",
+        "source_url",
+        "notes"
+      ],
+      "provenance_fields": [
+        "source_url"
+      ],
+      "rows_missing_provenance": [],
+      "unresolved_source_ids": [],
+      "invalid_source_urls": [],
+      "structural_provenance_pass": true
+    }
+  ]
+}

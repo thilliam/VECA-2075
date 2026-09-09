@@ -2,10 +2,22 @@
 
 This directory is the control plane for research-source completeness and ingestion accuracy.
 
-The map is persuasive only if sparse areas mean "little evidence/infrastructure" rather than "we forgot to ingest it". This system therefore tracks two independent questions:
+The map is persuasive only if sparse areas mean "little evidence/infrastructure" rather than "we forgot to ingest it". This system tracks three related questions:
 
 1. **Coverage:** have we identified and reviewed the important source families?
-2. **Ingestion assurance:** for every source we use, have we accounted for every expected entity and verified critical fields?
+2. **Exhaustive-ingest assurance:** where a dataset claims to reproduce a source inventory, have we accounted for every expected entity and checked critical fields?
+3. **Curated-synthesis assurance:** where VECA intentionally selects evidence, is every included row traceable and is the selection scope explicit enough that it cannot masquerade as a complete universe?
+
+## Dataset kinds
+
+Do not apply the 27/27 rule to a dataset that never claims to contain all 27 entities.
+
+- **`exhaustive_import`** — intended to reproduce a defined source universe. It requires an independent expected inventory and exact reconciliation.
+- **`curated_synthesis`** — intentionally selected evidence from one or more sources. It requires row-level provenance plus an explicit `selection_claim`, `selection_policy` and `completeness_test` in `curated_dataset_contracts.json`.
+- **`support_output`** — generated QA/summary output. It inherits assurance from its upstream dataset.
+- **`legacy_deprecated`** — retained for history only; non-canonical and not a new map/data input.
+
+`provenance_reconciled` means a curated set passed its scope contract and every included row resolves to registered provenance. It does **not** mean all possible real-world entities of that class have been collected.
 
 ## Source lifecycle
 
@@ -32,9 +44,9 @@ Keep motivation/authority visible rather than collapsing everything into governm
 
 ## The independent inventory rule
 
-A source cannot be marked complete by counting the rows produced by its own extractor.
+An exhaustive source cannot be marked complete by counting the rows produced by its own extractor.
 
-For entity-bearing sources, the manifest must establish an **independent expected inventory** first, using one of:
+For entity-bearing exhaustive sources, the manifest must establish an **independent expected inventory** first, using one of:
 
 - `table_rows`
 - `appendix_inventory`
@@ -49,7 +61,7 @@ Example: a report contains 27 sites. The extraction creates 23 records. Reconcil
 
 ## Entity dispositions
 
-Every expected entity must land in exactly one bucket:
+Every expected entity in an exhaustive source must land in exactly one bucket:
 
 - `mapped` — present in the VECA spatial layer.
 - `dataset_only` — intentionally present in the derived dataset but not mapped.
@@ -77,54 +89,49 @@ Each manifest has a `verification` section. Evidence-backed checks should priori
 
 ## Files
 
-- `source_register.json` — canonical research-source backlog and status register.
-- `manifests/*.json` — one ingestion/reconciliation record per ingested source.
-- `manifests/_template.json` — copy for a new ingestion.
-- `coverage_report.md` / `coverage_report.json` — generated dashboard outputs.
-- `../tools/validate_source_assurance.py` — stdlib-only validator and report generator.
+- `source_register.json` — canonical cross-domain research-source backlog/status register.
+- `dataset_register.json` — canonical inventory/status of every current derived dataset.
+- `curated_dataset_contracts.json` — explicit scope contract for every current curated synthesis.
+- `manifests/*.json` — source-specific exhaustive-ingestion/reconciliation records.
+- `current_dataset_audit.md/json` — generated structural provenance audit.
+- `coverage_report.md/json` — source-coverage dashboard outputs.
 
 ## Commands
 
-Validate structural and reconciliation rules:
-
-```bash
-python tools/validate_source_assurance.py
-```
-
-Apply stricter verified/reconciled rules:
-
 ```bash
 python tools/validate_source_assurance.py --strict
+python tools/validate_dataset_register.py
+python tools/audit_current_datasets.py
+python tools/sync_curated_assurance.py
 ```
 
-Generate the dashboard after a successful update:
+Direct authoritative imports with independent source services can additionally use:
 
 ```bash
-python tools/validate_source_assurance.py --strict --write-report
+python tools/reconcile_direct_imports.py
 ```
 
 ## Migration rule for existing VECA data
 
 Do not retroactively label existing layers `verified` merely because they look sound.
 
-For each existing source:
+For an **exhaustive import**:
 
-1. add/register the source;
+1. register the source and dataset;
 2. establish the independent source inventory;
-3. reconcile existing derived/map entities against that inventory;
+3. reconcile all derived/map entities against it;
 4. record exclusions/duplicates/unresolved items explicitly;
 5. perform accuracy checks;
-6. only then move the source to `verified`.
+6. only then move the source/dataset to the appropriate reconciled/verified state.
 
-This allows current map work to continue while making uncertainty and incomplete migration visible.
+For a **curated synthesis**:
+
+1. register the dataset;
+2. make its selection claim explicit;
+3. ensure every included row has resolvable source provenance;
+4. state what the file does **not** claim to cover;
+5. mark it `provenance_reconciled`, not `verified`, unless a later exhaustive inventory justifies a stronger claim.
 
 ## Agent completion contract
 
-A research ingestion task is not complete merely because it writes a CSV/GeoJSON or adds map points. It should leave:
-
-- a source-register status update;
-- an ingestion manifest;
-- all expected source entities explicitly accounted for;
-- evidence-backed verification checks;
-- known gaps captured in the register;
-- a passing `python tools/validate_source_assurance.py --strict` once the source is declared reconciled/verified.
+A research ingestion task is not complete merely because it writes a CSV/GeoJSON or adds map points. It should leave the dataset and source assurance records in a state that accurately describes what has and has not been proven. New derived files must be added to `dataset_register.json` in the same change.

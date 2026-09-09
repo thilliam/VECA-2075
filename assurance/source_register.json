@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "updated": "2026-09-09",
-  "notes": "Initial assurance register. Existing VECA evidence is intentionally not labelled verified until it has been independently inventoried and reconciled through this system.",
+  "notes": "Cross-domain source coverage register. Reconciled/verified labels are used only where source-level assurance supports them; curated dataset assurance is tracked separately in dataset_register.json.",
   "sources": [
     {
       "source_id": "POP-ABS-SA2-ERP-2001-2025",
@@ -10,10 +10,10 @@
       "domain": "population",
       "geography": "QLD/NSW/ACT/VIC",
       "source_type": "authoritative_reality",
-      "status": "relevant",
+      "status": "reconciled",
       "priority": "P1",
       "map_relevance": true,
-      "known_gaps": ["Existing 1,844-SA2 derived layer requires assurance manifest and independent source-row reconciliation."]
+      "known_gaps": ["Independent ABS FeatureServer reconciliation matched all 1,844 SA2 identities and all ERP 2025 values; historical-year and migration-component fields have not all received a second independent field-by-field verification."]
     },
     {
       "source_id": "TRANSPORT-GA-EAST-RAIL",
@@ -22,10 +22,10 @@
       "domain": "transport",
       "geography": "QLD/NSW/ACT/VIC",
       "source_type": "authoritative_reality",
-      "status": "relevant",
+      "status": "reconciled",
       "priority": "P1",
       "map_relevance": true,
-      "known_gaps": ["Existing geometry requires feature-count reconciliation against authoritative source extract.", "Geometry alone does not establish corridor capacity/utilisation."]
+      "known_gaps": ["Independent authoritative OBJECTID inventory matched all 26,808 extracted features with zero missing/extra identities.", "Geometry/attribute field verification is not exhaustive, and geometry alone does not establish corridor capacity/utilisation."]
     },
     {
       "source_id": "TRANSPORT-GA-EAST-MAJOR-ROADS",
@@ -34,10 +34,10 @@
       "domain": "transport",
       "geography": "QLD/NSW/ACT/VIC",
       "source_type": "authoritative_reality",
-      "status": "relevant",
+      "status": "reconciled",
       "priority": "P1",
       "map_relevance": true,
-      "known_gaps": ["Existing geometry requires feature-count reconciliation against authoritative source extract.", "Capacity, congestion and bottleneck evidence remains incomplete."]
+      "known_gaps": ["Independent authoritative OBJECTID inventory matched all 75,581 extracted features with zero missing/extra identities.", "Geometry/attribute field verification is not exhaustive; capacity, congestion and bottleneck evidence remains incomplete."]
     },
     {
       "source_id": "TRANSPORT-BITRE-AIRPORTS",
@@ -46,10 +46,10 @@
       "domain": "transport",
       "geography": "Australia / east-coast subset",
       "source_type": "authoritative_reality",
-      "status": "relevant",
+      "status": "ingestion_planned",
       "priority": "P2",
       "map_relevance": true,
-      "known_gaps": ["Existing airport extraction requires independent source inventory and reconciliation."]
+      "known_gaps": ["Extractor/workflow exists, but no current airport dataset is present in the derived data tree; do not treat airports as already imported evidence."]
     },
     {
       "source_id": "ENERGY-AEMO-ISP-2026",
@@ -58,10 +58,10 @@
       "domain": "energy",
       "geography": "National Electricity Market / east-coast focus",
       "source_type": "infrastructure_owner_intent",
-      "status": "relevant",
+      "status": "reconciled",
       "priority": "P1",
       "map_relevance": true,
-      "known_gaps": ["Existing VECA transmission/REZ pipeline requires manifest reconciliation.", "Generator and storage asset-level extraction remains incomplete.", "Transmission proximity must not be treated as local connection capacity."]
+      "known_gaps": ["Scoped east-coast transmission inventory reconciled 21/21; critical field verification remains sampled rather than fully verified.", "Generator and storage asset-level extraction remains incomplete.", "Transmission proximity must not be treated as local connection capacity."]
     },
     {
       "source_id": "ENERGY-ESSENTIAL-DAPR",
