@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Extract scoped AEMO NEM Generation Information rows using stdlib XLSX parsing.
 
-The independent expected-ID inventory is supplied separately (built with openpyxl in
-CI). This extractor deliberately uses a different implementation path and reconciles
-exact Gen Info Unit IDs before succeeding.
+The independent expected-record inventory is supplied separately (built with openpyxl
+in CI). AEMO Gen Info Unit ID is retained but is not unique in the published sheet,
+so source_record_id uses a source-native composite of stable row identity fields.
 """
 from __future__ import annotations
 
@@ -22,6 +22,7 @@ NS = {
 }
 CELL_RE = re.compile(r"([A-Z]+)(\d+)")
 TARGET_REGIONS = {"QLD1", "NSW1", "VIC1"}
+IDENTITY_FIELDS = ("gen_info_unit_id", "survey_id", "unit_name", "duid", "technology_type", "technology_detail")
 
 
 def col_index(ref: str) -> int:
@@ -87,8 +88,7 @@ def row_values(row: ET.Element, strings: list[str], width: int) -> list[object]:
 
 
 def clean_header(value: object, idx: int) -> str:
-    text = str(value or "").strip().lower()
-    text = text.replace("&", " and ")
+    text = str(value or "").strip().lower().replace("&", " and ")
     text = re.sub(r"[^a-z0-9]+", "_", text).strip("_")
     return text or f"column_{idx + 1}"
 
@@ -103,12 +103,16 @@ def unique_headers(values: list[object]) -> list[str]:
     return out
 
 
-def norm_id(value: object) -> str:
+def norm(value: object) -> str:
     if value is None:
         return ""
     if isinstance(value, float) and value.is_integer():
         return str(int(value))
     return str(value).strip()
+
+
+def record_id(record: dict[str, object]) -> str:
+    return "|".join(norm(record.get(k)) for k in IDENTITY_FIELDS)
 
 
 def main() -> int:
@@ -120,10 +124,10 @@ def main() -> int:
     args = ap.parse_args()
 
     inventory = json.loads(args.inventory.read_text(encoding="utf-8"))
-    expected = set(inventory["gen_info_unit_ids"])
+    expected = set(inventory["source_record_ids"])
     extracted_rows: list[dict[str, object]] = []
     observed: set[str] = set()
-    duplicate_ids: list[str] = []
+    duplicate_record_ids: list[str] = []
 
     with zipfile.ZipFile(args.xlsx) as zf:
         strings = shared_strings(zf)
@@ -133,7 +137,6 @@ def main() -> int:
         raw_headers = row_values(header_row, strings, 165)
         headers = unique_headers(raw_headers)
         region_idx = headers.index("region")
-        unit_id_idx = headers.index("gen_info_unit_id")
 
         for row in rows:
             rnum = int(row.attrib.get("r", 0))
@@ -143,15 +146,15 @@ def main() -> int:
             region = str(vals[region_idx] or "").strip()
             if region not in TARGET_REGIONS:
                 continue
-            uid = norm_id(vals[unit_id_idx])
-            if not uid:
-                continue
-            if uid in observed:
-                duplicate_ids.append(uid)
-            observed.add(uid)
             record = {headers[i]: vals[i] if i < len(vals) else None for i in range(len(headers))}
-            record["gen_info_unit_id"] = uid
-            record["source_record_id"] = uid
+            if not norm(record.get("gen_info_unit_id")):
+                continue
+            rid = record_id(record)
+            if rid in observed:
+                duplicate_record_ids.append(rid)
+            observed.add(rid)
+            record["gen_info_unit_id"] = norm(record.get("gen_info_unit_id"))
+            record["source_record_id"] = rid
             extracted_rows.append(record)
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -174,13 +177,14 @@ def main() -> int:
     recon = {
         "source": "AEMO NEM Generation Information July 2026",
         "scope_regions": sorted(TARGET_REGIONS),
-        "expected_unit_ids": len(expected),
-        "extracted_unit_ids": len(observed),
-        "extracted_rows": len(extracted_rows),
+        "source_record_identity_fields": list(IDENTITY_FIELDS),
+        "expected_records": len(expected),
+        "extracted_records": len(extracted_rows),
+        "unique_extracted_record_ids": len(observed),
         "missing_source_record_ids": missing,
         "extra_source_record_ids": extra,
-        "duplicate_gen_info_unit_ids": sorted(set(duplicate_ids)),
-        "exact_identity_match": not missing and not extra and not duplicate_ids and len(extracted_rows) == len(expected),
+        "duplicate_source_record_ids": sorted(set(duplicate_record_ids)),
+        "exact_identity_match": not missing and not extra and not duplicate_record_ids and len(extracted_rows) == len(expected),
         "counts_by_region": dict(sorted(by_region.items())),
         "counts_by_commitment_status": dict(sorted(by_status.items())),
         "counts_by_technology_type": dict(sorted(by_technology.items())),
