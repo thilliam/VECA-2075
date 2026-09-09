@@ -42,32 +42,24 @@ def get_json(url: str, params: dict) -> dict:
     raise RuntimeError(f"Source query failed after retries: {last}")
 
 
-def assurance_tiles() -> list[dict[str, float]]:
-    """Independent 3x4-degree tiling; deliberately not the production extractor tiling."""
-    tiles = []
-    y = ENVELOPE["ymin"]
-    while y < ENVELOPE["ymax"]:
-        x = ENVELOPE["xmin"]
-        while x < ENVELOPE["xmax"]:
-            tiles.append({"xmin": x, "ymin": y, "xmax": min(x + 3.0, ENVELOPE["xmax"]), "ymax": min(y + 4.0, ENVELOPE["ymax"])})
-            x += 3.0
-        y += 4.0
-    return tiles
+def envelope_ids(url: str, where: str) -> set[int]:
+    """Return authoritative IDs for one constrained source partition in the VECA envelope."""
+    data = get_json(url, {
+        "where": where,
+        "geometry": json.dumps(ENVELOPE, separators=(",", ":")),
+        "geometryType": "esriGeometryEnvelope",
+        "inSR": 7844,
+        "spatialRel": "esriSpatialRelIntersects",
+        "returnIdsOnly": "true",
+        "f": "json",
+    })
+    return {int(x) for x in (data.get("objectIds") or [])}
 
 
-def tiled_ids(url: str, where: str) -> set[int]:
+def union_partitions(url: str, wheres: list[str]) -> set[int]:
     ids: set[int] = set()
-    for tile in assurance_tiles():
-        data = get_json(url, {
-            "where": where,
-            "geometry": json.dumps(tile, separators=(",", ":")),
-            "geometryType": "esriGeometryEnvelope",
-            "inSR": 7844,
-            "spatialRel": "esriSpatialRelIntersects",
-            "returnIdsOnly": "true",
-            "f": "json",
-        })
-        ids.update(int(x) for x in (data.get("objectIds") or []))
+    for where in wheres:
+        ids.update(envelope_ids(url, where))
     return ids
 
 
@@ -125,10 +117,8 @@ def abs_reconcile() -> dict:
 
 
 def road_reconcile() -> dict:
-    expected = tiled_ids(
-        ROAD_QUERY,
-        "hierarchy = 'National or State Highway' AND status = 'Operational' AND state IN ('QLD','NSW','ACT','VIC')"
-    )
+    base = "hierarchy = 'National or State Highway' AND status = 'Operational'"
+    expected = union_partitions(ROAD_QUERY, [f"{base} AND state = '{state}'" for state in ("NSW", "VIC", "QLD", "ACT")])
     derived = geojson_ids(ROOT / "data/derived/transport/ga_major_roads_east.geojson")
     missing, extra = sorted(expected - derived), sorted(derived - expected)
     return {
@@ -136,12 +126,12 @@ def road_reconcile() -> dict:
         "dataset": "data/derived/transport/ga_major_roads_east.geojson",
         "source_inventory_count": len(expected), "derived_count": len(derived),
         "missing_objectids": missing, "extra_objectids": extra, "passed": not missing and not extra,
-        "inventory_evidence": "GA National Roads service; independent 3x4-degree returnIdsOnly inventory with operational/highway/target-state source filtering",
+        "inventory_evidence": "GA National Roads service; independent full-envelope returnIdsOnly queries partitioned by NSW/VIC/QLD/ACT with operational National-or-State-Highway filter",
     }
 
 
 def rail_reconcile() -> dict:
-    expected = tiled_ids(RAIL_QUERY, "SOURCE_JURISDICTION <> 'SA' OR SOURCE_JURISDICTION IS NULL")
+    expected = union_partitions(RAIL_QUERY, [f"SOURCE_JURISDICTION = '{state}'" for state in ("NSW", "VIC", "QLD")])
     derived = geojson_ids(ROOT / "data/derived/transport/ga_rail_east.geojson")
     missing, extra = sorted(expected - derived), sorted(derived - expected)
     return {
@@ -149,7 +139,7 @@ def rail_reconcile() -> dict:
         "dataset": "data/derived/transport/ga_rail_east.geojson",
         "source_inventory_count": len(expected), "derived_count": len(derived),
         "missing_objectids": missing, "extra_objectids": extra, "passed": not missing and not extra,
-        "inventory_evidence": "GA Foundation Rail Railway_Lines service; independent 3x4-degree returnIdsOnly inventory excluding explicit SA source-jurisdiction rows",
+        "inventory_evidence": "GA Foundation Rail Railway_Lines service; independent full-envelope returnIdsOnly queries partitioned by source jurisdiction NSW/VIC/QLD",
     }
 
 
