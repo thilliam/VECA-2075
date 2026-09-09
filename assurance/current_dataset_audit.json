@@ -6,7 +6,7 @@
     "exhaustive_import": 4,
     "support_output": 3
   },
-  "curated_structural_provenance_failures": 4,
+  "curated_structural_provenance_failures": 3,
   "datasets": [
     {
       "path": "data/derived/energy_zones_seed.csv",
@@ -482,13 +482,16 @@
         "optionality_class",
         "flexibility",
         "veca_question",
-        "source_note"
+        "source_note",
+        "source_ids"
       ],
-      "provenance_fields": [],
+      "provenance_fields": [
+        "source_ids"
+      ],
       "rows_missing_provenance": [],
       "unresolved_source_ids": [],
       "invalid_source_urls": [],
-      "structural_provenance_pass": false
+      "structural_provenance_pass": true
     },
     {
       "path": "domains/government-intent/data/derived/health_capital_signals_v1.csv",

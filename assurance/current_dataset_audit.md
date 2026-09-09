@@ -6,7 +6,7 @@
 - Exhaustive imports: **4**
 - Curated syntheses: **21**
 - Support outputs: **3**
-- Curated sets failing structural provenance: **4**
+- Curated sets failing structural provenance: **3**
 
 | Dataset | Kind | Records | Structural provenance | Current assurance |
 |---|---|---:|---|---|
@@ -27,7 +27,7 @@
 | `domains/government-intent/data/derived/anchor_assets_seed.csv` | curated_synthesis | 19 | PASS | source_decomposition_required |
 | `domains/government-intent/data/derived/education_assets_seed.csv` | curated_synthesis | 20 | PASS | source_decomposition_required |
 | `domains/government-intent/data/derived/government_land_education_seed.csv` | curated_synthesis | 14 | PASS | source_decomposition_required |
-| `domains/government-intent/data/derived/health_capital_optionality_seed.csv` | curated_synthesis | 6 | FAIL/N/A | source_decomposition_required |
+| `domains/government-intent/data/derived/health_capital_optionality_seed.csv` | curated_synthesis | 6 | PASS | source_decomposition_required |
 | `domains/government-intent/data/derived/health_capital_signals_v1.csv` | curated_synthesis | 11 | PASS | source_decomposition_required |
 | `domains/government-intent/data/derived/land_zoning_optionality_seed.csv` | curated_synthesis | 6 | FAIL/N/A | source_decomposition_required |
 | `domains/government-intent/data/derived/regional_growth_baselines_seed.csv` | curated_synthesis | 10 | FAIL/N/A | source_decomposition_required |
@@ -41,7 +41,6 @@
 
 ## Structural provenance failures
 
-- `domains/government-intent/data/derived/health_capital_optionality_seed.csv` — no recognised provenance column
 - `domains/government-intent/data/derived/land_zoning_optionality_seed.csv` — no recognised provenance column
 - `domains/government-intent/data/derived/regional_growth_baselines_seed.csv` — no recognised provenance column
 - `domains/government-intent/data/derived/regional_health_assets_seed.csv` — no recognised provenance column
