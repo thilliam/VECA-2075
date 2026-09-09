@@ -1,0 +1,48 @@
+{
+  "source": "AEMO NEM Generation Information July 2026",
+  "scope_regions": [
+    "NSW1",
+    "QLD1",
+    "VIC1"
+  ],
+  "source_record_identity_fields": [
+    "gen_info_unit_id",
+    "survey_id",
+    "unit_name",
+    "duid",
+    "technology_type",
+    "technology_detail"
+  ],
+  "expected_records": 1415,
+  "extracted_records": 1415,
+  "unique_extracted_record_ids": 1415,
+  "missing_source_record_ids": [],
+  "extra_source_record_ids": [],
+  "duplicate_source_record_ids": [],
+  "exact_identity_match": true,
+  "counts_by_region": {
+    "NSW1": 570,
+    "QLD1": 469,
+    "VIC1": 376
+  },
+  "counts_by_commitment_status": {
+    "Announced Withdrawal": 14,
+    "Anticipated": 94,
+    "Committed": 38,
+    "Committed*": 13,
+    "In Commissioning": 28,
+    "In Service": 459,
+    "Publicly Announced": 768,
+    "Withdrawn": 1
+  },
+  "counts_by_technology_type": {
+    "Battery Storage": 524,
+    "Coal": 44,
+    "Gas Turbine": 129,
+    "Hydro": 113,
+    "Other": 43,
+    "Solar PV": 314,
+    "Wind": 248
+  },
+  "source_column_count": 165
+}
