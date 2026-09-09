@@ -32,15 +32,25 @@ jobs:
         run: python tools/reconcile_direct_imports.py
       - name: Validate assurance manifests
         run: python tools/validate_source_assurance.py --strict
+      - name: Validate dataset register
+        run: python tools/validate_dataset_register.py
       - name: Commit reconciliation outputs
         run: |
           git config user.name "VECA assurance bot"
           git config user.email "actions@users.noreply.github.com"
-          git add assurance/direct_import_reconciliation.json assurance/manifests/POP-ABS-SA2-ERP-2001-2025.json assurance/manifests/TRANSPORT-GA-EAST-MAJOR-ROADS.json assurance/manifests/TRANSPORT-GA-EAST-RAIL.json
+          git add assurance/direct_import_reconciliation.json assurance/dataset_register.json assurance/manifests/POP-ABS-SA2-ERP-2001-2025.json assurance/manifests/TRANSPORT-GA-EAST-MAJOR-ROADS.json assurance/manifests/TRANSPORT-GA-EAST-RAIL.json
           if git diff --cached --quiet; then
             echo "No reconciliation changes"
-          else
-            git commit -m "Assurance: reconcile ABS and GA direct imports"
-            git pull --rebase origin feature/assurance-complete-existing-sets
-            git push origin HEAD:feature/assurance-complete-existing-sets
+            exit 0
           fi
+          git commit -m "Assurance: reconcile ABS and GA direct imports"
+          for attempt in 1 2 3; do
+            git fetch origin feature/assurance-complete-existing-sets
+            if git rebase origin/feature/assurance-complete-existing-sets && git push origin HEAD:feature/assurance-complete-existing-sets; then
+              exit 0
+            fi
+            git rebase --abort || true
+            sleep $((attempt * 2))
+          done
+          echo "Unable to publish direct-import assurance after retries" >&2
+          exit 1
