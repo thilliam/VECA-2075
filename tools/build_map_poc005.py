@@ -3,6 +3,8 @@
 
 POC-005 deliberately uses representative locality/corridor geometry where the
 source dataset is non-spatial. Geometry quality is carried into every feature.
+Existing POC-004 derivatives are reused if present so a locally validated AEMO
+REZ cache is not unnecessarily rebuilt.
 """
 from __future__ import annotations
 import csv, json
@@ -12,6 +14,7 @@ from build_map_poc004 import main as build_poc004
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'maps'/'poc-005'/'data'
+POC004=ROOT/'maps'/'poc-004'/'data'
 COMPUTE=ROOT/'domains'/'digital-compute'/'data'/'derived'/'compute_campus_pipeline_seed.csv'
 DIGITAL=ROOT/'domains'/'digital-connectivity'/'data'/'derived'/'digital_backbone_routes_seed.csv'
 RAIL=ROOT/'domains'/'transport'/'data'/'derived'/'conventional_rail_capacity_investment_seed.csv'
@@ -54,8 +57,7 @@ def build_compute():
 def build_digital():
     out=[];missing=[]
     for r in rows(DIGITAL):
-        ep=r.get('endpoints','').replace('–','-').split('-')
-        pts=[]
+        ep=r.get('endpoints','').replace('–','-').split('-');pts=[]
         for name in ep:
             name=name.strip()
             if name in CITY:pts.append(CITY[name])
@@ -63,15 +65,12 @@ def build_digital():
         out.append(line(r['route_id'],r['route_name'],'digital-connectivity',pts,{**r,'source_dataset':str(DIGITAL.relative_to(ROOT))},'generalised_endpoint_corridor','Straight/generalised endpoint corridor for system context; not fibre alignment or access-point geometry'))
     return fc(out),missing
 
-def rail_endpoints(rid,name):
-    explicit={
-    'RAIL-NIP-ALBURY-SYDNEY':['Albury','Sydney'],'RAIL-NIP-MELB-ALBURY':['Melbourne','Albury'],'RAIL-NIP-TELARAH-ACACIA':['Telarah','Acacia Ridge'],
-    'IR-B2A':['Beveridge','Albury'],'IR-A2I':['Albury','Illabo'],'IR-I2S':['Illabo','Stockinbingal'],'IR-S2P':['Stockinbingal','Parkes'],'IR-P2N':['Parkes','Narromine'],'IR-N2N':['Narromine','Narrabri'],'IR-NNS1':['Narrabri','North Star'],'IR-NNS2':['Narrabri','North Star'],'IR-BG':['North Star','Gowrie'],'IR-GH':['Gowrie','Helidon'],'IR-HC':['Helidon','Calvert']}
-    return explicit.get(rid)
+def rail_endpoints(rid):
+    return {'RAIL-NIP-ALBURY-SYDNEY':['Albury','Sydney'],'RAIL-NIP-MELB-ALBURY':['Melbourne','Albury'],'RAIL-NIP-TELARAH-ACACIA':['Telarah','Acacia Ridge'],'IR-B2A':['Beveridge','Albury'],'IR-A2I':['Albury','Illabo'],'IR-I2S':['Illabo','Stockinbingal'],'IR-S2P':['Stockinbingal','Parkes'],'IR-P2N':['Parkes','Narromine'],'IR-N2N':['Narromine','Narrabri'],'IR-NNS1':['Narrabri','North Star'],'IR-NNS2':['Narrabri','North Star'],'IR-BG':['North Star','Gowrie'],'IR-GH':['Gowrie','Helidon'],'IR-HC':['Helidon','Calvert']}.get(rid)
 def build_rail():
     out=[];missing=[]
     for r in rows(RAIL):
-        ep=rail_endpoints(r['rail_signal_id'],r['program_or_corridor'])
+        ep=rail_endpoints(r['rail_signal_id'])
         if not ep:continue
         pts=[LOCALITIES.get(x) for x in ep]
         if any(x is None for x in pts):missing.append(r['rail_signal_id']);continue
@@ -81,7 +80,7 @@ def build_rail():
 def build_ports():
     out=[];missing=[]
     for r in rows(PORTS):
-        key=r.get('locality','');loc=LOCALITIES.get(key)
+        loc=LOCALITIES.get(r.get('locality',''))
         if not loc:
             if r.get('port_id')=='PORT-BOTANY':loc=(151.20,-33.97)
             elif r.get('port_id')=='PORT-MEL':loc=(144.90,-37.82)
@@ -106,9 +105,16 @@ def build_water():
         out.append(point(r['system_id'],r['system_name'],'water-system',loc,{**r,'source_dataset':str(WATER.relative_to(ROOT))},'representative_system_anchor','Representative system anchor; not dam, pipe, service-area or catchment geometry'))
     return fc(out),missing
 
+def ensure_poc004():
+    required=['transmission_projects.geojson','energy_zones.geojson','capital_projects.geojson','freight_intermodal.geojson','planning_optionality.geojson']
+    if all((POC004/x).exists() for x in required):
+        print('POC-004 derivatives already exist; reusing locally validated baseline')
+    else:
+        print('POC-004 derivatives missing; building baseline')
+        build_poc004()
+
 def main():
-    build_poc004()
-    layers={}
+    ensure_poc004();layers={}
     for name,fn in [('compute_campuses.geojson',build_compute),('digital_backbone.geojson',build_digital),('rail_capacity_investment.geojson',build_rail),('ports.geojson',build_ports),('dnsp_capacity_signals.geojson',build_dnsp),('water_systems_expanded.geojson',build_water)]:
         data,gaps=fn();write(name,data);layers[name]={'features':len(data['features']),'gaps':gaps}
     (OUT/'manifest.json').write_text(json.dumps(layers,indent=2),encoding='utf-8')
