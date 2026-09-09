@@ -1,0 +1,42 @@
+name: Audit current VECA datasets
+
+on:
+  push:
+    branches:
+      - feature/assurance-complete-existing-sets
+    paths:
+      - "tools/audit_current_datasets.py"
+      - "assurance/dataset_register.json"
+      - "data/derived/**"
+      - "domains/*/data/derived/**"
+      - ".github/workflows/audit-current-datasets.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/assurance-complete-existing-sets
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Audit current datasets
+        run: python tools/audit_current_datasets.py
+      - name: Commit audit outputs
+        run: |
+          git config user.name "VECA assurance bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add assurance/current_dataset_audit.json assurance/current_dataset_audit.md
+          if git diff --cached --quiet; then
+            echo "No audit changes"
+          else
+            git commit -m "Assurance: refresh current dataset audit"
+            git pull --rebase origin feature/assurance-complete-existing-sets
+            git push origin HEAD:feature/assurance-complete-existing-sets
+          fi
