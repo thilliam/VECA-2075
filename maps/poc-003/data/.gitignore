@@ -1,0 +1,3 @@
+*.geojson
+manifest.json
+!.gitignore

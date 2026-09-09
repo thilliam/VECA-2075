@@ -1,0 +1,4 @@
+*.geojson
+manifest.json
+spatial-gaps.json
+!.gitignore
