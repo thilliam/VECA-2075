@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "results": [
+    {
+      "source_id": "POP-ABS-SA2-ERP-2001-2025",
+      "dataset": "data/derived/population_sa2_east.csv",
+      "source_inventory_count": 1844,
+      "derived_count": 1844,
+      "missing_codes": [],
+      "extra_codes": [],
+      "erp_2025_value_mismatches": [],
+      "passed": true,
+      "inventory_evidence": "ABS SA2 Regional Population 2025 FeatureServer layer 3; state_code_2021 in 1,2,3,8"
+    },
+    {
+      "source_id": "TRANSPORT-GA-EAST-MAJOR-ROADS",
+      "dataset": "data/derived/transport/ga_major_roads_east.geojson",
+      "source_inventory_count": 75581,
+      "derived_count": 75581,
+      "missing_objectids": [],
+      "extra_objectids": [],
+      "passed": true,
+      "inventory_evidence": "GA National Roads service; independent 3x4-degree returnIdsOnly inventory with operational/highway/target-state source filtering"
+    },
+    {
+      "source_id": "TRANSPORT-GA-EAST-RAIL",
+      "dataset": "data/derived/transport/ga_rail_east.geojson",
+      "source_inventory_count": 26808,
+      "derived_count": 26808,
+      "missing_objectids": [],
+      "extra_objectids": [],
+      "passed": true,
+      "inventory_evidence": "GA Foundation Rail Railway_Lines service; independent 3x4-degree returnIdsOnly inventory excluding explicit SA source-jurisdiction rows"
+    }
+  ]
+}

@@ -72,11 +72,12 @@
       "path": "data/derived/population_sa2_east.csv",
       "domain": "population",
       "role": "imported_dataset",
-      "assurance_state": "inventory_required",
+      "assurance_state": "reconciled",
       "map_relevance": true,
       "provenance": "ABS Regional Population 2024-25 SA2 cubes",
       "observed_count": 1844,
-      "blocker": "Need independent ABS target-state SA2 code inventory and code-set reconciliation; existing 1,844 count is extractor-derived."
+      "blocker": "Independent identity inventory reconciled with zero missing/extra entities; broader attribute/geometry field verification can continue separately.",
+      "independent_expected_count": 1844
     },
     {
       "path": "data/derived/population_state_validation.csv",
@@ -91,11 +92,12 @@
       "path": "data/derived/transport/ga_major_roads_east.geojson",
       "domain": "transport",
       "role": "imported_dataset",
-      "assurance_state": "inventory_required",
+      "assurance_state": "reconciled",
       "map_relevance": true,
       "provenance": "Geoscience Australia authoritative road service",
       "observed_count": 75581,
-      "blocker": "Need independent authoritative API count and feature-ID set reconciliation using identical scope rules."
+      "blocker": "Independent identity inventory reconciled with zero missing/extra entities; broader attribute/geometry field verification can continue separately.",
+      "independent_expected_count": 75581
     },
     {
       "path": "data/derived/transport/ga_major_roads_east_summary.csv",
@@ -110,11 +112,12 @@
       "path": "data/derived/transport/ga_rail_east.geojson",
       "domain": "transport",
       "role": "imported_dataset",
-      "assurance_state": "inventory_required",
+      "assurance_state": "reconciled",
       "map_relevance": true,
       "provenance": "Geoscience Australia Foundation Rail Infrastructure Railway_Lines service",
       "observed_count": 26808,
-      "blocker": "Need independent authoritative API count plus OBJECTID-set reconciliation using identical envelope/SA exclusion rules."
+      "blocker": "Independent identity inventory reconciled with zero missing/extra entities; broader attribute/geometry field verification can continue separately.",
+      "independent_expected_count": 26808
     },
     {
       "path": "data/derived/transport/ga_rail_east_summary.csv",
