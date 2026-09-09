@@ -22,11 +22,12 @@ jobs:
           curl --fail --location --retry 3 \
             'https://www.aemo.com.au/-/media/files/electricity/nem/planning_and_forecasting/generation_information/2026/nem-generation-information-july-2026.xlsx?rev=3455851f2bc945b7ab61c5ceed272992&sc_lang=en' \
             -o _scratch/aemo/nem-generation-information-july-2026.xlsx
-      - name: Build independent expected-ID inventory with openpyxl
+      - name: Build independent expected-record inventory with openpyxl
         run: |
           python -m pip install --disable-pip-version-check --quiet openpyxl
           python - <<'PY'
           import json
+          from collections import Counter
           from pathlib import Path
           import openpyxl
           x='_scratch/aemo/nem-generation-information-july-2026.xlsx'
@@ -34,32 +35,42 @@ jobs:
           ws=wb['Generator Information']
           headers=[str(c.value or '').strip() for c in next(ws.iter_rows(min_row=4,max_row=4))]
           def ix(name): return headers.index(name)
+          def norm(v):
+              if v is None: return ''
+              if isinstance(v,(int,float)) and float(v).is_integer(): return str(int(v))
+              return str(v).strip()
+          fields=['Gen Info Unit ID','Survey ID','Unit Name','DUID','Technology Type','Technology Detail']
+          idx={f:ix(f) for f in fields}
           region_i=ix('Region')
-          unit_i=ix('Gen Info Unit ID')
           target={'QLD1','NSW1','VIC1'}
-          ids=[]; counts={}
+          record_ids=[]; unit_ids=[]; counts={}
           for row in ws.iter_rows(min_row=5, values_only=True):
-              region=str(row[region_i] or '').strip()
+              region=norm(row[region_i])
               if region not in target: continue
-              v=row[unit_i]
-              if v is None: continue
-              uid=str(int(v)) if isinstance(v,(int,float)) and float(v).is_integer() else str(v).strip()
-              ids.append(uid); counts[region]=counts.get(region,0)+1
-          dup=sorted({x for x in ids if ids.count(x)>1})
+              uid=norm(row[idx['Gen Info Unit ID']])
+              if not uid: continue
+              rid='|'.join(norm(row[idx[f]]) for f in fields)
+              record_ids.append(rid); unit_ids.append(uid); counts[region]=counts.get(region,0)+1
+          rc=Counter(record_ids); uc=Counter(unit_ids)
+          duplicate_record_ids=sorted(k for k,v in rc.items() if v>1)
+          duplicate_unit_ids=sorted(k for k,v in uc.items() if v>1)
           payload={
               'source':'AEMO NEM Generation Information July 2026',
               'inventory_method':'openpyxl independent workbook read',
               'independent_from_extraction':True,
               'scope_regions':sorted(target),
-              'expected_count':len(ids),
-              'unique_id_count':len(set(ids)),
-              'duplicate_ids':dup,
+              'source_record_identity_fields':fields,
+              'expected_count':len(record_ids),
+              'unique_record_id_count':len(rc),
+              'duplicate_source_record_ids':duplicate_record_ids,
+              'duplicate_gen_info_unit_id_count':len(duplicate_unit_ids),
+              'duplicate_gen_info_unit_ids':duplicate_unit_ids,
               'counts_by_region':dict(sorted(counts.items())),
-              'gen_info_unit_ids':sorted(set(ids), key=lambda x:int(x) if x.isdigit() else x),
+              'source_record_ids':sorted(rc),
           }
-          assert not dup
+          print(json.dumps({k:v for k,v in payload.items() if k not in ('source_record_ids','duplicate_gen_info_unit_ids')},indent=2))
+          assert not duplicate_record_ids, f'composite identity still duplicates: {duplicate_record_ids[:10]}'
           Path('assurance/inventories/aemo_generation_information_july_2026_unit_ids.json').write_text(json.dumps(payload,indent=2)+'\n',encoding='utf-8')
-          print(json.dumps({k:v for k,v in payload.items() if k!='gen_info_unit_ids'},indent=2))
           PY
       - name: Extract with independent stdlib implementation and reconcile IDs
         run: |
