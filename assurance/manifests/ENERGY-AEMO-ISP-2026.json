@@ -12,25 +12,25 @@
   },
   "disposition": {
     "mapped": 0,
-    "dataset_only": 17,
+    "dataset_only": 21,
     "excluded": 0,
     "duplicate": 0,
-    "unresolved": 4
+    "unresolved": 0
   },
   "verification": {
-    "state": "failed",
+    "state": "sampled",
     "checks": [
       {
         "field": "entity completeness",
         "method": "Compare the independent AEMO Table 1 east-coast transmission inventory against project_name values in domains/energy/data/derived/transmission_projects_seed.csv.",
-        "evidence_locator": "AEMO 2026 ISP Table 1 versus transmission_projects_seed.csv EN-TR-001..EN-TR-017.",
-        "result": "17 of 21 scoped transmission projects are present. Four source-listed projects are absent and remain unresolved: Gladstone Project; Switching Station Near Wondalga; Gippsland Offshore Wind Transmission; Central to North Queensland Reinforcement Stage 2."
+        "evidence_locator": "AEMO 2026 ISP Table 1 versus transmission_projects_seed.csv EN-TR-001..EN-TR-021.",
+        "result": "Initial comparison found 17 of 21. Four missing projects were added; all 21 independently inventoried transmission projects are now explicitly represented in the dataset."
       },
       {
         "field": "status/timing",
-        "method": "Spot-check source rows already represented in VECA against AEMO Table 1 status class and timing.",
-        "evidence_locator": "AEMO 2026 ISP Table 1, including HumeLink, Sydney Ring South, VNI West, Brisbane Area 275 kV Reinforcement and QNI Connect.",
-        "result": "Represented examples preserve the important committed/actionable/future distinction, but source completeness failure prevents this source from being marked reconciled or verified."
+        "method": "Spot-check source rows against AEMO Table 1 status class and timing, including newly added omissions.",
+        "evidence_locator": "AEMO 2026 ISP Table 1, including HumeLink, Sydney Ring South, VNI West, Gladstone Project, Brisbane Area 275 kV Reinforcement and QNI Connect.",
+        "result": "Spot checks preserve committed/actionable/future distinctions and source timing semantics. Full field-by-field verification is still required before verification.state can be passed."
       }
     ]
   },
@@ -38,5 +38,5 @@
     "domains/energy/data/derived/transmission_projects_seed.csv"
   ],
   "map_layers": [],
-  "notes": "First migration of an existing VECA source through the assurance system. This deliberately records a failure rather than normalising 17/17 from the derived file. Distribution opportunities in AEMO Table 1 are outside this transmission-project manifest and should be handled as a separate source/layer if ingested."
+  "notes": "First existing VECA source reconciled through the assurance process. The process exposed four omissions before repair. Distribution opportunities in AEMO Table 1 remain outside this transmission-project manifest and should be handled as a separate source/layer if ingested."
 }
