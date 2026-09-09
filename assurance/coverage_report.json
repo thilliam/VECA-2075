@@ -1,0 +1,15 @@
+{
+  "generated": "2026-09-09",
+  "source_count": 22,
+  "manifest_count": 0,
+  "by_domain": {
+    "cross-domain-capital": {"discovered": 1},
+    "digital-compute": {"discovered": 4},
+    "digital-connectivity": {"discovered": 1},
+    "energy": {"relevant": 1, "discovered": 6},
+    "population": {"relevant": 1},
+    "settlement-planning": {"discovered": 2},
+    "transport": {"relevant": 4, "discovered": 2}
+  },
+  "manifests": []
+}
