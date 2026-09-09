@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Build POC-004 energy/capital/freight/water derivatives on top of POC-003.
+"""Build POC-004 integrated system derivatives on top of POC-003.
 
-This POC intentionally distinguishes exact/source geometry from representative anchors.
-No invented transmission alignments, REZ polygons or water-network geometries are created.
+The POC distinguishes exact/source geometry from representative anchors.
+No invented transmission alignments, REZ polygons, water networks or planning-area
+boundaries are created here.
 """
 from __future__ import annotations
 
@@ -20,14 +21,27 @@ ENERGY_ZONES = ROOT / "data" / "derived" / "energy_zones_seed.csv"
 CAPITAL = ROOT / "data" / "derived" / "infrastructure_projects_seed.csv"
 FREIGHT = ROOT / "data" / "derived" / "transport" / "intermodal_terminals_seed.csv"
 WATER = ROOT / "domains" / "water" / "data" / "derived" / "water_systems_seed.csv"
+PLANNING = ROOT / "domains" / "government-intent" / "data" / "derived" / "land_zoning_optionality_seed.csv"
+GOV_LAND = ROOT / "domains" / "government-intent" / "data" / "derived" / "government_land_education_seed.csv"
+
 WATER_ANCHORS = {
-    "WAT-SEQ": (152.80, -27.55),
-    "WAT-SYD": (150.90, -33.85),
-    "WAT-CBR": (149.10, -35.30),
-    "WAT-MELB": (144.90, -37.85),
-    "WAT-WAGGA": (147.37, -35.12),
-    "WAT-ALBURY": (146.92, -36.08),
+    "WAT-SEQ": (152.80, -27.55), "WAT-SYD": (150.90, -33.85),
+    "WAT-CBR": (149.10, -35.30), "WAT-MELB": (144.90, -37.85),
+    "WAT-WAGGA": (147.37, -35.12), "WAT-ALBURY": (146.92, -36.08),
     "WAT-GOULBURN": (149.72, -34.75),
+}
+PLANNING_ANCHORS = {
+    "GI-LAND-SEQ-PFGA": (152.65, -27.62),
+    "GI-LAND-TOOWOOMBA-PFGA": (151.95, -27.58),
+    "GI-LAND-CC-SCP": (151.33, -33.28),
+}
+GOV_LAND_ANCHORS = {
+    "GLE-CC-003": (151.38, -33.30),
+    "GLE-NE-001": (150.94, -31.08),
+    "GLE-ACT-001": (149.09, -35.34),
+    "GLE-SEQ-001": (153.05, -27.60),
+    "GLE-SEQ-002": (152.76, -27.66),
+    "GLE-SEQ-003": (151.95, -27.60),
 }
 
 
@@ -50,10 +64,10 @@ def feature(entity_id: str, name: str, domain: str, props: dict, reg: dict):
     return {"type": "Feature", "geometry": {"type": "Point", "coordinates": [float(r["longitude"]), float(r["latitude"])]}, "properties": out}
 
 
-def anchored_feature(entity_id: str, name: str, domain: str, props: dict, lon: float, lat: float, note: str):
+def anchored_feature(entity_id: str, name: str, domain: str, props: dict, lon: float, lat: float, quality: str, note: str):
     out = dict(props)
     out.update({"entity_id": entity_id, "name": name, "domain": domain,
-                "geometry_quality": "representative_system_anchor", "geometry_note": note})
+                "geometry_quality": quality, "geometry_note": note})
     return {"type": "Feature", "geometry": {"type": "Point", "coordinates": [lon, lat]}, "properties": out}
 
 
@@ -106,11 +120,26 @@ def build_freight(reg):
 def build_water():
     out, missing = [], []
     for row in read_csv(WATER):
-        eid = row["system_id"]
-        loc = WATER_ANCHORS.get(eid)
+        eid = row["system_id"]; loc = WATER_ANCHORS.get(eid)
+        if not loc: missing.append(eid); continue
+        out.append(anchored_feature(eid, row["system_name"], "water-system", {**row, "source_dataset": str(WATER.relative_to(ROOT)), "assurance_state": "structured_research_seed"}, loc[0], loc[1], "representative_system_anchor", "Representative urban water-system anchor; not dam, pipe, catchment or service-area geometry"))
+    return {"type": "FeatureCollection", "features": out}, missing
+
+
+def build_planning_optionality():
+    out, missing = [], []
+    for row in read_csv(PLANNING):
+        eid = row["area_id"]; loc = PLANNING_ANCHORS.get(eid)
+        if not loc:
+            # Broad statewide/multi-region policies are intentionally not converted to misleading points.
+            continue
+        out.append(anchored_feature(eid, row["area_or_program"], "planning-optionality", {**row, "source_dataset": str(PLANNING.relative_to(ROOT)), "assurance_state": "provenance_reconciled"}, loc[0], loc[1], "representative_program_anchor", "Representative program/growth-area anchor; not statutory boundary or parcel geometry"))
+    for row in read_csv(GOV_LAND):
+        if row.get("record_type") not in {"government_land", "growth_land"}: continue
+        eid = row["record_id"]; loc = GOV_LAND_ANCHORS.get(eid)
         if not loc:
             missing.append(eid); continue
-        out.append(anchored_feature(eid, row["system_name"], "water-system", {**row, "source_dataset": str(WATER.relative_to(ROOT)), "assurance_state": "structured_research_seed"}, loc[0], loc[1], "Representative urban water-system anchor; not dam, pipe, catchment or service-area geometry"))
+        out.append(anchored_feature(eid, row["asset_or_area"], "planning-optionality", {**row, "source_dataset": str(GOV_LAND.relative_to(ROOT)), "assurance_state": "provenance_reconciled"}, loc[0], loc[1], "representative_program_anchor", "Representative government/growth-land anchor; not parcel boundary"))
     return {"type": "FeatureCollection", "features": out}, missing
 
 
@@ -122,19 +151,14 @@ def write(name: str, data: dict):
 
 
 def main():
-    build_poc003()
-    reg = registry()
-    transmission, a = build_transmission(reg)
-    zones, b = build_zones(reg)
-    capital, c = build_capital(reg)
-    freight, d = build_freight(reg)
-    water, e = build_water()
-    write("transmission_projects.geojson", transmission)
-    write("energy_zones.geojson", zones)
-    write("capital_projects.geojson", capital)
-    write("freight_intermodal.geojson", freight)
-    write("water_systems.geojson", water)
-    gaps = {"transmission": a, "energy_zones": b, "capital": c, "freight": d, "water": e}
+    build_poc003(); reg = registry()
+    transmission, a = build_transmission(reg); zones, b = build_zones(reg)
+    capital, c = build_capital(reg); freight, d = build_freight(reg)
+    water, e = build_water(); planning, f = build_planning_optionality()
+    write("transmission_projects.geojson", transmission); write("energy_zones.geojson", zones)
+    write("capital_projects.geojson", capital); write("freight_intermodal.geojson", freight)
+    write("water_systems.geojson", water); write("planning_optionality.geojson", planning)
+    gaps = {"transmission": a, "energy_zones": b, "capital": c, "freight": d, "water": e, "planning_optionality": f}
     (OUT / "spatial-gaps.json").write_text(json.dumps(gaps, indent=2), encoding="utf-8")
     manifest = {
         "transmission": {"features": len(transmission["features"]), "geometry_mode": "representative anchors"},
@@ -142,6 +166,7 @@ def main():
         "capital_projects": {"features": len(capital["features"]), "geometry_mode": "representative anchors"},
         "freight_intermodal": {"features": len(freight["features"]), "geometry_mode": "approximate asset points"},
         "water_systems": {"features": len(water["features"]), "geometry_mode": "representative system anchors"},
+        "planning_optionality": {"features": len(planning["features"]), "geometry_mode": "representative program anchors"},
         "health": {"mode": "reuse POC-002 corpus derivative"}, "education": {"mode": "reuse POC-002 corpus derivative"}
     }
     (OUT / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
