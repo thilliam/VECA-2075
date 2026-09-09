@@ -6,7 +6,7 @@
     "exhaustive_import": 4,
     "support_output": 3
   },
-  "curated_structural_provenance_failures": 3,
+  "curated_structural_provenance_failures": 2,
   "datasets": [
     {
       "path": "data/derived/energy_zones_seed.csv",
@@ -543,13 +543,16 @@
         "mechanism",
         "optionality_type",
         "veca_relevance",
-        "source_note"
+        "source_note",
+        "source_ids"
       ],
-      "provenance_fields": [],
+      "provenance_fields": [
+        "source_ids"
+      ],
       "rows_missing_provenance": [],
       "unresolved_source_ids": [],
       "invalid_source_urls": [],
-      "structural_provenance_pass": false
+      "structural_provenance_pass": true
     },
     {
       "path": "domains/government-intent/data/derived/regional_growth_baselines_seed.csv",
@@ -571,10 +574,18 @@
         "dwelling_requirement_or_target",
         "spatial_intent",
         "capital_implication",
-        "source_note"
+        "source_note",
+        "source_ids"
       ],
-      "provenance_fields": [],
-      "rows_missing_provenance": [],
+      "provenance_fields": [
+        "source_ids"
+      ],
+      "rows_missing_provenance": [
+        6,
+        9,
+        10,
+        11
+      ],
       "unresolved_source_ids": [],
       "invalid_source_urls": [],
       "structural_provenance_pass": false
