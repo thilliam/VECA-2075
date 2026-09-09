@@ -10,7 +10,7 @@
 
 | Dataset | Kind | Records | Structural provenance | Current assurance |
 |---|---|---:|---|---|
-| `data/derived/energy_zones_seed.csv` | curated_synthesis | 12 | PASS | source_decomposition_required |
+| `data/derived/energy_zones_seed.csv` | curated_synthesis | 23 | PASS | source_decomposition_required |
 | `data/derived/hsr_corridor_obstacles_seed.csv` | curated_synthesis | 7 | PASS | source_decomposition_required |
 | `data/derived/hsr_studies_seed.csv` | curated_synthesis | 8 | PASS | source_decomposition_required |
 | `data/derived/hsr_study_evidence_seed.csv` | curated_synthesis | 22 | PASS | source_decomposition_required |

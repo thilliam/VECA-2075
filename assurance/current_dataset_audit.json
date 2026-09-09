@@ -16,7 +16,7 @@
       "assurance_state": "source_decomposition_required",
       "map_relevance": true,
       "blocker": "Reconcile each included zone/project against its primary source inventory rather than accepting curated seed row count.",
-      "record_count": 12,
+      "record_count": 23,
       "columns": [
         "zone_id",
         "name",
