@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "updated": "2026-09-09",
+  "replace_existing": false,
+  "sources": [
+    {
+      "source_id": "ENERGY-ESSENTIAL-DAPR-2025-DATA",
+      "title": "Essential Energy DAPR and zone-substation load data 2025",
+      "publisher": "Essential Energy",
+      "domain": "energy",
+      "geography": "Regional NSW",
+      "source_type": "infrastructure_owner_intent",
+      "status": "ingestion_planned",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": ["Full zone-substation capacity/constraint tables not yet materialised in VECA; historical load alone is not connection headroom."]
+    },
+    {
+      "source_id": "ENERGY-AUSGRID-DTAPR-2025-DATA",
+      "title": "Ausgrid 2025 DTAPR capacity, forecast and limitation datasets",
+      "publisher": "Ausgrid",
+      "domain": "energy",
+      "geography": "Sydney / Central Coast / Hunter",
+      "source_type": "infrastructure_owner_intent",
+      "status": "ingestion_planned",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": ["Machine-readable substation capacity/demand forecast and limitation tables identified but not yet fully imported."]
+    },
+    {
+      "source_id": "ENERGY-ENDEAVOUR-DAPR-2025-DATA",
+      "title": "Endeavour Energy 2025 DAPR / Rosetta capacity and project evidence",
+      "publisher": "Endeavour Energy",
+      "domain": "energy",
+      "geography": "Western Sydney / Blue Mountains / Illawarra / South Coast",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": ["Current batch is a selective high-consequence capacity/project signal set; full Rosetta asset/limitation inventory remains to be extracted before the source can be called ingested."]
+    },
+    {
+      "source_id": "ENERGY-ENERGEX-DAPR-2025-DATA",
+      "title": "Energex 2025-26 DAPR and zone-substation load data",
+      "publisher": "Energex",
+      "domain": "energy",
+      "geography": "South East Queensland",
+      "source_type": "infrastructure_owner_intent",
+      "status": "ingestion_planned",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": ["2025-26 historical zone-substation load package identified; DAPR capacity/constraint tables still require structured ingestion."]
+    },
+    {
+      "source_id": "ENERGY-ERGON-DAPR-2025-DATA",
+      "title": "Ergon Energy Network 2025 DAPR capacity and limitation datasets",
+      "publisher": "Ergon Energy Network",
+      "domain": "energy",
+      "geography": "Regional Queensland",
+      "source_type": "infrastructure_owner_intent",
+      "status": "ingestion_planned",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": ["Machine-readable BSP/zone-substation forecast and limitation workbooks identified; full asset-level import remains to be run."]
+    },
+    {
+      "source_id": "ENERGY-AUSNET-DAPR-2025-DATA",
+      "title": "AusNet 2025-2029 DAPR capacity and limitation evidence",
+      "publisher": "AusNet",
+      "domain": "energy",
+      "geography": "Eastern and northern Victoria",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": ["Current batch extracts selected high-consequence augmentation/constraint signals; full zone-substation inventory and forecast table ingestion remains outstanding before the source can be called ingested."]
+    },
+    {
+      "source_id": "ENERGY-POWERCOR-DAPR-2025-DATA",
+      "title": "Powercor 2025 DAPR and network data",
+      "publisher": "Powercor",
+      "domain": "energy",
+      "geography": "Western Victoria",
+      "source_type": "infrastructure_owner_intent",
+      "status": "ingestion_planned",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": ["Network visualisation and DAPR constraint data identified; full structured extraction not yet complete."]
+    },
+    {
+      "source_id": "ENERGY-CITIPOWER-DAPR-2025-DATA",
+      "title": "CitiPower 2025 DAPR and network data",
+      "publisher": "CitiPower",
+      "domain": "energy",
+      "geography": "Inner Melbourne",
+      "source_type": "infrastructure_owner_intent",
+      "status": "ingestion_planned",
+      "priority": "P1",
+      "map_relevance": true,
+      "known_gaps": ["Needed mainly as metropolitan counterfactual; full structured extraction not yet complete."]
+    },
+    {
+      "source_id": "ENERGY-UNITED-DAPR-2025-DATA",
+      "title": "United Energy 2025 DAPR and zone-substation data",
+      "publisher": "United Energy",
+      "domain": "energy",
+      "geography": "South-east Melbourne / Mornington Peninsula",
+      "source_type": "infrastructure_owner_intent",
+      "status": "ingestion_planned",
+      "priority": "P1",
+      "map_relevance": true,
+      "known_gaps": ["DAPR, terminal-station forecasts and historical zone-substation load files identified; structured extraction remains outstanding."]
+    },
+    {
+      "source_id": "ENERGY-JEMENA-DAPR-2025-DATA",
+      "title": "Jemena Electricity Networks 2025 DAPR and digital DAPR map",
+      "publisher": "Jemena Electricity Networks",
+      "domain": "energy",
+      "geography": "North-west Melbourne",
+      "source_type": "infrastructure_owner_intent",
+      "status": "ingestion_planned",
+      "priority": "P1",
+      "map_relevance": true,
+      "known_gaps": ["Digital map exposes topology, forecast loads/capacities and constraints; structured extraction remains outstanding."]
+    }
+  ],
+  "datasets": [
+    {
+      "path": "domains/energy/data/derived/distribution_capacity_signals_seed.csv",
+      "domain": "energy",
+      "role": "imported_dataset",
+      "assurance_state": "provenance_reconciled",
+      "map_relevance": true,
+      "provenance": "multi-DNSP primary-source distribution capacity/augmentation signal synthesis",
+      "blocker": null,
+      "selection_claim": "selective_capacity_signals",
+      "selection_policy": "Capture high-consequence distribution/sub-transmission capacity, augmentation and enabling-infrastructure signals encountered during the first DNSP ingestion sweep, prioritising regional growth, new economic nodes, data-centre/industrial demand and metropolitan counterfactuals.",
+      "completeness_test": "Every included signal must resolve to a primary DNSP DAPR, RIT-D, project or network-planning source and preserve whether the capacity is existing, planned, required or merely proposed. This dataset does not claim to contain every zone substation or network limitation.",
+      "canonical": true
+    }
+  ],
+  "curated_contracts": [
+    {
+      "path": "domains/energy/data/derived/distribution_capacity_signals_seed.csv",
+      "selection_claim": "selective_capacity_signals",
+      "selection_policy": "Capture high-consequence distribution/sub-transmission capacity, augmentation and enabling-infrastructure signals encountered during the first DNSP ingestion sweep, prioritising regional growth, new economic nodes, data-centre/industrial demand and metropolitan counterfactuals.",
+      "completeness_test": "Every included signal must resolve to a primary DNSP DAPR, RIT-D, project or network-planning source and preserve whether the capacity is existing, planned, required or merely proposed. This dataset does not claim to contain every zone substation or network limitation.",
+      "canonical": true
+    }
+  ]
+}

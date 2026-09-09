@@ -350,6 +350,19 @@
       "selection_policy": "Retain only as historical project-state evidence while canonical domains/government-intent data supersedes it.",
       "completeness_test": "No completeness claim. Must not receive new data or be treated as canonical map input.",
       "canonical": false
+    },
+    {
+      "path": "domains/energy/data/derived/distribution_capacity_signals_seed.csv",
+      "domain": "energy",
+      "role": "imported_dataset",
+      "assurance_state": "provenance_reconciled",
+      "map_relevance": true,
+      "provenance": "multi-DNSP primary-source distribution capacity/augmentation signal synthesis",
+      "blocker": null,
+      "selection_claim": "selective_capacity_signals",
+      "selection_policy": "Capture high-consequence distribution/sub-transmission capacity, augmentation and enabling-infrastructure signals encountered during the first DNSP ingestion sweep, prioritising regional growth, new economic nodes, data-centre/industrial demand and metropolitan counterfactuals.",
+      "completeness_test": "Every included signal must resolve to a primary DNSP DAPR, RIT-D, project or network-planning source and preserve whether the capacity is existing, planned, required or merely proposed. This dataset does not claim to contain every zone substation or network limitation.",
+      "canonical": true
     }
   ]
 }

@@ -13,7 +13,9 @@
       "status": "reconciled",
       "priority": "P1",
       "map_relevance": true,
-      "known_gaps": ["Independent ABS FeatureServer reconciliation matched all 1,844 SA2 identities and all ERP 2025 values; historical-year and migration-component fields have not all received a second independent field-by-field verification."]
+      "known_gaps": [
+        "Independent ABS FeatureServer reconciliation matched all 1,844 SA2 identities and all ERP 2025 values; historical-year and migration-component fields have not all received a second independent field-by-field verification."
+      ]
     },
     {
       "source_id": "TRANSPORT-GA-EAST-RAIL",
@@ -25,7 +27,10 @@
       "status": "reconciled",
       "priority": "P1",
       "map_relevance": true,
-      "known_gaps": ["Independent authoritative OBJECTID inventory matched all 26,808 extracted features with zero missing/extra identities.", "Geometry/attribute field verification is not exhaustive, and geometry alone does not establish corridor capacity/utilisation."]
+      "known_gaps": [
+        "Independent authoritative OBJECTID inventory matched all 26,808 extracted features with zero missing/extra identities.",
+        "Geometry/attribute field verification is not exhaustive, and geometry alone does not establish corridor capacity/utilisation."
+      ]
     },
     {
       "source_id": "TRANSPORT-GA-EAST-MAJOR-ROADS",
@@ -37,7 +42,10 @@
       "status": "reconciled",
       "priority": "P1",
       "map_relevance": true,
-      "known_gaps": ["Independent authoritative OBJECTID inventory matched all 75,581 extracted features with zero missing/extra identities.", "Geometry/attribute field verification is not exhaustive; capacity, congestion and bottleneck evidence remains incomplete."]
+      "known_gaps": [
+        "Independent authoritative OBJECTID inventory matched all 75,581 extracted features with zero missing/extra identities.",
+        "Geometry/attribute field verification is not exhaustive; capacity, congestion and bottleneck evidence remains incomplete."
+      ]
     },
     {
       "source_id": "TRANSPORT-BITRE-AIRPORTS",
@@ -49,7 +57,9 @@
       "status": "ingestion_planned",
       "priority": "P2",
       "map_relevance": true,
-      "known_gaps": ["Extractor/workflow exists, but no current airport dataset is present in the derived data tree; do not treat airports as already imported evidence."]
+      "known_gaps": [
+        "Extractor/workflow exists, but no current airport dataset is present in the derived data tree; do not treat airports as already imported evidence."
+      ]
     },
     {
       "source_id": "ENERGY-AEMO-ISP-2026",
@@ -61,7 +71,11 @@
       "status": "reconciled",
       "priority": "P1",
       "map_relevance": true,
-      "known_gaps": ["Scoped east-coast transmission inventory reconciled 21/21; critical field verification remains sampled rather than fully verified.", "Generator and storage asset-level extraction remains incomplete.", "Transmission proximity must not be treated as local connection capacity."]
+      "known_gaps": [
+        "Scoped east-coast transmission inventory reconciled 21/21; critical field verification remains sampled rather than fully verified.",
+        "Generator and storage asset-level extraction remains incomplete.",
+        "Transmission proximity must not be treated as local connection capacity."
+      ]
     },
     {
       "source_id": "ENERGY-ESSENTIAL-DAPR",
@@ -73,7 +87,9 @@
       "status": "discovered",
       "priority": "P0",
       "map_relevance": true,
-      "known_gaps": ["Zone-substation/bulk-supply capacity, forecast load, constraints and augmentation not yet ingested."]
+      "known_gaps": [
+        "Zone-substation/bulk-supply capacity, forecast load, constraints and augmentation not yet ingested."
+      ]
     },
     {
       "source_id": "ENERGY-AUSGRID-DAPR",
@@ -85,7 +101,9 @@
       "status": "discovered",
       "priority": "P0",
       "map_relevance": true,
-      "known_gaps": ["Zone-substation capacity, demand forecasts, constraints, retirement and augmentation not yet ingested."]
+      "known_gaps": [
+        "Zone-substation capacity, demand forecasts, constraints, retirement and augmentation not yet ingested."
+      ]
     },
     {
       "source_id": "ENERGY-ENDEAVOUR-DAPR",
@@ -97,7 +115,9 @@
       "status": "discovered",
       "priority": "P0",
       "map_relevance": true,
-      "known_gaps": ["Local capacity and major-load forecasts, including data-centre effects, not yet ingested."]
+      "known_gaps": [
+        "Local capacity and major-load forecasts, including data-centre effects, not yet ingested."
+      ]
     },
     {
       "source_id": "ENERGY-ENERGEX-DAPR",
@@ -109,7 +129,9 @@
       "status": "discovered",
       "priority": "P0",
       "map_relevance": true,
-      "known_gaps": ["Substation/feeder capacity and forecast-constraint layer not yet ingested."]
+      "known_gaps": [
+        "Substation/feeder capacity and forecast-constraint layer not yet ingested."
+      ]
     },
     {
       "source_id": "ENERGY-ERGON-DAPR",
@@ -121,7 +143,9 @@
       "status": "discovered",
       "priority": "P0",
       "map_relevance": true,
-      "known_gaps": ["Regional load forecasts, network limitations, capacity and proposed solutions not yet ingested."]
+      "known_gaps": [
+        "Regional load forecasts, network limitations, capacity and proposed solutions not yet ingested."
+      ]
     },
     {
       "source_id": "ENERGY-VIC-DNSP-PLANNING",
@@ -133,7 +157,9 @@
       "status": "discovered",
       "priority": "P0",
       "map_relevance": true,
-      "known_gaps": ["Victorian distribution-network capacity/constraint coverage requires source-by-source decomposition and ingestion."]
+      "known_gaps": [
+        "Victorian distribution-network capacity/constraint coverage requires source-by-source decomposition and ingestion."
+      ]
     },
     {
       "source_id": "RAIL-ARTC-NETWORK-INVESTMENT-PROGRAM",
@@ -145,7 +171,9 @@
       "status": "discovered",
       "priority": "P0",
       "map_relevance": true,
-      "known_gaps": ["Conventional rail capacity, loop, signalling, resilience and corridor-upgrade projects not yet represented systematically."]
+      "known_gaps": [
+        "Conventional rail capacity, loop, signalling, resilience and corridor-upgrade projects not yet represented systematically."
+      ]
     },
     {
       "source_id": "RAIL-INLAND-RAIL-CURRENT-PROGRAM",
@@ -157,7 +185,9 @@
       "status": "relevant",
       "priority": "P1",
       "map_relevance": true,
-      "known_gaps": ["Current delivered/active/preserved-but-not-active sections require explicit status reconciliation."]
+      "known_gaps": [
+        "Current delivered/active/preserved-but-not-active sections require explicit status reconciliation."
+      ]
     },
     {
       "source_id": "RAIL-ARA-PIPELINE-POLICY",
@@ -169,7 +199,9 @@
       "status": "discovered",
       "priority": "P1",
       "map_relevance": true,
-      "known_gaps": ["Industry view of conventional rail investment, freight resilience and future network need not yet reviewed systematically."]
+      "known_gaps": [
+        "Industry view of conventional rail investment, freight resilience and future network need not yet reviewed systematically."
+      ]
     },
     {
       "source_id": "COMPUTE-AIRTRUNK-AU-PIPELINE",
@@ -181,7 +213,9 @@
       "status": "discovered",
       "priority": "P0",
       "map_relevance": true,
-      "known_gaps": ["Campus locations, operational/committed/ultimate MW, power, cooling/water and delivery horizon not yet structured."]
+      "known_gaps": [
+        "Campus locations, operational/committed/ultimate MW, power, cooling/water and delivery horizon not yet structured."
+      ]
     },
     {
       "source_id": "COMPUTE-NEXTDC-AU-PIPELINE",
@@ -193,7 +227,9 @@
       "status": "discovered",
       "priority": "P0",
       "map_relevance": true,
-      "known_gaps": ["Campus pipeline, MW, secured power, status and commissioning horizon not yet structured."]
+      "known_gaps": [
+        "Campus pipeline, MW, secured power, status and commissioning horizon not yet structured."
+      ]
     },
     {
       "source_id": "COMPUTE-CDC-AU-PIPELINE",
@@ -205,7 +241,9 @@
       "status": "discovered",
       "priority": "P0",
       "map_relevance": true,
-      "known_gaps": ["Campus pipeline, contracted capacity, power/cooling requirements and timing not yet structured."]
+      "known_gaps": [
+        "Campus pipeline, contracted capacity, power/cooling requirements and timing not yet structured."
+      ]
     },
     {
       "source_id": "COMPUTE-GOODMAN-DATA-CENTRE-PIPELINE",
@@ -217,7 +255,9 @@
       "status": "discovered",
       "priority": "P0",
       "map_relevance": true,
-      "known_gaps": ["Powered land, planned MW and interaction with industrial/logistics land competition not yet structured."]
+      "known_gaps": [
+        "Powered land, planned MW and interaction with industrial/logistics land competition not yet structured."
+      ]
     },
     {
       "source_id": "INFRA-IPA-PIPELINE-INVESTMENT-MONITOR",
@@ -229,7 +269,9 @@
       "status": "discovered",
       "priority": "P1",
       "map_relevance": true,
-      "known_gaps": ["Independent infrastructure pipeline/investor-intent evidence not yet incorporated."]
+      "known_gaps": [
+        "Independent infrastructure pipeline/investor-intent evidence not yet incorporated."
+      ]
     },
     {
       "source_id": "REGIONAL-RAI-STRATEGIC-PLANNING",
@@ -241,7 +283,9 @@
       "status": "discovered",
       "priority": "P1",
       "map_relevance": false,
-      "known_gaps": ["Regional strategic-planning, housing, productivity and renewable-legacy research not yet reviewed against VECA assumptions."]
+      "known_gaps": [
+        "Regional strategic-planning, housing, productivity and renewable-legacy research not yet reviewed against VECA assumptions."
+      ]
     },
     {
       "source_id": "PROPERTY-UDIA-PCA-GROWTH-PIPELINE",
@@ -253,7 +297,9 @@
       "status": "discovered",
       "priority": "P2",
       "map_relevance": true,
-      "known_gaps": ["Private-development view of growth corridors, serviced-land constraints and enabling infrastructure not yet systematically reviewed."]
+      "known_gaps": [
+        "Private-development view of growth corridors, serviced-land constraints and enabling infrastructure not yet systematically reviewed."
+      ]
     },
     {
       "source_id": "DIGITAL-FIBRE-EAST-COAST",
@@ -265,7 +311,149 @@
       "status": "discovered",
       "priority": "P1",
       "map_relevance": true,
-      "known_gaps": ["Fibre routes, interconnection nodes and subsea cable landing context not yet assembled for compute-compatible location analysis."]
+      "known_gaps": [
+        "Fibre routes, interconnection nodes and subsea cable landing context not yet assembled for compute-compatible location analysis."
+      ]
+    },
+    {
+      "source_id": "ENERGY-ESSENTIAL-DAPR-2025-DATA",
+      "title": "Essential Energy DAPR and zone-substation load data 2025",
+      "publisher": "Essential Energy",
+      "domain": "energy",
+      "geography": "Regional NSW",
+      "source_type": "infrastructure_owner_intent",
+      "status": "ingestion_planned",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Full zone-substation capacity/constraint tables not yet materialised in VECA; historical load alone is not connection headroom."
+      ]
+    },
+    {
+      "source_id": "ENERGY-AUSGRID-DTAPR-2025-DATA",
+      "title": "Ausgrid 2025 DTAPR capacity, forecast and limitation datasets",
+      "publisher": "Ausgrid",
+      "domain": "energy",
+      "geography": "Sydney / Central Coast / Hunter",
+      "source_type": "infrastructure_owner_intent",
+      "status": "ingestion_planned",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Machine-readable substation capacity/demand forecast and limitation tables identified but not yet fully imported."
+      ]
+    },
+    {
+      "source_id": "ENERGY-ENDEAVOUR-DAPR-2025-DATA",
+      "title": "Endeavour Energy 2025 DAPR / Rosetta capacity and project evidence",
+      "publisher": "Endeavour Energy",
+      "domain": "energy",
+      "geography": "Western Sydney / Blue Mountains / Illawarra / South Coast",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Current batch is a selective high-consequence capacity/project signal set; full Rosetta asset/limitation inventory remains to be extracted before the source can be called ingested."
+      ]
+    },
+    {
+      "source_id": "ENERGY-ENERGEX-DAPR-2025-DATA",
+      "title": "Energex 2025-26 DAPR and zone-substation load data",
+      "publisher": "Energex",
+      "domain": "energy",
+      "geography": "South East Queensland",
+      "source_type": "infrastructure_owner_intent",
+      "status": "ingestion_planned",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "2025-26 historical zone-substation load package identified; DAPR capacity/constraint tables still require structured ingestion."
+      ]
+    },
+    {
+      "source_id": "ENERGY-ERGON-DAPR-2025-DATA",
+      "title": "Ergon Energy Network 2025 DAPR capacity and limitation datasets",
+      "publisher": "Ergon Energy Network",
+      "domain": "energy",
+      "geography": "Regional Queensland",
+      "source_type": "infrastructure_owner_intent",
+      "status": "ingestion_planned",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Machine-readable BSP/zone-substation forecast and limitation workbooks identified; full asset-level import remains to be run."
+      ]
+    },
+    {
+      "source_id": "ENERGY-AUSNET-DAPR-2025-DATA",
+      "title": "AusNet 2025-2029 DAPR capacity and limitation evidence",
+      "publisher": "AusNet",
+      "domain": "energy",
+      "geography": "Eastern and northern Victoria",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Current batch extracts selected high-consequence augmentation/constraint signals; full zone-substation inventory and forecast table ingestion remains outstanding before the source can be called ingested."
+      ]
+    },
+    {
+      "source_id": "ENERGY-POWERCOR-DAPR-2025-DATA",
+      "title": "Powercor 2025 DAPR and network data",
+      "publisher": "Powercor",
+      "domain": "energy",
+      "geography": "Western Victoria",
+      "source_type": "infrastructure_owner_intent",
+      "status": "ingestion_planned",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Network visualisation and DAPR constraint data identified; full structured extraction not yet complete."
+      ]
+    },
+    {
+      "source_id": "ENERGY-CITIPOWER-DAPR-2025-DATA",
+      "title": "CitiPower 2025 DAPR and network data",
+      "publisher": "CitiPower",
+      "domain": "energy",
+      "geography": "Inner Melbourne",
+      "source_type": "infrastructure_owner_intent",
+      "status": "ingestion_planned",
+      "priority": "P1",
+      "map_relevance": true,
+      "known_gaps": [
+        "Needed mainly as metropolitan counterfactual; full structured extraction not yet complete."
+      ]
+    },
+    {
+      "source_id": "ENERGY-UNITED-DAPR-2025-DATA",
+      "title": "United Energy 2025 DAPR and zone-substation data",
+      "publisher": "United Energy",
+      "domain": "energy",
+      "geography": "South-east Melbourne / Mornington Peninsula",
+      "source_type": "infrastructure_owner_intent",
+      "status": "ingestion_planned",
+      "priority": "P1",
+      "map_relevance": true,
+      "known_gaps": [
+        "DAPR, terminal-station forecasts and historical zone-substation load files identified; structured extraction remains outstanding."
+      ]
+    },
+    {
+      "source_id": "ENERGY-JEMENA-DAPR-2025-DATA",
+      "title": "Jemena Electricity Networks 2025 DAPR and digital DAPR map",
+      "publisher": "Jemena Electricity Networks",
+      "domain": "energy",
+      "geography": "North-west Melbourne",
+      "source_type": "infrastructure_owner_intent",
+      "status": "ingestion_planned",
+      "priority": "P1",
+      "map_relevance": true,
+      "known_gaps": [
+        "Digital map exposes topology, forecast loads/capacities and constraints; structured extraction remains outstanding."
+      ]
     }
   ]
 }
