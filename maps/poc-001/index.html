@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VECA 2075 — Layered Map POC</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.7.1/dist/maplibre-gl.css" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="eyebrow">VECA 2075</div>
+        <h1>Layered Explorer</h1>
+        <p>Explore the corpus spatially. Zoom reveals more detail; click any feature for evidence and interpretation.</p>
+      </div>
+
+      <section>
+        <div class="section-title">Time horizon <span id="yearLabel">2050</span></div>
+        <input id="year" type="range" min="2026" max="2075" value="2050" step="1" />
+        <div class="range-labels"><span>2026</span><span>2075</span></div>
+      </section>
+
+      <section>
+        <div class="section-title">Layers</div>
+        <div id="layerControls" class="layer-controls"></div>
+      </section>
+
+      <section>
+        <div class="section-title">Status</div>
+        <label class="check-row"><input type="checkbox" data-status="existing" checked /> Existing</label>
+        <label class="check-row"><input type="checkbox" data-status="committed" checked /> Committed / funded</label>
+        <label class="check-row"><input type="checkbox" data-status="planned" checked /> Government planned</label>
+        <label class="check-row"><input type="checkbox" data-status="scenario" checked /> VECA scenario</label>
+      </section>
+
+      <section class="legend">
+        <div class="section-title">Reading the map</div>
+        <div><span class="swatch existing"></span> Existing</div>
+        <div><span class="swatch committed"></span> Committed / funded</div>
+        <div><span class="swatch planned"></span> Government planned</div>
+        <div><span class="swatch scenario"></span> VECA scenario</div>
+      </section>
+    </aside>
+
+    <section class="map-wrap">
+      <div id="map"></div>
+      <div class="map-topbar">
+        <button id="resetView">East coast</button>
+        <button data-jump="seq">SEQ</button>
+        <button data-jump="central-coast">Central Coast</button>
+        <button data-jump="new-england">New England</button>
+        <button data-jump="canberra">Canberra</button>
+        <button data-jump="riverina">Wagga / Albury</button>
+        <button data-jump="gippsland">Gippsland</button>
+      </div>
+      <div class="zoom-note">Semantic zoom: regional anchors appear first; local assets reveal as you zoom in.</div>
+    </section>
+
+    <aside id="detailPanel" class="detail-panel empty">
+      <button id="closeDetail" class="close">×</button>
+      <div id="detailContent">
+        <div class="eyebrow">SELECT A FEATURE</div>
+        <h2>Evidence panel</h2>
+        <p>Click an asset or corridor to see its role, status, source and VECA interpretation.</p>
+      </div>
+    </aside>
+  </main>
+
+  <script src="https://unpkg.com/maplibre-gl@5.7.1/dist/maplibre-gl.js"></script>
+  <script src="./data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
