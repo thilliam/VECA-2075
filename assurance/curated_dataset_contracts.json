@@ -163,6 +163,13 @@
       "selection_policy": "Capture material east-coast campuses and pipeline assets published by NEXTDC, AirTrunk, CDC and Goodman, plus non-physical portfolio-demand records where needed to preserve contracted-load evidence without double-counting.",
       "completeness_test": "Every row has a primary operator source and explicit capacity definition/status. The set claims broad coverage of the named operators' east-coast campuses encountered in this sweep, not complete coverage of every Australian data-centre owner, planning approval, powered-land proposal or customer load.",
       "canonical": true
+    },
+    {
+      "path": "domains/transport/data/derived/conventional_rail_capacity_investment_seed.csv",
+      "selection_claim": "selective_capacity_and_program_signals",
+      "selection_policy": "Capture current east-coast conventional-rail capability-changing investments, funded corridor programs, Inland Rail section status and the next authoritative operating-capability sources needed to convert rail geometry into a usable capacity layer.",
+      "completeness_test": "Every included row resolves to a current primary ARTC/Inland Rail source and distinguishes completed, in-progress, funded-program, approved/preserved and ingestion-target states. The dataset does not claim to contain every ARTC project, train path, loop or route-access parameter.",
+      "canonical": true
     }
   ]
 }
