@@ -146,7 +146,8 @@ def point_feature(row, reg, domain):
     })
     if domain == "population":
         props["status"] = "planned"
-        props["valid_from"] = int(float(row.get("plan_horizon") or 2026)) if str(row.get("plan_horizon") or "").isdigit() else 2026
+        props["valid_from"] = 2026
+        props["horizon"] = row.get("plan_horizon") or ""
     else:
         props["status"] = status_normalise(row.get("status"))
         props["valid_from"] = 2026
