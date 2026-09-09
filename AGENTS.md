@@ -13,7 +13,7 @@ Before starting a task, read:
 5. the relevant `experiments/.../README.md`
 6. the relevant `domains/<domain>/research/*layer_plan*.md` and source register.
 
-For current work, `PROJECT_STATUS_AND_ROADMAP.md` is the canonical status/backlog document. `assurance/source_register.json` is the canonical cross-domain source-coverage/backlog register.
+For current work, `PROJECT_STATUS_AND_ROADMAP.md` is the canonical status/backlog document. `assurance/source_register.json` is the canonical cross-domain source-coverage/backlog register. `assurance/dataset_register.json` is the canonical inventory of current derived datasets and their assurance state.
 
 ## Current project state
 
@@ -50,6 +50,7 @@ Canonical new work is domain-first:
 Cross-domain source assurance lives under:
 
 `assurance/source_register.json`  
+`assurance/dataset_register.json`  
 `assurance/manifests/`
 
 Older `research/` and `data/` content is still live legacy material while workflow-dependent migration is unresolved. Search both before assuming evidence is absent.
@@ -72,13 +73,16 @@ The expected count may not simply be the row count produced by the same extracto
 
 Completeness also does not prove correctness. Verify identity/location and decision-critical fields such as status, capacity, MW, value and timing against evidence, and use spatial sanity checks where relevant.
 
-Run before declaring a source reconciled or verified:
+**Every new file under `data/derived/**` or `domains/*/data/derived/**` must be added to `assurance/dataset_register.json` in the same change.** This prevents a dataset from quietly entering analysis/map work without an assurance state. Support summaries are registered too, but are labelled `support_output` rather than treated as independent source imports.
+
+Run for data/source changes:
 
 ```bash
+python tools/validate_dataset_register.py
 python tools/validate_source_assurance.py --strict
 ```
 
-See `assurance/README.md` for the full contract and manifest template.
+See `assurance/README.md` for the full source contract and manifest template. See `assurance/migration/current_imported_sets_2026-09-09.md` for the baseline census of the 25 source-bearing datasets that existed when dataset-level assurance was introduced.
 
 When a source gives multiple capacities or dollar values, preserve their definitions rather than choosing the most convenient number.
 
@@ -88,6 +92,7 @@ Parallel agents should receive bounded domains/regions/outputs. Avoid multiple a
 
 A good source-ingestion task normally produces:
 - `assurance/source_register.json` additions/status updates;
+- `assurance/dataset_register.json` additions/status updates for any derived file;
 - a source-specific `assurance/manifests/*.json` reconciliation record;
 - a structured derived dataset where appropriate;
 - a concise findings/limitations note;
