@@ -317,16 +317,19 @@
     },
     {
       "source_id": "ENERGY-ESSENTIAL-DAPR-2025-DATA",
-      "title": "Essential Energy DAPR and zone-substation load data 2025",
+      "title": "Essential Energy DAPR and zone-substation capacity data 2025",
       "publisher": "Essential Energy",
       "domain": "energy",
       "geography": "Regional NSW",
       "source_type": "infrastructure_owner_intent",
-      "status": "ingestion_planned",
+      "status": "reconciled",
       "priority": "P0",
       "map_relevance": true,
       "known_gaps": [
-        "Full zone-substation capacity/constraint tables not yet materialised in VECA; historical load alone is not connection headroom."
+        "Zone-substation summer/winter capacity and five-year forecasts are reconciled for all 366 published zone-substation records.",
+        "Bulk supply point, sub-transmission line, limitation, retirement/derating and augmentation tables remain separate follow-on ingestion tasks.",
+        "Substation coordinates/geometry remain to be joined from the Essential Energy DAPR portal before map rendering.",
+        "Arithmetic firm-capacity margin is not guaranteed connection headroom and must not be presented as such."
       ]
     },
     {
