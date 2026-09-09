@@ -1,0 +1,42 @@
+entity_id,longitude,latitude,geometry_quality,geometry_note
+GI-REG-HUNTER,151.75,-32.95,representative_centroid,Regional representative point for POC-002
+GI-REG-CENTRALCOAST,151.34,-33.30,representative_centroid,Regional representative point for POC-002
+GI-REG-RIVERINA,147.25,-35.55,representative_centroid,Regional representative point for POC-002
+GI-REG-NEWENGLAND,151.10,-30.75,representative_centroid,Regional representative point for POC-002
+GI-REG-SEQ,152.65,-27.62,representative_centroid,Regional representative point for POC-002
+GI-REG-TOOWOOMBA,151.95,-27.56,representative_centroid,Regional representative point for POC-002
+GI-REG-GIPPSLAND,146.40,-38.15,representative_centroid,Regional representative point for POC-002
+GA-CC-001,151.423,-33.282,asset_point,POC-verified approximate asset location
+GA-CC-002,151.342,-33.419,asset_point,POC-verified approximate asset location
+GA-CC-003,151.342,-33.419,asset_point,POC-verified approximate asset location
+GA-NE-001,151.67,-30.49,asset_point,POC-verified approximate asset location
+GA-NE-002,150.93,-31.09,asset_point,POC-verified approximate asset location
+GA-NE-003,149.84,-29.47,asset_point,POC-verified approximate asset location
+GA-NE-004,150.25,-30.98,asset_point,POC-verified approximate asset location
+GA-ACT-001,149.14,-35.25,asset_point,POC-verified approximate asset location
+GA-ACT-002,149.10,-35.35,asset_point,POC-verified approximate asset location
+GA-RIV-001,147.37,-35.12,asset_point,POC-verified approximate asset location
+GA-RIV-002,146.92,-36.08,asset_point,POC-verified approximate asset location
+GA-RIV-003,146.89,-36.13,asset_point,POC-verified approximate asset location
+GA-GIP-001,146.45,-38.22,asset_point,POC-verified approximate asset location
+GA-GIP-002,146.42,-38.31,asset_point,POC-verified approximate asset location
+GA-SEQ-001,152.76,-27.62,asset_point,POC-verified approximate asset location
+GA-SEQ-002,151.95,-27.54,asset_point,POC-verified approximate asset location
+EDU-CC-001,151.34,-33.42,asset_point,POC-verified approximate asset location
+EDU-CC-002,151.38,-33.36,asset_point,POC-verified approximate asset location
+EDU-NE-001,151.67,-30.49,asset_point,POC-verified approximate asset location
+EDU-NE-002,150.93,-31.09,asset_point,POC-verified approximate asset location
+EDU-NE-003,151.67,-30.51,asset_point,POC-verified approximate asset location
+EDU-NE-004,150.93,-31.10,asset_point,POC-verified approximate asset location
+EDU-ACT-001,149.12,-35.28,asset_point,POC-verified approximate asset location
+EDU-ACT-002,149.09,-35.24,asset_point,POC-verified approximate asset location
+EDU-ACT-003,149.09,-35.34,asset_point,POC-verified approximate asset location
+EDU-RIV-001,147.35,-35.06,asset_point,POC-verified approximate asset location
+EDU-RIV-002,146.98,-36.07,asset_point,POC-verified approximate asset location
+EDU-RIV-003,147.36,-35.12,asset_point,POC-verified approximate asset location
+EDU-RIV-004,146.92,-36.08,asset_point,POC-verified approximate asset location
+EDU-GIP-001,146.42,-38.31,asset_point,POC-verified approximate asset location
+EDU-SEQ-001,151.93,-27.60,asset_point,POC-verified approximate asset location
+EDU-SEQ-002,152.76,-27.62,asset_point,POC-verified approximate asset location
+EDU-SEQ-003,151.95,-27.58,asset_point,POC-verified approximate asset location
+EDU-SEQ-004,152.76,-27.62,asset_point,POC-verified approximate asset location
