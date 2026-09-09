@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "source_id": "ENERGY-AEMO-GENINFO-2026-07",
+  "map_required": false,
+  "inventory": {
+    "mode": "entity_count",
+    "expected_count": 1415,
+    "count_basis": "table_rows",
+    "evidence_locator": "AEMO NEM Generation Information July 2026 workbook, Generator Information sheet, independently inventoried with openpyxl for NSW1/QLD1/VIC1 and source-native composite row identity.",
+    "independent_from_extraction": true,
+    "notes": "Independent inventory is assurance/inventories/aemo_generation_information_july_2026_unit_ids.json. Gen Info Unit ID alone is not unique in the published sheet, so identity uses Gen Info Unit ID + Survey ID + Unit Name + DUID + Technology Type + Technology Detail."
+  },
+  "disposition": {
+    "mapped": 0,
+    "dataset_only": 1415,
+    "excluded": 0,
+    "duplicate": 0,
+    "unresolved": 0
+  },
+  "verification": {
+    "state": "sampled",
+    "checks": [
+      {
+        "field": "record completeness / identity",
+        "method": "Compare independently inventoried composite source_record_ids from openpyxl against the separate stdlib XML extractor output.",
+        "evidence_locator": "assurance/inventories/aemo_generation_information_july_2026_unit_ids.json and assurance/reconciliation/aemo_generation_information_east_july_2026.json",
+        "result": "1415 expected records and 1415 extracted records; zero missing, zero extra and zero duplicate composite source_record_ids."
+      },
+      {
+        "field": "status and capacity semantics",
+        "method": "Spot-check source rows and preserve AEMO Commitment Status, technology, AC/DC generation capacity and storage MWh as separate fields without VECA reclassification.",
+        "evidence_locator": "AEMO Generator Information sheet and Background Information field definitions; derived CSV retains all 165 source columns.",
+        "result": "Core source fields are retained without collapsing In Service, In Commissioning, Committed, Anticipated, Publicly Announced or Announced Withdrawal. Full field-by-field verification remains outstanding."
+      }
+    ]
+  },
+  "dataset_paths": [
+    "domains/energy/data/derived/aemo_generation_information_east_july_2026.csv"
+  ],
+  "map_layers": [],
+  "notes": "Exhaustive source-observation layer for QLD1/NSW1/VIC1. ACT projects appear within NSW1 where AEMO assigns them to the NSW NEM region. This dataset is not yet a map-ready site layer: site-level grouping and geometry/location joins should derive from Survey ID/KCI/site identity without losing unit-level evidence."
+}
