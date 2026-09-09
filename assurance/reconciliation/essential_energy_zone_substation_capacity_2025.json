@@ -1,0 +1,14 @@
+{
+  "source": "Essential Energy DAPR 2025 BSP, ZS and Lines Extract Summary V2",
+  "expected_zone_substations": 366,
+  "extracted_zone_substations": 366,
+  "summer_sheet_records": 366,
+  "winter_sheet_records": 366,
+  "summer_only_source_record_ids": [],
+  "winter_only_source_record_ids": [],
+  "missing_source_record_ids": [],
+  "extra_source_record_ids": [],
+  "exact_identity_match": true,
+  "assets_negative_summer_2029_apparent_margin": 90,
+  "assets_negative_winter_2030_apparent_margin": 85
+}
