@@ -4,14 +4,14 @@
 Runs/reuses POC-002, then adds:
 - 2025 SA2 ERP polygons (ABS geometry + committed VECA ERP table)
 - 2021 Urban Centres and Localities settlement hierarchy
-- explicit metropolitan sub-centres (Parramatta/Penrith validation cases)
+- explicit major metropolitan functional centres without promoting ordinary suburbs
 
 No heavy GIS dependency is required; ABS ArcGIS services return GeoJSON.
 Remote ABS responses are cached locally so iterative reruns are fast.
 """
 from __future__ import annotations
 
-import csv, io, json, math, zipfile
+import csv, io, json, math, re, zipfile
 from pathlib import Path
 import requests
 
@@ -26,6 +26,23 @@ SA2_URL = "https://geo.abs.gov.au/arcgis/rest/services/ASGS2021/SA2/FeatureServe
 UCL_URL = "https://geo.abs.gov.au/arcgis/rest/services/ASGS2021/UCL/FeatureServer/0/query"
 UCL_GCP = "https://www.abs.gov.au/census/find-census-data/datapacks/download/2021_GCP_UCL_for_AUS_short-header.zip"
 TARGET_STATES = {"1","2","3","8"}
+
+# Curated functional centres inside contiguous capital-city UCL footprints.
+# These are intentionally sparse: major metropolitan centres, not suburb labels.
+METRO_CENTRES = [
+    ("Parramatta", 151.003, -33.815, 3, 5.0, "Sydney"),
+    ("Penrith", 150.694, -33.751, 3, 5.0, "Sydney"),
+    ("Liverpool", 150.925, -33.920, 3, 5.4, "Sydney"),
+    ("Blacktown", 150.906, -33.771, 3, 5.4, "Sydney"),
+    ("Brisbane CBD", 153.026, -27.470, 2, 4.6, "Brisbane"),
+    ("Ipswich", 152.760, -27.614, 3, 5.0, "Brisbane"),
+    ("Logan Central", 153.109, -27.639, 3, 5.4, "Brisbane"),
+    ("Caboolture", 152.952, -27.084, 3, 5.4, "Brisbane"),
+    ("Melbourne CBD", 144.963, -37.814, 2, 4.6, "Melbourne"),
+    ("Dandenong", 145.214, -37.987, 3, 5.4, "Melbourne"),
+    ("Frankston", 145.135, -38.144, 3, 5.4, "Melbourne"),
+    ("Box Hill", 145.125, -37.819, 3, 5.6, "Melbourne"),
+]
 
 
 def request_json(url, params):
@@ -86,6 +103,14 @@ def bounds_center(g):
     return [(min(xs)+max(xs))/2,(min(ys)+max(ys))/2]
 
 
+def canonical_ucl_code(v):
+    s=str(v or '').strip()
+    s=re.sub(r'\.0$','',s)
+    digits=''.join(re.findall(r'\d',s))
+    if len(digits)>=6:return digits[-6:]
+    return digits.zfill(6) if digits else ''
+
+
 def read_pop():
     with POP.open(newline="",encoding="utf-8-sig") as f:return {r["sa2_code"]:r for r in csv.DictReader(f)}
 
@@ -126,11 +151,13 @@ def read_ucl_population():
         pop_col=next((x for x in fields if x.lower() in {'tot_p_p','total_persons_persons'}),None) or next((x for x in fields if 'tot_p_p' in x.lower()),None)
         if not code_col or not pop_col:continue
         for row in reader:
-            code=str(row.get(code_col) or '').strip(); val=str(row.get(pop_col) or '').replace(',','').strip()
-            try:result[code]=int(float(val))
+            code=canonical_ucl_code(row.get(code_col)); val=str(row.get(pop_col) or '').replace(',','').strip()
+            try:
+                if code:result[code]=int(float(val))
             except ValueError:pass
         if result:break
     if not result:raise RuntimeError('Could not find UCL population fields in ABS G01 DataPack')
+    print(f"UCL Census population rows: {len(result):,}; max population={max(result.values()):,}")
     return result
 
 
@@ -146,24 +173,24 @@ def rank_for(pop):
 def build_settlements(sa2_source):
     pops=read_ucl_population()
     features=feature_pages(UCL_URL,"1=1","ucl_code_2021,ucl_name_2021,sosr_code_2021,sosr_name_2021,area_albers_sqkm","abs_ucl_all.json")
-    out=[]; skipped_geometry=0
+    out=[]; skipped_geometry=0; matched_population=0; positive_population=0
     for f in features:
-        p=f.get('properties',{});code=str(p.get('ucl_code_2021') or '')
+        p=f.get('properties',{});code=canonical_ucl_code(p.get('ucl_code_2021'))
         if not code or code[0] not in TARGET_STATES:continue
         centre=bounds_center(f.get('geometry'))
         if not centre:
             skipped_geometry+=1; continue
-        pop=int(pops.get(code,0));rank,minz=rank_for(pop)
+        if code in pops:matched_population+=1
+        pop=int(pops.get(code,0)); positive_population += int(pop>0)
+        rank,minz=rank_for(pop)
         out.append({"type":"Feature","geometry":{"type":"Point","coordinates":centre},"properties":{"entity_id":f"UCL-{code}","name":p.get('ucl_name_2021'),"domain":"settlement","settlement_type":"ABS UCL","population_2021":pop,"settlement_rank":rank,"min_zoom":minz,"geometry_quality":"UCL_bounds_centre","source_dataset":"ABS ASGS2021 UCL + Census 2021 GCP"}})
     if skipped_geometry:print(f"UCL: skipped {skipped_geometry} in-scope features with null/invalid geometry")
+    print(f"UCL population join: matched {matched_population:,} geometry rows; {positive_population:,} have population > 0")
+    if positive_population < 500 or max((f['properties']['population_2021'] for f in out), default=0) < 250_000:
+        raise RuntimeError('UCL population join validation failed: too few populated centres or no large urban centre')
 
-    overrides={"Parramatta":("parramatta",3,5.2),"Penrith":("penrith",3,5.2)}
-    for label,(needle,rank,minz) in overrides.items():
-        matches=[f for f in sa2_source if needle in str(f.get('properties',{}).get('sa2_name_2021','')).lower()]
-        centres=[bounds_center(f.get('geometry')) for f in matches]; centres=[c for c in centres if c]
-        if centres:
-            centre=[sum(c[0] for c in centres)/len(centres),sum(c[1] for c in centres)/len(centres)]
-            out.append({"type":"Feature","geometry":{"type":"Point","coordinates":centre},"properties":{"entity_id":f"VECA-METRO-{label.upper()}","name":label,"domain":"settlement","settlement_type":"VECA metropolitan sub-centre","population_2021":None,"settlement_rank":rank,"min_zoom":minz,"geometry_quality":"derived_from_matching_SA2","source_dataset":"ABS ASGS2021 SA2; VECA functional-centre classification"}})
+    for label,lon,lat,rank,minz,metro in METRO_CENTRES:
+        out.append({"type":"Feature","geometry":{"type":"Point","coordinates":[lon,lat]},"properties":{"entity_id":f"VECA-METRO-{label.upper().replace(' ','-')}","name":label,"domain":"settlement","settlement_type":"VECA metropolitan functional centre","metro_system":metro,"population_2021":None,"settlement_rank":rank,"min_zoom":minz,"geometry_quality":"curated_functional_centre_point","source_dataset":"VECA POC-003 functional-centre classification; validate against future metropolitan hierarchy source"}})
     return {"type":"FeatureCollection","features":out}
 
 
