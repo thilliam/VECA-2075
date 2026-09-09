@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "source_id": "ENERGY-AUSGRID-DTAPR-2025-DATA",
+  "map_required": false,
+  "inventory": {
+    "mode": "entity_count",
+    "expected_count": 210,
+    "count_basis": "table_rows",
+    "evidence_locator": "Ausgrid 2025 DTAPR Substation Capacity and Demand Forecast workbook, Tech Spec (ZS) and Tech Spec (STS) sheets; independent openpyxl inventory by asset type + name + voltage.",
+    "independent_from_extraction": true,
+    "notes": "Independent inventory is assurance/inventories/ausgrid_substation_capacity_2025_ids.json. Scope includes every published zone substation and subtransmission substation in this workbook."
+  },
+  "disposition": {"mapped": 0, "dataset_only": 210, "excluded": 0, "duplicate": 0, "unresolved": 0},
+  "verification": {
+    "state": "sampled",
+    "checks": [
+      {
+        "field": "asset completeness and cross-sheet joins",
+        "method": "Compare independent Tech Spec ZS/STS inventory against stdlib extraction and require every technical-spec asset to join to both Actual Demand and Demand Forecast sheets.",
+        "evidence_locator": "assurance/inventories/ausgrid_substation_capacity_2025_ids.json and assurance/reconciliation/ausgrid_substation_capacity_demand_2025.json",
+        "result": "210 expected and 210 extracted; zero missing, extra or duplicate source records; zero actual-demand or forecast join gaps."
+      },
+      {
+        "field": "capacity semantics",
+        "method": "Spot-check total capacity, firm capacity, load-transfer capacity and actual/forecast demand against published workbook rows; derived margins use arithmetic firm capacity minus reported demand only.",
+        "evidence_locator": "Ausgrid 2025 workbook Tech Spec, Actual Demand and Demand Forecast sheets plus derived CSV capacity_interpretation field.",
+        "result": "Published capacity/demand fields are retained separately. Derived apparent margins are explicitly labelled not guaranteed connection headroom. Full field-by-field verification remains outstanding."
+      }
+    ]
+  },
+  "dataset_paths": ["domains/energy/data/derived/ausgrid_substation_capacity_demand_2025.csv"],
+  "map_layers": [],
+  "notes": "177 zone substations and 33 subtransmission substations. Site coordinates/geometry and system-limitations joins are separate follow-on evidence; negative apparent firm margin is a constraint signal, not proof a new connection is impossible."
+}
