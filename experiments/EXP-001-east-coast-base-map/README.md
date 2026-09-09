@@ -1,6 +1,6 @@
 # EXP-001 — East Coast Base Map
 
-**Status:** specified; research not yet started  
+**Status:** first coherent inherited-system pass substantially established; enrichment active  
 **Scope:** eastern Australia base system  
 **Principle:** observe before proposing
 
@@ -9,6 +9,26 @@
 Build a coherent multilayer spatial picture of eastern Australia **before** proposing a future settlement pattern or transport network.
 
 EXP-001 establishes the inherited physical and investment system: where people, transport, recent capital, committed projects, energy, water, industry and logistics are located and how those layers relate spatially.
+
+## Current position — September 2026
+
+EXP-001 is no longer at source-discovery stage.
+
+Established/represented:
+- ABS SA2 population and population-grid source;
+- authoritative east-coast major road and rail geometry;
+- ports/intermodal/airport first-pass evidence;
+- deep historical/current HSR/faster-rail evidence corpus;
+- recent/committed infrastructure capital seed;
+- AEMO transmission/REZ first pass;
+- functional water-system seed;
+- industry/logistics node seed;
+- cross-domain synthesis;
+- a working layered-map POC under `maps/poc-001/`.
+
+Remaining enrichment includes energy generation/storage assets, water gaps, broader industry/logistics, port catchments, transport utilisation/capacity and a clean non-double-counted capital register.
+
+EXP-002 habitat/resource screening has begun in parallel. EXP-001 does not need exhaustive asset completeness before that work proceeds.
 
 ## Why this experiment exists
 
@@ -20,7 +40,7 @@ Approximately Brisbane / South East Queensland to Melbourne, including inland re
 
 South Australia is outside EXP-001.
 
-## Initial layers
+## Layer classes
 
 1. Current population.
 2. Existing major transport infrastructure.
@@ -28,67 +48,50 @@ South Australia is outside EXP-001.
 4. Major infrastructure currently committed or under construction.
 5. Credible planned infrastructure, visibly distinct from committed work.
 6. Electricity generation, major transmission and Renewable Energy Zones.
-7. Major water infrastructure and available water-security indicators.
+7. Major water infrastructure and water-security systems.
 8. Major industrial, logistics and port infrastructure.
 
-Climate, land suitability and 2075 settlement scoring are deliberately deferred until this first base map is coherent.
+Climate, land suitability and future habitat screening belong primarily to EXP-002.
 
 ## Hard exclusions
 
-EXP-001 must contain:
+EXP-001 contains:
 
-- **no proposed HSR route**;
-- **no candidate new cities**;
+- **no VECA-proposed HSR route**;
+- **no preferred candidate new cities**;
 - **no settlement suitability ranking**;
 - **no multi-factor weighting model**; and
 - **no assumption that current CBDs are future network centres**.
 
+Historical/current government HSR alignments may appear as evidence and must remain clearly identified as external proposals/studies.
+
 ## Evidence requirements
 
 - Important claims and layers must have traceable source provenance.
-- Prefer primary authoritative sources under `research/source_register.md`.
-- Infrastructure status must use the controlled taxonomy.
+- Prefer primary authoritative sources.
+- Infrastructure status must use controlled taxonomy.
 - Proposed projects must never be visually or analytically merged with committed projects.
 - Public/private ownership should be captured separately where applicable.
-- Dollar values should record nominal/real basis and price year when available.
+- Dollar values should record scope and price-year basis where available.
 - Evidence, inference and hypothesis must remain distinguishable.
 
-## Method — intentionally technology-neutral
+## Mapping
 
-1. Identify authoritative sources for each initial layer.
-2. Register sources and their temporal/geographic limitations.
-3. Acquire only data needed for the initial layers.
-4. Normalise project status and essential provenance.
-5. Produce a spatial representation that can display the layers together and independently.
-6. Inspect overlaps, gaps, corridors, concentrations and apparent capital momentum.
-7. Record findings as evidence-backed observations and explicit inferences.
-8. Record data gaps and methodological problems before extending the model.
+`maps/poc-001/` is the current interactive evidence-view POC. It proves layer toggles, semantic zoom, time/status filtering, regional navigation and feature evidence panels.
 
-The experiment may select minimal GIS or data-processing tools once source formats are known. Tool selection is subordinate to the research question.
+It currently uses a small spatially enabled feature subset. Large authoritative road/rail files should be served via tiles/viewport delivery rather than loaded wholesale into the browser.
 
-## Completion criteria
+The map is a view over VECA evidence entities, not the source of truth.
 
-EXP-001 is complete when:
+## Completion interpretation
 
-- all eight initial layer classes have a usable east-coast representation or a documented evidence gap;
-- each important layer has source provenance;
-- committed and proposed infrastructure are distinguishable;
-- recent investment can be inspected spatially without implying that dollar totals equal strategic value;
-- the combined map is coherent enough to reveal regional patterns and omissions;
-- findings distinguish observation from inference;
-- limitations and unresolved source problems are documented; and
-- no settlement or HSR proposal has been smuggled into the base map.
+EXP-001 should be considered **sufficient to support parallel EXP-002 work**, but not closed to enrichment.
 
-## Expected outputs
+Formal close-out requires:
+- all eight layer classes usable or an explicit documented gap;
+- provenance/status separation;
+- a coherent combined spatial view;
+- findings and limitations;
+- no smuggled settlement/HSR recommendation.
 
-- populated source register;
-- raw-source inventory and provenance notes;
-- derived layer inventory;
-- one coherent multilayer east-coast base map or equivalent spatial view;
-- `sources.md` experiment-specific source index;
-- `findings.md` evidence/inference record; and
-- recommendations for the next research experiment based on what EXP-001 actually reveals.
-
-## Not yet decided
-
-GIS stack, database, Python usage, web presentation, map hosting, layer storage format and spatial resolution remain open until required by the data.
+See `synthesis_v1.md` and root `PROJECT_STATUS_AND_ROADMAP.md` for current findings and remaining work.
