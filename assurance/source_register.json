@@ -566,6 +566,118 @@
       "known_gaps": [
         "Portfolio power-bank figures are market pipeline evidence, not operating IT load or a map asset census."
       ]
+    },
+    {
+      "source_id": "RAIL-ARTC-NIP-2026-DETAIL",
+      "title": "ARTC Network Investment Program Horizons 1 and 2",
+      "publisher": "Australian Rail Track Corporation",
+      "domain": "transport",
+      "geography": "National interstate network / east-coast focus",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Horizon 2 corridor funding is known but individual project scope remains subject to business cases."
+      ]
+    },
+    {
+      "source_id": "RAIL-ARTC-NIP-H1-2026",
+      "title": "ARTC Network Investment Program Horizon 1 project overview",
+      "publisher": "Australian Rail Track Corporation",
+      "domain": "transport",
+      "geography": "ARTC network",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Current ingestion captures east-coast project/corridor signals but is not an exhaustive asset-by-asset NIP inventory."
+      ]
+    },
+    {
+      "source_id": "RAIL-ARTC-SHOO-2026",
+      "title": "Southern Highlands Overtaking Opportunities",
+      "publisher": "Australian Rail Track Corporation",
+      "domain": "transport",
+      "geography": "Southern Highlands NSW",
+      "source_type": "infrastructure_owner_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Project-level scope captured; post-completion operational performance will require later evidence."
+      ]
+    },
+    {
+      "source_id": "RAIL-ARTC-RAS-2026-DETAIL",
+      "title": "ARTC Route Access Standard section pages",
+      "publisher": "Australian Rail Track Corporation",
+      "domain": "transport",
+      "geography": "ARTC interstate network",
+      "source_type": "authoritative_reality",
+      "status": "ingestion_planned",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Section-level axle load, speed, train length and gauge tables still require exhaustive extraction and geometry joining."
+      ]
+    },
+    {
+      "source_id": "RAIL-ARTC-NIB-2026",
+      "title": "ARTC Network Information Books and diagrams",
+      "publisher": "Australian Rail Track Corporation",
+      "domain": "transport",
+      "geography": "ARTC interstate network",
+      "source_type": "authoritative_reality",
+      "status": "ingestion_planned",
+      "priority": "P1",
+      "map_relevance": true,
+      "known_gaps": [
+        "Loops, sidings, junctions and operational diagrams still require structured extraction."
+      ]
+    },
+    {
+      "source_id": "RAIL-INLAND-PROGRESS-2026-DETAIL",
+      "title": "Inland Rail current progress by section",
+      "publisher": "Inland Rail / ARTC",
+      "domain": "transport",
+      "geography": "Melbourne-Parkes and northern preserved corridor",
+      "source_type": "government_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Statuses change as construction completes; section state needs periodic refresh."
+      ]
+    },
+    {
+      "source_id": "RAIL-INLAND-ROUTE-2026-DETAIL",
+      "title": "Inland Rail route section definitions",
+      "publisher": "Inland Rail / ARTC",
+      "domain": "transport",
+      "geography": "Melbourne-Brisbane inland corridor",
+      "source_type": "government_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Current batch captures section-level route/capability descriptions; detailed engineering attributes remain source-specific."
+      ]
+    },
+    {
+      "source_id": "RAIL-INLAND-NORTH-2026",
+      "title": "Inland Rail north-of-Parkes corridor preservation",
+      "publisher": "Inland Rail / ARTC",
+      "domain": "transport",
+      "geography": "NSW/QLD north of Parkes",
+      "source_type": "government_intent",
+      "status": "relevant",
+      "priority": "P0",
+      "map_relevance": true,
+      "known_gaps": [
+        "Future delivery funding/timing is undecided; preserved/approved sections must not be shown as committed construction."
+      ]
     }
   ]
 }
