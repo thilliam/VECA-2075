@@ -1,0 +1,56 @@
+function point(id,name,coords,region,layer,status,year,jurisdiction,role,interpretation,source){return {type:'Feature',geometry:{type:'Point',coordinates:coords},properties:{id,name,region,layer,status,year,jurisdiction,role,interpretation,source}}}
+function line(id,name,coords,region,layer,status,year,jurisdiction,role,interpretation,source){return {type:'Feature',geometry:{type:'LineString',coordinates:coords},properties:{id,name,region,layer,status,year,jurisdiction,role,interpretation,source}}}
+
+window.VECA_MAP_DATA={
+ catalogue:[
+  {id:'growth',group:'People',label:'Regional growth anchors',default:true,minZoom:3},
+  {id:'transport',group:'Transport',label:'Current rail spine',default:true,minZoom:4},
+  {id:'scenario',group:'VECA',label:'Illustrative HSR scenario',default:true,minZoom:3},
+  {id:'health',group:'Social infrastructure',label:'Hospitals & health',default:true,minZoom:5},
+  {id:'education',group:'Social infrastructure',label:'Universities / TAFE',default:true,minZoom:5.5}
+ ],
+ jumps:{
+  seq:{center:[152.4,-27.55],zoom:7},'central-coast':{center:[151.33,-33.28],zoom:8},'new-england':{center:[151.15,-30.75],zoom:6.7},canberra:{center:[149.13,-35.28],zoom:9},riverina:{center:[147.5,-35.5],zoom:6.4},gippsland:{center:[146.5,-38],zoom:7}
+ },
+ features:{
+  growth:{type:'FeatureCollection',features:[
+   point('REG-SEQ','SEQ western growth system',[152.65,-27.62],'SEQ','growth','planned',2046,'QLD','Major metropolitan growth system','Western SEQ combines strong population growth with established health, education and transport anchors.','https://www.planning.qld.gov.au/planning-framework/plan-making/regional-planning/south-east-queensland-regional-plan'),
+   point('REG-CC','Central Coast',[151.34,-33.30],'Central Coast','growth','planned',2041,'NSW','Regional growth corridor','Gosford–Ourimbah–Wyong functions as a distributed regional system rather than a single centre.','https://www.planning.nsw.gov.au/plans-for-your-area/regional-plans/central-coast-regional-plan-2041'),
+   point('REG-NE','Armidale–Tamworth system',[151.10,-30.75],'New England','growth','planned',2041,'NSW','Complementary inland centres','Education, health, aviation and regional services create complementary rather than identical growth roles.','https://www.planning.nsw.gov.au/plans-for-your-area/regional-plans/new-england-north-west-regional-plan-2041'),
+   point('REG-ACT','Canberra',[149.13,-35.28],'Canberra','growth','planned',2050,'ACT','National capital growth system','Canberra combines unusually strong institutional, education and health capacity with planned long-term urban expansion.','https://www.planning.act.gov.au/'),
+   point('REG-RIV','Wagga–Albury corridor',[147.25,-35.55],'Wagga/Albury','growth','planned',2041,'NSW/VIC','Inland regional-city system','Two substantial regional cities create a potential inland population and service spine.','https://www.planning.nsw.gov.au/'),
+   point('REG-GIP','Latrobe / Gippsland',[146.40,-38.15],'Gippsland','growth','planned',2050,'VIC','Transitioning regional economy','Health, tertiary education, energy transition and industrial land form a distinctive growth platform.','https://www.planning.vic.gov.au/')
+  ]},
+  health:{type:'FeatureCollection',features:[
+   point('GA-CC-001','Wyong Hospital',[151.423,-33.282],'Central Coast','health','existing',2026,'NSW','Major hospital serving northern Central Coast','Recent redevelopment reinforces Wyong as a durable northern Central Coast health node.','https://www.nsw.gov.au/ministerial-releases/200-million-wyong-hospital-redevelopment-now-complete'),
+   point('GA-CC-002','Gosford Hospital',[151.342,-33.419],'Central Coast','health','existing',2026,'NSW','Regional tertiary health anchor','Hospital and university presence make Gosford a deliberately reinforced health and knowledge centre.','https://www.health.nsw.gov.au/'),
+   point('GA-NE-003','Moree Hospital redevelopment',[149.84,-29.47],'New England','health','committed',2028,'NSW','Regional hospital redevelopment','Reinforces Moree as a service centre alongside other regional investment.','https://www.nsw.gov.au/business-and-economy/nsw-budget/2026-27-budget-papers/regional-nsw/new-england-and-northwest'),
+   point('GA-NE-004','Gunnedah Hospital redevelopment',[150.25,-30.98],'New England','health','committed',2028,'NSW','Regional hospital redevelopment','Strengthens the existing service hierarchy rather than creating a new spatial node.','https://www.nsw.gov.au/business-and-economy/nsw-budget/2026-27-budget-papers/regional-nsw/new-england-and-northwest'),
+   point('GA-ACT-001','Northside Hospital / North Canberra Hospital',[149.14,-35.25],'Canberra','health','committed',2035,'ACT','Future major northside hospital','A major future service anchor with site choice effectively fixed on the existing campus.','https://www.act.gov.au/our-canberra/latest-news/2026/june/202627-act-budget-investing-in-a-new-northside-hospital'),
+   point('GA-ACT-002','Canberra Hospital / Woden',[149.10,-35.35],'Canberra','health','existing',2026,'ACT','Major tertiary health campus','The Woden health precinct is a long-term southern service anchor.','https://www.planning.act.gov.au/planning-projects/southern-gateway-planning-framework'),
+   point('GA-RIV-001','Wagga Wagga Health Service',[147.37,-35.12],'Wagga/Albury','health','existing',2026,'NSW','Major regional referral hospital','Large sunk health investment creates durable regional service gravity.','https://www.nsw.gov.au/departments-and-agencies/nsw-health/service-directory/wagga-wagga-health-service'),
+   point('GA-RIV-002','Albury Wodonga Regional Hospital',[146.92,-36.08],'Wagga/Albury','health','committed',2030,'NSW/VIC','Cross-border regional health hub','Current capital investment increasingly locks complex care into the Albury campus.','https://www.nsw.gov.au/health-and-wellbeing/health-infrastructure-projects/albury-wodonga-regional-hospital-project'),
+   point('GA-GIP-001','Latrobe Regional Hospital',[146.45,-38.22],'Gippsland','health','existing',2026,'VIC','Major tertiary regional hospital','Repeated expansion reinforces Traralgon/Latrobe as Gippsland’s dominant health-service node.','https://www.vhba.vic.gov.au/health/regional-facilities/latrobe-regional-hospital-expansion-stage-3a'),
+   point('GA-SEQ-001','Ipswich Hospital',[152.76,-27.62],'SEQ','health','existing',2026,'QLD','Western SEQ health anchor','Health and tertiary education investment align with strong western SEQ population growth.','https://www.planning.qld.gov.au/__data/assets/pdf_file/0024/86145/shapingseq-2023-Low.pdf'),
+   point('GA-SEQ-002','New Toowoomba Hospital',[151.95,-27.54],'SEQ','health','committed',2030,'QLD','Future Darling Downs hospital campus','Relocation to a new integrated campus demonstrates how renewal can create new service geography.','https://www.plan.health.qld.gov.au/hospital-rescue-plan/our-hospitals/new-toowoomba-hospital')
+  ]},
+  education:{type:'FeatureCollection',features:[
+   point('EDU-CC-001','University of Newcastle Gosford Central',[151.34,-33.42],'Central Coast','education','existing',2026,'NSW','CBD higher-education anchor','New CBD university investment adds durable knowledge-sector gravity to Gosford.','https://www.newcastle.edu.au/engage/development-projects/completed-projects/2026/central-coast-campus'),
+   point('EDU-CC-002','University of Newcastle Ourimbah',[151.38,-33.36],'Central Coast','education','existing',2026,'NSW','Established regional university campus','Creates a second tertiary anchor in the distributed Central Coast system.','https://www.newcastle.edu.au/campus-life/central-coast/ourimbah'),
+   point('EDU-NE-001','University of New England Armidale',[151.67,-30.49],'New England','education','existing',2026,'NSW','Major regional university and research anchor','UNE gives Armidale institutional depth far beyond its population size.','https://www.une.edu.au/'),
+   point('EDU-NE-002','UNE Tamworth Central',[150.93,-31.09],'New England','education','committed',2028,'NSW','New CBD higher-education campus','Strengthens the Armidale–Tamworth complementary-centres model.','https://www.une.edu.au/about-une/news-and-events/news/2026/03/une-tamworth-central-campus-project-marks-start-of-construction'),
+   point('EDU-ACT-001','Australian National University',[149.12,-35.28],'Canberra','education','existing',2026,'Commonwealth/ACT','National research-intensive university','A nationally significant knowledge institution and major human-capital anchor.','https://www.anu.edu.au/'),
+   point('EDU-RIV-001','Charles Sturt University Wagga Wagga',[147.35,-35.06],'Wagga/Albury','education','existing',2026,'NSW','Major inland university campus','Agriculture, veterinary science and professional training support much greater city scale.','https://study.csu.edu.au/why-charles-sturt/locations/campuses/wagga-wagga'),
+   point('EDU-RIV-002','Charles Sturt University Albury-Wodonga',[146.98,-36.07],'Wagga/Albury','education','existing',2026,'NSW/VIC','Cross-border university campus','Adds higher education to the cross-border health and logistics cluster.','https://study.csu.edu.au/why-charles-sturt/locations/campuses/albury-wodonga'),
+   point('EDU-GIP-001','Federation University Gippsland',[146.42,-38.31],'Gippsland','education','existing',2026,'VIC','Regional university and workforce anchor','Forms part of a broader Latrobe Valley health–education–industry cluster.','https://federation.edu.au/about-us/our-campuses/gippsland-campus'),
+   point('EDU-SEQ-001','UniSQ Toowoomba',[151.93,-27.60],'SEQ','education','existing',2026,'QLD','Major Darling Downs university','Established higher-education and research capacity supports regional growth.','https://www.unisq.edu.au/about-unisq/locations/toowoomba'),
+   point('EDU-SEQ-002','UniSQ Ipswich',[152.76,-27.62],'SEQ','education','existing',2026,'QLD','Western SEQ university anchor','Part of the strategic Ipswich health–university growth precinct.','https://www.unisq.edu.au/about-unisq/locations/ipswich')
+  ]},
+  transport:{type:'FeatureCollection',features:[
+   line('RAIL-EAST','Existing east-coast / inland rail spine',[[153.03,-27.47],[152.76,-27.62],[151.95,-27.56],[151.67,-30.49],[150.93,-31.09],[151.78,-32.93],[151.77,-32.95],[151.34,-33.42],[151.21,-33.87],[149.13,-35.28],[147.37,-35.12],[146.92,-36.08],[145.13,-37.81]],'East coast','transport','existing',2026,'Multi-jurisdiction','Simplified POC rail spine','POC geometry only: proves scale switching and layering; production map will use the repo’s Geoscience Australia rail dataset via tiles.','https://www.ga.gov.au/')
+  ]},
+  scenario:{type:'FeatureCollection',features:[
+   line('VECA-HSR-01','Illustrative Brisbane–Sydney–Melbourne HSR spine',[[153.03,-27.47],[152.76,-27.62],[151.95,-27.56],[153.1,-30.3],[151.78,-32.93],[151.34,-33.42],[151.21,-33.87],[150.70,-34.0],[149.13,-35.28],[147.37,-35.12],[146.92,-36.08],[145.13,-37.81]],'East coast','scenario','scenario',2075,'VECA','Illustrative scenario only','This is deliberately not a route recommendation. It exists to prove scenario styling, time filtering and interaction against existing assets.','https://github.com/thilliam/VECA-2075')
+  ]}
+ }
+};
