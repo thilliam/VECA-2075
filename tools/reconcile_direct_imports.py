@@ -10,16 +10,14 @@ import csv
 import json
 import time
 from pathlib import Path
-from typing import Iterable
 
 import requests
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFESTS = ROOT / "assurance" / "manifests"
 RESULT = ROOT / "assurance" / "direct_import_reconciliation.json"
-TIMEOUT = 120
+TIMEOUT = 90
 ENVELOPE = {"xmin": 140.9, "ymin": -39.8, "xmax": 154.2, "ymax": -25.0}
-TARGET_STATES = {"QLD", "NSW", "ACT", "VIC"}
 
 ABS_QUERY = "https://geo.abs.gov.au/arcgis/rest/services/Hosted/SA2_Regional_Population_2025/FeatureServer/3/query"
 ROAD_QUERY = "https://services-ap1.arcgis.com/ypkPEy1AmwPKGNNv/ArcGIS/rest/services/National_Roads/FeatureServer/0/query"
@@ -39,26 +37,37 @@ def get_json(url: str, params: dict) -> dict:
         except (requests.RequestException, RuntimeError, ValueError) as exc:
             last = exc
             if attempt < 3:
-                time.sleep(3 * attempt)
+                time.sleep(2 * attempt)
     raise RuntimeError(f"Source query failed after retries: {last}")
 
 
-def batches(values: list[int], size: int = 500) -> Iterable[list[int]]:
-    for i in range(0, len(values), size):
-        yield values[i:i + size]
-
-
 def assurance_tiles() -> list[dict[str, float]]:
-    """Independent 2x2-degree tiling, deliberately different from production extractors."""
+    """Independent 3x4-degree tiling; deliberately not the production extractor tiling."""
     tiles = []
     y = ENVELOPE["ymin"]
     while y < ENVELOPE["ymax"]:
         x = ENVELOPE["xmin"]
         while x < ENVELOPE["xmax"]:
-            tiles.append({"xmin": x, "ymin": y, "xmax": min(x + 2.0, ENVELOPE["xmax"]), "ymax": min(y + 2.0, ENVELOPE["ymax"])})
-            x += 2.0
-        y += 2.0
+            tiles.append({"xmin": x, "ymin": y, "xmax": min(x + 3.0, ENVELOPE["xmax"]), "ymax": min(y + 4.0, ENVELOPE["ymax"])})
+            x += 3.0
+        y += 4.0
     return tiles
+
+
+def tiled_ids(url: str, where: str) -> set[int]:
+    ids: set[int] = set()
+    for tile in assurance_tiles():
+        data = get_json(url, {
+            "where": where,
+            "geometry": json.dumps(tile, separators=(",", ":")),
+            "geometryType": "esriGeometryEnvelope",
+            "inSR": 7844,
+            "spatialRel": "esriSpatialRelIntersects",
+            "returnIdsOnly": "true",
+            "f": "json",
+        })
+        ids.update(int(x) for x in data.get("objectIds", []))
+    return ids
 
 
 def geojson_ids(path: Path) -> set[int]:
@@ -113,57 +122,32 @@ def abs_reconcile() -> dict:
     }
 
 
-def source_ids_with_attrs(url: str, where: str, fields: str) -> list[dict]:
-    ids: set[int] = set()
-    for tile in assurance_tiles():
-        data = get_json(url, {
-            "where": where,
-            "geometry": json.dumps(tile, separators=(",", ":")),
-            "geometryType": "esriGeometryEnvelope",
-            "inSR": 7844,
-            "spatialRel": "esriSpatialRelIntersects",
-            "returnIdsOnly": "true",
-            "f": "json",
-        })
-        ids.update(int(x) for x in data.get("objectIds", []))
-
-    attrs: list[dict] = []
-    for group in batches(sorted(ids)):
-        data = get_json(url, {
-            "objectIds": ",".join(map(str, group)),
-            "outFields": fields,
-            "returnGeometry": "false",
-            "f": "json",
-        })
-        attrs.extend(f.get("attributes", {}) for f in data.get("features", []))
-    return attrs
-
-
 def road_reconcile() -> dict:
-    attrs = source_ids_with_attrs(ROAD_QUERY, "hierarchy = 'National or State Highway'", "OBJECTID,status,state,hierarchy")
-    expected = {int(a["OBJECTID"]) for a in attrs
-                if str(a.get("status") or "").strip().lower() == "operational"
-                and str(a.get("state") or "").strip().upper() in TARGET_STATES}
+    expected = tiled_ids(
+        ROAD_QUERY,
+        "hierarchy = 'National or State Highway' AND status = 'Operational' AND state IN ('QLD','NSW','ACT','VIC')"
+    )
     derived = geojson_ids(ROOT / "data/derived/transport/ga_major_roads_east.geojson")
     missing, extra = sorted(expected - derived), sorted(derived - expected)
     return {
         "source_id": "TRANSPORT-GA-EAST-MAJOR-ROADS",
         "source_inventory_count": len(expected), "derived_count": len(derived),
         "missing_objectids": missing, "extra_objectids": extra, "passed": not missing and not extra,
-        "inventory_evidence": "GA National Roads service; independent 2x2-degree ID inventory, deduplicated, then operational/state filtering",
+        "inventory_evidence": "GA National Roads service; independent 3x4-degree returnIdsOnly inventory with operational/highway/target-state source filtering",
     }
 
 
 def rail_reconcile() -> dict:
-    attrs = source_ids_with_attrs(RAIL_QUERY, "1=1", "OBJECTID,SOURCE_JURISDICTION")
-    expected = {int(a["OBJECTID"]) for a in attrs if str(a.get("SOURCE_JURISDICTION") or "").strip().upper() != "SA"}
+    # Production extraction removes only explicit SA source-jurisdiction rows after envelope retrieval.
+    # Apply the same scope semantics directly in the independent source query.
+    expected = tiled_ids(RAIL_QUERY, "SOURCE_JURISDICTION <> 'SA' OR SOURCE_JURISDICTION IS NULL")
     derived = geojson_ids(ROOT / "data/derived/transport/ga_rail_east.geojson")
     missing, extra = sorted(expected - derived), sorted(derived - expected)
     return {
         "source_id": "TRANSPORT-GA-EAST-RAIL",
         "source_inventory_count": len(expected), "derived_count": len(derived),
         "missing_objectids": missing, "extra_objectids": extra, "passed": not missing and not extra,
-        "inventory_evidence": "GA Foundation Rail Railway_Lines service; independent 2x2-degree ID inventory, deduplicated, then SA-jurisdiction filtering",
+        "inventory_evidence": "GA Foundation Rail Railway_Lines service; independent 3x4-degree returnIdsOnly inventory excluding explicit SA source-jurisdiction rows",
     }
 
 
