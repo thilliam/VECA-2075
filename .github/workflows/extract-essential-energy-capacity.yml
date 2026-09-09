@@ -1,0 +1,63 @@
+name: Extract Essential Energy zone-substation capacity
+on:
+  push:
+    branches: [feature/ingest-essential-energy-capacity-001]
+    paths:
+      - "tools/extract_essential_energy_zone_substations.py"
+      - ".github/workflows/extract-essential-energy-capacity.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: feature/ingest-essential-energy-capacity-001, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - name: Download authoritative workbook
+        run: |
+          mkdir -p _scratch/essential assurance/inventories assurance/reconciliation domains/energy/data/derived
+          curl --fail --location --retry 3 'https://dapr.essentialenergy.com.au/DAPR%202025%20BSP%2C%20ZS%20and%20Lines%20Extract%20Summary%20-%20V2.xlsx' -o _scratch/essential/dapr-2025-bsp-zs-lines.xlsx
+      - name: Build independent zone-substation inventory with openpyxl
+        run: |
+          python -m pip install --disable-pip-version-check --quiet openpyxl
+          python - <<'PY'
+          import json
+          from collections import Counter
+          from pathlib import Path
+          import openpyxl
+          wb=openpyxl.load_workbook('_scratch/essential/dapr-2025-bsp-zs-lines.xlsx',read_only=True,data_only=False)
+          def norm(v): return '' if v is None else str(v).strip()
+          ids_by_sheet={}
+          for sheet in ('ZSSummer','ZSWinter'):
+              ws=wb[sheet]; ids=[]
+              for row in ws.iter_rows(min_row=3,values_only=True):
+                  if not norm(row[1]): continue
+                  ids.append(f"zone_substation|{norm(row[0])}|{norm(row[1])}|{norm(row[2])}")
+              c=Counter(ids); dup=sorted(k for k,v in c.items() if v>1)
+              assert not dup, f'duplicate {sheet} ids: {dup[:10]}'
+              ids_by_sheet[sheet]=set(ids)
+          assert ids_by_sheet['ZSSummer']==ids_by_sheet['ZSWinter'], 'summer/winter identity sets differ'
+          ids=sorted(ids_by_sheet['ZSSummer'])
+          payload={'source':'Essential Energy DAPR 2025 BSP, ZS and Lines Extract Summary V2','inventory_method':'openpyxl independent read of ZSSummer/ZSWinter','independent_from_extraction':True,'expected_count':len(ids),'source_record_ids':ids}
+          Path('assurance/inventories/essential_energy_zone_substations_2025_ids.json').write_text(json.dumps(payload,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps({k:v for k,v in payload.items() if k!='source_record_ids'},indent=2))
+          PY
+      - name: Extract and reconcile with stdlib implementation
+        run: |
+          python tools/extract_essential_energy_zone_substations.py \
+            _scratch/essential/dapr-2025-bsp-zs-lines.xlsx \
+            assurance/inventories/essential_energy_zone_substations_2025_ids.json \
+            domains/energy/data/derived/essential_energy_zone_substation_capacity_2025.csv \
+            assurance/reconciliation/essential_energy_zone_substation_capacity_2025.json
+      - name: Publish outputs
+        run: |
+          git config user.name "VECA ingestion bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add assurance/inventories/essential_energy_zone_substations_2025_ids.json assurance/reconciliation/essential_energy_zone_substation_capacity_2025.json domains/energy/data/derived/essential_energy_zone_substation_capacity_2025.csv
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Energy: materialise Essential Energy zone-substation capacity"
+          git pull --rebase --autostash origin feature/ingest-essential-energy-capacity-001
+          git push origin HEAD:feature/ingest-essential-energy-capacity-001
