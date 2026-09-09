@@ -53,8 +53,16 @@ jobs:
           git add assurance/dataset_register.json assurance/current_dataset_audit.json assurance/current_dataset_audit.md
           if git diff --cached --quiet; then
             echo "No curated assurance changes"
-          else
-            git commit -m "Assurance: reconcile curated dataset provenance"
-            git pull --rebase origin feature/assurance-complete-existing-sets
-            git push origin HEAD:feature/assurance-complete-existing-sets
+            exit 0
           fi
+          git commit -m "Assurance: reconcile curated dataset provenance"
+          for attempt in 1 2 3; do
+            git fetch origin feature/assurance-complete-existing-sets
+            if git rebase origin/feature/assurance-complete-existing-sets && git push origin HEAD:feature/assurance-complete-existing-sets; then
+              exit 0
+            fi
+            git rebase --abort || true
+            sleep $((attempt * 2))
+          done
+          echo "Unable to publish assurance state after retries" >&2
+          exit 1
