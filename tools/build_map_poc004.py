@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Build POC-004 energy/capital/freight derivatives on top of POC-003.
+"""Build POC-004 energy/capital/freight/water derivatives on top of POC-003.
 
 This POC intentionally distinguishes exact/source geometry from representative anchors.
-No invented transmission alignments or REZ polygons are created here.
+No invented transmission alignments, REZ polygons or water-network geometries are created.
 """
 from __future__ import annotations
 
@@ -19,6 +19,16 @@ TRANSMISSION = ROOT / "domains" / "energy" / "data" / "derived" / "transmission_
 ENERGY_ZONES = ROOT / "data" / "derived" / "energy_zones_seed.csv"
 CAPITAL = ROOT / "data" / "derived" / "infrastructure_projects_seed.csv"
 FREIGHT = ROOT / "data" / "derived" / "transport" / "intermodal_terminals_seed.csv"
+WATER = ROOT / "domains" / "water" / "data" / "derived" / "water_systems_seed.csv"
+WATER_ANCHORS = {
+    "WAT-SEQ": (152.80, -27.55),
+    "WAT-SYD": (150.90, -33.85),
+    "WAT-CBR": (149.10, -35.30),
+    "WAT-MELB": (144.90, -37.85),
+    "WAT-WAGGA": (147.37, -35.12),
+    "WAT-ALBURY": (146.92, -36.08),
+    "WAT-GOULBURN": (149.72, -34.75),
+}
 
 
 def read_csv(path: Path):
@@ -35,97 +45,72 @@ def feature(entity_id: str, name: str, domain: str, props: dict, reg: dict):
     if not r:
         return None
     out = dict(props)
-    out.update({
-        "entity_id": entity_id,
-        "name": name,
-        "domain": domain,
-        "geometry_quality": r["geometry_quality"],
-        "geometry_note": r["geometry_note"],
-    })
-    return {
-        "type": "Feature",
-        "geometry": {"type": "Point", "coordinates": [float(r["longitude"]), float(r["latitude"])]},
-        "properties": out,
-    }
+    out.update({"entity_id": entity_id, "name": name, "domain": domain,
+                "geometry_quality": r["geometry_quality"], "geometry_note": r["geometry_note"]})
+    return {"type": "Feature", "geometry": {"type": "Point", "coordinates": [float(r["longitude"]), float(r["latitude"])]}, "properties": out}
+
+
+def anchored_feature(entity_id: str, name: str, domain: str, props: dict, lon: float, lat: float, note: str):
+    out = dict(props)
+    out.update({"entity_id": entity_id, "name": name, "domain": domain,
+                "geometry_quality": "representative_system_anchor", "geometry_note": note})
+    return {"type": "Feature", "geometry": {"type": "Point", "coordinates": [lon, lat]}, "properties": out}
 
 
 def transmission_status(raw: str):
     s = (raw or "").lower()
-    if "committed" in s:
-        return "committed"
-    if "actionable" in s:
-        return "actionable"
-    if "future" in s:
-        return "future"
+    if "committed" in s: return "committed"
+    if "actionable" in s: return "actionable"
+    if "future" in s: return "future"
     return "planned"
 
 
 def build_transmission(reg):
-    out = []
-    missing = []
+    out, missing = [], []
     for row in read_csv(TRANSMISSION):
         eid = row["project_id"]
-        f = feature(eid, row["project_name"], "energy-transmission", {
-            **row,
-            "status": transmission_status(row.get("status_class")),
-            "source_dataset": str(TRANSMISSION.relative_to(ROOT)),
-            "assurance_state": "reconciled_entity_inventory",
-        }, reg)
-        if f: out.append(f)
-        else: missing.append(eid)
+        f = feature(eid, row["project_name"], "energy-transmission", {**row, "status": transmission_status(row.get("status_class")), "source_dataset": str(TRANSMISSION.relative_to(ROOT)), "assurance_state": "reconciled_entity_inventory"}, reg)
+        out.append(f) if f else missing.append(eid)
     return {"type": "FeatureCollection", "features": out}, missing
 
 
 def build_zones(reg):
-    out = []
-    missing = []
+    out, missing = [], []
     for row in read_csv(ENERGY_ZONES):
-        # POC-004 maps current NSW and proposed VIC zones. Historical QLD potential-REZ
-        # geography remains available in the dataset but is not on by default.
-        if row.get("state") not in {"NSW", "VIC"}:
-            continue
+        if row.get("state") not in {"NSW", "VIC"}: continue
         eid = row["zone_id"]
         status = "declared" if row.get("zone_type") == "declared_REZ" else "proposed"
-        f = feature(eid, row["name"], "energy-zone", {
-            **row,
-            "status": status,
-            "source_dataset": str(ENERGY_ZONES.relative_to(ROOT)),
-            "assurance_state": "provenance_reconciled",
-        }, reg)
-        if f: out.append(f)
-        else: missing.append(eid)
+        f = feature(eid, row["name"], "energy-zone", {**row, "status": status, "source_dataset": str(ENERGY_ZONES.relative_to(ROOT)), "assurance_state": "provenance_reconciled"}, reg)
+        out.append(f) if f else missing.append(eid)
     return {"type": "FeatureCollection", "features": out}, missing
 
 
 def build_capital(reg):
-    out = []
-    missing = []
+    out, missing = [], []
     for row in read_csv(CAPITAL):
         eid = row["project_id"]
-        f = feature(eid, row["name"], "capital-project", {
-            **row,
-            "status": row.get("status") or "unknown",
-            "source_dataset": str(CAPITAL.relative_to(ROOT)),
-            "assurance_state": "provenance_reconciled",
-        }, reg)
-        if f: out.append(f)
-        else: missing.append(eid)
+        f = feature(eid, row["name"], "capital-project", {**row, "status": row.get("status") or "unknown", "source_dataset": str(CAPITAL.relative_to(ROOT)), "assurance_state": "provenance_reconciled"}, reg)
+        out.append(f) if f else missing.append(eid)
     return {"type": "FeatureCollection", "features": out}, missing
 
 
 def build_freight(reg):
-    out = []
-    missing = []
+    out, missing = [], []
     for row in read_csv(FREIGHT):
         eid = row["terminal_id"]
-        f = feature(eid, row["name"], "freight-intermodal", {
-            **row,
-            "status": row.get("status") or "unknown",
-            "source_dataset": str(FREIGHT.relative_to(ROOT)),
-            "assurance_state": "provenance_reconciled",
-        }, reg)
-        if f: out.append(f)
-        else: missing.append(eid)
+        f = feature(eid, row["name"], "freight-intermodal", {**row, "status": row.get("status") or "unknown", "source_dataset": str(FREIGHT.relative_to(ROOT)), "assurance_state": "provenance_reconciled"}, reg)
+        out.append(f) if f else missing.append(eid)
+    return {"type": "FeatureCollection", "features": out}, missing
+
+
+def build_water():
+    out, missing = [], []
+    for row in read_csv(WATER):
+        eid = row["system_id"]
+        loc = WATER_ANCHORS.get(eid)
+        if not loc:
+            missing.append(eid); continue
+        out.append(anchored_feature(eid, row["system_name"], "water-system", {**row, "source_dataset": str(WATER.relative_to(ROOT)), "assurance_state": "structured_research_seed"}, loc[0], loc[1], "Representative urban water-system anchor; not dam, pipe, catchment or service-area geometry"))
     return {"type": "FeatureCollection", "features": out}, missing
 
 
@@ -143,19 +128,21 @@ def main():
     zones, b = build_zones(reg)
     capital, c = build_capital(reg)
     freight, d = build_freight(reg)
+    water, e = build_water()
     write("transmission_projects.geojson", transmission)
     write("energy_zones.geojson", zones)
     write("capital_projects.geojson", capital)
     write("freight_intermodal.geojson", freight)
-    gaps = {"transmission": a, "energy_zones": b, "capital": c, "freight": d}
+    write("water_systems.geojson", water)
+    gaps = {"transmission": a, "energy_zones": b, "capital": c, "freight": d, "water": e}
     (OUT / "spatial-gaps.json").write_text(json.dumps(gaps, indent=2), encoding="utf-8")
     manifest = {
         "transmission": {"features": len(transmission["features"]), "geometry_mode": "representative anchors"},
         "energy_zones": {"features": len(zones["features"]), "geometry_mode": "representative anchors"},
         "capital_projects": {"features": len(capital["features"]), "geometry_mode": "representative anchors"},
         "freight_intermodal": {"features": len(freight["features"]), "geometry_mode": "approximate asset points"},
-        "health": {"mode": "reuse POC-002 corpus derivative"},
-        "education": {"mode": "reuse POC-002 corpus derivative"},
+        "water_systems": {"features": len(water["features"]), "geometry_mode": "representative system anchors"},
+        "health": {"mode": "reuse POC-002 corpus derivative"}, "education": {"mode": "reuse POC-002 corpus derivative"}
     }
     (OUT / "manifest.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
     gap_count = sum(len(v) for v in gaps.values())
@@ -163,5 +150,4 @@ def main():
     print("POC-004 complete")
 
 
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": main()
