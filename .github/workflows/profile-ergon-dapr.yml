@@ -1,0 +1,49 @@
+name: Profile Ergon DAPR workbook
+
+on:
+  push:
+    branches:
+      - feature/ingest-distribution-capacity-001
+    paths:
+      - "tools/profile_xlsx_stdlib.py"
+      - ".github/workflows/profile-ergon-dapr.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  profile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/ingest-distribution-capacity-001
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Download authoritative Ergon workbook
+        run: |
+          mkdir -p _scratch/ergon assurance/source_profiles
+          curl --fail --location --retry 3 \
+            'https://www.ergon.com.au/__data/assets/excel_doc/0011/1839755/BSP_and_Zone_Substation_Forecasts_-_Ergon_2025.xlsx' \
+            --output _scratch/ergon/BSP_and_Zone_Substation_Forecasts_-_Ergon_2025.xlsx
+      - name: Profile workbook
+        run: |
+          python tools/profile_xlsx_stdlib.py \
+            _scratch/ergon/BSP_and_Zone_Substation_Forecasts_-_Ergon_2025.xlsx \
+            assurance/source_profiles/ergon_bsp_zone_2025.json \
+            --max-rows 40
+      - name: Commit source profile
+        run: |
+          git config user.name "VECA ingestion bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add assurance/source_profiles/ergon_bsp_zone_2025.json
+          if git diff --cached --quiet; then
+            echo "No profile changes"
+            exit 0
+          fi
+          git commit -m "Energy: profile Ergon BSP and zone-substation workbook"
+          git pull --rebase --autostash origin feature/ingest-distribution-capacity-001
+          git push origin HEAD:feature/ingest-distribution-capacity-001
