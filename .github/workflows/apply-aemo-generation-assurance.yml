@@ -1,0 +1,32 @@
+name: Apply AEMO generation assurance batch
+on:
+  push:
+    branches: [feature/ingest-aemo-generation-assets-001]
+    paths:
+      - "assurance/ingestion_batches/aemo_generation_information_july_2026.json"
+      - "assurance/manifests/ENERGY-AEMO-GENINFO-2026-07.json"
+      - ".github/workflows/apply-aemo-generation-assurance.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: feature/ingest-aemo-generation-assets-001, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: python tools/apply_assurance_batch.py assurance/ingestion_batches/aemo_generation_information_july_2026.json
+      - run: python tools/audit_current_datasets.py
+      - run: python tools/validate_dataset_register.py
+      - run: python tools/validate_source_assurance.py --strict
+      - name: Publish canonical assurance state
+        run: |
+          git config user.name "VECA assurance bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add assurance/source_register.json assurance/dataset_register.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Assurance: register AEMO generation asset dataset"
+          git pull --rebase --autostash origin feature/ingest-aemo-generation-assets-001
+          git push origin HEAD:feature/ingest-aemo-generation-assets-001
