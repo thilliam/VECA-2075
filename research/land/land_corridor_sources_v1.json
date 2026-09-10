@@ -1,0 +1,88 @@
+{
+  "version": "POC-008-v1",
+  "purpose": "Authoritative source manifest for explainable land/corridor feasibility evidence. Public ownership is typed evidence, not automatic suitability.",
+  "sources": [
+    {
+      "source_id": "NSW-LAND-TENURE-2024",
+      "jurisdiction": "NSW",
+      "title": "NSW Land Tenure",
+      "publisher": "NSW Department of Primary Industries and Regional Development",
+      "portal": "Data.NSW / SEED",
+      "published": "2024-11-22",
+      "last_updated_seen": "2025-10-08",
+      "licence": "Creative Commons Attribution",
+      "coverage": "statewide wall-to-wall",
+      "classes": ["Crownland-Leasehold","Crownland-Other","Indigenous Owned","National Park","Private","State Forest","Unresolved Tenure"],
+      "download": "https://datasets.seed.nsw.gov.au/dataset/6884bc76-7b9d-4fcc-b3cc-a3416699dcb5/resource/d4e3fc9c-11f8-433c-8fe1-751148136635/download/nswlandtenure_dec2024_v2_seed.gdb.zip",
+      "notes": [
+        "Dataset documentation warns roads, waterways and general public areas across Greater Sydney and Wollongong are not properly mapped in this version.",
+        "Use separate NSW cadastral road/rail corridor layers for corridor evidence rather than relying on tenure alone."
+      ]
+    },
+    {
+      "source_id": "NSW-GOV-PROPERTY-INDEX",
+      "jurisdiction": "NSW",
+      "title": "Government Property Index",
+      "publisher": "NSW Department of Planning, Housing and Infrastructure",
+      "portal": "NSW Planning Portal / Data.NSW",
+      "coverage": "NSW Government-owned land index",
+      "role": "cross-check government ownership; not a suitability class"
+    },
+    {
+      "source_id": "NSW-RAIL-CORRIDOR-GDA2020",
+      "jurisdiction": "NSW",
+      "title": "Railway Corridor - NSW Land Parcel Property Theme - GDA2020 Service",
+      "publisher": "NSW Spatial Services",
+      "portal": "Data.NSW / Spatial Services",
+      "role": "positive corridor evidence / existing reservation geometry"
+    },
+    {
+      "source_id": "NSW-ROAD-CORRIDOR-GDA2020",
+      "jurisdiction": "NSW",
+      "title": "Road Corridor - NSW Land Parcel Property Theme - GDA2020 Service",
+      "publisher": "NSW Spatial Services",
+      "portal": "Data.NSW / Spatial Services",
+      "role": "existing corridor evidence; longitudinal compatibility and junction conflict remain separate questions"
+    },
+    {
+      "source_id": "VIC-VICMAP-PROPERTY",
+      "jurisdiction": "VIC",
+      "title": "Vicmap Property",
+      "publisher": "Victoria Department of Transport and Planning",
+      "portal": "Data.Vic / Vicmap",
+      "licence": "Creative Commons",
+      "coverage": "statewide cadastral parcels",
+      "role": "authoritative parcel geometry with Crown/freehold differentiation, cadastral roads and easements"
+    },
+    {
+      "source_id": "VIC-CROWN-LAND-TENURE",
+      "jurisdiction": "VIC",
+      "title": "Vicmap Crown Land Tenure",
+      "publisher": "Victoria Department of Transport and Planning",
+      "portal": "Data.Vic / Vicmap",
+      "licence": "CC BY 4.0",
+      "coverage": "statewide",
+      "role": "Crown tenure, reserves and government-road evidence",
+      "layers": ["CL_TENURE_VIEW","GOV_ROAD_POLYGON"]
+    },
+    {
+      "source_id": "ABS-MESH-BLOCK-2021",
+      "jurisdiction": "AU",
+      "title": "2021 Census Mesh Blocks",
+      "publisher": "Australian Bureau of Statistics",
+      "portal": "ABS ASGS",
+      "coverage": "Australia",
+      "role": "fine-grained urban/development footprint and broad land-use class",
+      "notes": ["Mesh Blocks are the smallest ABS geography and broadly identify land use such as residential, commercial, industrial and parkland."]
+    },
+    {
+      "source_id": "ABS-UCL-2021",
+      "jurisdiction": "AU",
+      "title": "Urban Centres and Localities 2021",
+      "publisher": "Australian Bureau of Statistics",
+      "portal": "ABS ASGS",
+      "coverage": "Australia",
+      "role": "coarser settlement extent sanity/context layer; not sufficient alone for alignment penalties"
+    }
+  ]
+}

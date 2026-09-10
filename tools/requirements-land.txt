@@ -1,0 +1,4 @@
+-r requirements-terrain.txt
+geopandas>=1.0
+pyogrio>=0.9
+shapely>=2.0

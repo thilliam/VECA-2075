@@ -1,0 +1,25 @@
+name: Validate POC-008 land corridor model
+
+on:
+  pull_request:
+    paths:
+      - "tools/land_corridor_rules.py"
+      - "tools/build_land_corridor_screen.py"
+      - "tools/requirements-land.txt"
+      - "tests/test_land_corridor_rules.py"
+      - "maps/poc-008/**"
+      - "research/land/**"
+      - "experiments/EXP-002-habitat-resource-screening/land_corridor_feasibility_v1.md"
+      - ".github/workflows/validate-poc008-land.yml"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run POC-008 rule regression tests
+        run: python -m unittest tests.test_land_corridor_rules
