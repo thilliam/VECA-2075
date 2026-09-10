@@ -1,391 +1,179 @@
 # VECA-2075 — Project Status and End-to-End Roadmap
 
-**Status date:** 9 September 2026  
+**Status date:** 10 September 2026  
 **Purpose:** canonical handover/status document for humans and agents. Read this before starting a new VECA task.
 
-## 1. What VECA is trying to answer
+## 1. Current position
 
 VECA asks how eastern Australia could accommodate roughly **10 million additional residents** by around 2075 if settlement, infrastructure, water, energy, industry and transport were planned as one long-horizon system rather than by extending today's metropolitan pattern by default.
 
-The 10 million figure is a forcing scenario, not a forecast. The project must be able to conclude that today's metropolitan pattern is best, that regional expansion is better, or that a hybrid is superior.
+The 10 million figure is a forcing scenario, not a forecast. No settlement ranking, preferred regional candidate or preferred VECA HSR alignment is authorised yet.
 
-The governing doctrine is in `doctrine/design_principles.md`. The most important rules are: settlement before transport; use future climate; distinguish evidence/inference/hypothesis; current population is not destiny; sunk capital matters but does not dictate the answer; preserve optionality; and do not introduce a composite score before the evidence and sensitivity problem are understood.
+Current stage state:
 
-## 2. Where the project is now
+- **Stage 0 — doctrine/research controls:** complete.
+- **Stage 1 — inherited system:** substantially complete; enrichment continues in parallel.
+- **Stage 2 — physical survival / habitat-resource screen:** **current primary analytical stage**.
+- **Stage 3+ — candidate selection, capability joins, settlement systems, transport and whole-system economics:** gated on Stage 2.
+- **Regional Anchor Cluster join/weighting:** paused until Stage 2 is materially credible.
 
-VECA has moved beyond bootstrap/source reconnaissance. It now has a meaningful inherited-system evidence base, structured domain research, a source-ingestion assurance control plane, and a working multi-generation layered-map POC. It has **not** yet selected candidate settlement regions, assigned settlement rankings, designed a VECA transport network, or performed whole-system economics.
+The latest cross-agent reconciliation is `session_summaries/RECONCILIATION_2026-09-10.md`.
 
-Current position:
+## 2. What is now established
 
-**EXP-001 inherited-system mapping: first coherent pass substantially established; enrichment remains.**  
-**EXP-002 habitat/resource screening: framework and source discovery established; material spatial screening is the next major analytical task.**  
-**Government intent/future capital optionality: first regional and asset-level evidence established.**  
-**Map POC: real transport, population, settlements and landscape context now demonstrated; next major analytical layer is energy.**  
-**Source assurance: cross-domain source/dataset register and reconciliation process now controls whether apparent map gaps are real or ingestion gaps.**  
-**Regional Anchor Cluster join: explicitly paused and placed in backlog until the physical survival screen is further advanced.**
+### Research controls and assurance
 
-## 3. What has been achieved
+`assurance/` is the control plane for source coverage and ingestion integrity. Current controls include source lifecycle, dataset registration, exhaustive-vs-curated dataset semantics, independent expected inventories, entity disposition/reconciliation, curated scope contracts and strict validation.
 
-### Doctrine and research design
+The first assurance migration proved its value by finding a 17/21 AEMO transmission import and repairing it to 21/21. Later assurance work also exposed malformed CSV provenance, aggregated source entities and other defects that a plausible map would not reveal.
 
-- Vision, geographic scope and 10m forcing scenario established.
-- Fifteen design principles pin the research against technology-first, CBD-first and current-population bias.
-- Evidence/inference/hypothesis separation established.
-- Controlled infrastructure status logic established: completed, under construction, funded/committed, approved-not-started, planned-high-confidence, proposed, cancelled.
-- Future concepts documented but intentionally unweighted: Capital Gravity, infrastructure inheritance per additional resident, habitat/resource suitability, economic potential, network value, AI infrastructure/economic/social resilience, life accessibility and voluntary migration attractiveness.
+A new `assurance/spatial_readiness.json` layer now bridges corpus ingestion to mapping. It explicitly distinguishes mapped, map-ready, blocked-spatial-join and non-spatial evidence so a missing map symbol is not misread as missing evidence.
 
-### Source coverage and ingestion assurance
+### Population and settlement geography
 
-`assurance/` is now the research-source control plane. Its purpose is to ensure sparse map areas mean sparse evidence/infrastructure rather than forgotten ingestion.
-
-Established controls include:
-- cross-domain `source_register.json` with lifecycle `discovered -> triaged -> relevant -> ingestion_planned -> ingested -> reconciled -> verified`;
-- canonical `dataset_register.json` covering current derived datasets;
-- explicit distinction between `exhaustive_import`, `curated_synthesis`, `support_output` and deprecated legacy outputs;
-- independent expected-inventory rule for exhaustive imports;
-- entity dispositions: mapped / dataset_only / excluded / duplicate / unresolved;
-- reconciliation invariant so expected entities cannot silently disappear;
-- evidence-backed accuracy verification for identity, decision-critical fields and spatial sanity;
-- curated-dataset scope contracts so provenance-reconciled seed sets do not masquerade as exhaustive censuses.
-
-The source register now spans 20+ important source families across population, transport, energy, digital/compute, infrastructure capital, regional planning and connectivity. New map/data work should update assurance records as part of the same change.
-
-### Population
-
-- ABS SA2 2001–2025 ERP layer materialised for QLD/NSW/ACT/VIC: 1,844 SA2s.
-- 2024–25 components and state validation captured.
-- Authoritative 1 km population-grid source preserved.
-- POC-003 joins authoritative SA2 geometry to 2025 ERP and renders density and 2020–25 growth.
-- ABS Urban Centres and Localities are now rendered as a semantic-zoom settlement hierarchy; major metropolitan functional centres are separately represented where contiguous metro UCLs are too coarse.
-- ABS 2025 LGA population geometry/data is now available as a separate population/growth lens so metropolitan systems can be viewed as Blacktown, Parramatta, Penrith, Liverpool, etc., rather than only as Greater Sydney.
-- Findings distinguish metropolitan-fringe growth, heterogeneous regional growth and one-year movement from long-run settlement suitability.
-- Future refinement: aggregate small outer localities into functional settlement clusters at medium zoom, dissolving to individual towns only at high zoom.
+- ABS SA2 ERP: 1,844 east-coast SA2s, reconciled to authoritative source identity.
+- LGA population/growth lens is available.
+- ABS UCL settlement hierarchy plus curated metropolitan functional centres is available.
+- Population needs multiple lenses: physical density, administrative geography and functional settlement systems.
+- Medium-zoom functional settlement clusters remain future work.
 
 ### Transport
 
-- Geoscience Australia east-coast rail and major-road geometry materialised and corrected to QLD/NSW/ACT/VIC scope.
-- Independent authoritative reconciliation now accounts for all 26,808 rail source features and all 75,581 road source features in the scoped extracts.
-- POC-002 proves real browser delivery from generated map derivatives: operational rail is reduced to 6,822 retained source segments; major roads retain all 75,581 source segments after short-segment deletion was shown to break network continuity.
-- Current road GeoJSON derivative is about 46 MB, confirming GeoJSON is a POC delivery mechanism rather than the production serving architecture.
-- Low-zoom network generalisation remains required: continuous strategic corridor representations should replace visual gaps at small scale, while authoritative detail replaces them at higher zoom.
-- Freight research distinguishes physical inheritance, observed utilisation and latent network option value.
-- Initial intermodal nodes, ports and airport activity represented in research datasets.
-- HSR/faster-rail evidence lineage assembled from VFT/Speedrail through the 2001 and 2013 Commonwealth studies to current HSRA work.
-- HSR cost and corridor-obstacle evidence seeded. This is evidence reuse, not a VECA route proposal.
-
-### Recent/committed infrastructure and Capital Gravity groundwork
-
-- Major recent/committed transport and infrastructure projects seeded with status/value discipline.
-- Western Sydney Airport/Aerotropolis/Bradfield case studied as evidence that governments can deliberately manufacture new economic gravity through coordinated airport, metro, road, land and industry investment.
-- Capital Gravity is recognised as more than dollar totals; enabling investment must later be separated from congestion remediation and legacy replacement.
+- GA rail and major-road source extracts are reconciled at 26,808 rail features and 75,581 road features.
+- Conventional-rail capacity/investment evidence now distinguishes physical geometry, funded works, route capability, active projects and corridor preservation.
+- HSR/faster-rail evidence lineage from earlier Australian studies through current HSRA work is preserved as inherited evidence, not route advocacy.
+- Port/intermodal and inland-catchment framing has materially improved.
+- Later Stage-8 methodology backlog now includes corridor co-location/optionality, accessible population per corridor-km, door-to-door journey burden, destination vehicle availability and FSD/shared first-last-mile scenarios.
 
 ### Energy
 
-- AEMO 2026 ISP transmission pipeline structured and source-level reconciled at 21/21 east-coast scoped projects, including HumeLink, Hunter-Central Coast REZ, Central-West Orana REZ, Western Renewables Link, VNI West, New England REZ and relevant Queensland/Victorian reinforcements.
-- NSW declared REZs, Victorian proposed REZs and historical Queensland potential-REZ planning geography are structured with deliberately different status semantics.
-- Important finding: connection/transfer/storage/generation capacity are different quantities and must not be collapsed.
-- Asset-level generation/storage extraction remains outstanding.
-- Distribution-network capacity/constraint sources are now explicitly listed as P0 ingestion targets: Essential Energy, Ausgrid, Endeavour Energy, Energex, Ergon and Victorian DNSPs.
-- **Energy is the next major map-layer family:** first AEMO transmission/REZ geography, then DNSP substation/capacity/constraint data as it is ingested.
+- AEMO 2026 ISP east-coast transmission set is reconciled at 21/21 scoped projects.
+- Exhaustive AEMO July 2026 generation/storage source observations: 1,415 / 1,415 records across NSW1/QLD1/VIC1.
+- Ausgrid capacity/demand: 210 / 210 substations, including firm capacity, transfer, embedded generation and demand forecasts.
+- Essential Energy zone-substation capacity: 366 matched summer/winter assets.
+- Ergon 2025-26 historical load: 265 / 265 substations with raw values preserved and a separately labelled empirical divide-by-1000 interpretation.
+- Distribution-capacity signals remain screening evidence, not guaranteed connection headroom.
+- Major remaining map limitation: several exhaustive asset/capacity datasets still require authoritative spatial joins.
 
 ### Water
 
-- Functional-system method established: analyse source + storage + regulated river/groundwater + treatment + transfer + desal/recycling + augmentation rather than treating a dam as a water score.
-- Seed systems exist for SEQ, Greater Sydney, Canberra-Queanbeyan, Melbourne/South-Central, Wagga, Albury and Goulburn.
-- Key insight: diversification and transfer capability can matter more than raw reservoir size.
-- Toowoomba/Darling Downs, New England and Hunter/coastal coverage still needs completion and sustainable-yield/augmentation comparison is not yet mature.
+Functional-system method is established: source + storage + regulated river/groundwater + treatment + transfer + desalination/recycling + augmentation, not nearest-dam scoring.
 
-### Industry and logistics
+Coverage now includes SEQ, Sydney, Canberra-Queanbeyan, Melbourne/South-Central, Wagga, Albury, Goulburn, Toowoomba/Darling Downs, Lower Hunter, Tamworth and Armidale/Guyra/Uralla. Sustainable-yield and augmentation comparison remains incomplete and belongs in Stage 2.
 
-- Initial structured nodes include Western Sydney Aerotropolis/Bradfield, Parkes SAP/National Logistics Hub and Wagga/Bomen/RiFL SAP.
-- Port and intermodal research has begun to treat ports as inland catchment systems rather than waterfront points.
-- Broader QLD, Hunter, VIC and ACT node coverage remains incomplete.
-- ARTC conventional-rail investment, Inland Rail current-program status, long-haul fibre and data-centre/powered-land pipelines are now explicit assurance/source-backlog families rather than informal future ideas.
+### Digital / compute / industry / logistics
 
-### Climate, hazard, terrain and land
+Structured first-pass evidence now includes:
 
-- EXP-002 framework established with staged gates rather than one score.
-- Climate/hazard source register and first findings established: warming is universal; southern water stress requires explicit future-yield treatment; extreme rainfall and drought can worsen together; fire weather is a major future spatial filter; national flood evidence requires local/state refinement.
-- Land source plan established for DEM/slope, ABARES land use, protected areas, native-title/ILUA context, agriculture, wetlands/floodplain and transformed land.
-- POC-003 now includes switchable satellite imagery and a live ABARES national land-use overlay, proving the map can combine analytical VECA data with physical-land context without copying national raster datasets into the repository.
-- The actual 2050/2070 regional climate profiles, slope/terrain surfaces and stronger constraint overlays are not yet materialised. This remains a major next-stage gap.
+- compute/data-centre campus pipeline;
+- terrestrial and domestic subsea digital backbone;
+- Brisbane, Botany, Kembla, Newcastle, Melbourne and Geelong port systems;
+- Moorebank, Enfield, Cooks River and other intermodal nodes;
+- ARTC/inland-rail capacity/investment evidence.
 
-### Government intent and Future Capital Optionality
+The project must continue to separate published capacity types and avoid summing incompatible MW or treating system capacity as local spare capacity.
 
-A new evidence family now records what governments already assume about future settlement geography and how movable future public capital remains.
+### Government Intent / Future Capital Optionality
 
-Established evidence includes:
-- NSW regional growth plans;
-- ShapingSEQ and preserved future-growth areas;
-- Victorian statewide/housing-target direction;
-- ACT district/service planning;
-- health capital and site-role signals;
-- government-controlled/growth land;
-- universities, TAFE/VET/trade education and first school-growth signals.
+Government regional plans, growth assumptions, health/service capital, government land, education/VET and growth-school signals are now established evidence families.
 
-Capital is conceptually separated into:
-1. sunk/fixed inheritance;
-2. committed low-flex capital;
-3. planned capital;
-4. renewal liability;
-5. growth-triggered capital; and
-6. optionality assets such as reserved land/corridors.
+The key economic framing remains: compare alternative settlement systems against the capital governments would otherwise spend somewhere, rather than comparing regional growth against a fictional zero-investment baseline.
 
-The economic question this enables is: **how much of the infrastructure needed by an alternative settlement pattern is genuinely incremental, versus expenditure governments would have made somewhere anyway?**
-
-### Education and human-capital assets
-
-- Anchor inventories now include major universities and vocational/trade institutions across Central Coast, New England, Canberra, Wagga/Albury, Gippsland and SEQ/Toowoomba.
-- School work is intentionally focused on new-school reservations, major expansions, growth-driven capacity and later cost norms rather than cataloguing every school.
-- `Human Capital Formation Capacity` has emerged as a future analytical family; it is not yet a score.
+Future analysis must keep sunk/fixed inheritance, committed low-flex capital, planned capital, renewal liabilities, growth-triggered capital and optionality assets distinct.
 
 ### Mapping
 
-The map has progressed through three POC generations:
+Current interactive lineage:
 
-- `maps/poc-001/` — interaction proof: layer toggles, semantic zoom, time/status filters, regional navigation and clickable evidence panels using simplified embedded features.
-- `maps/poc-002/` — real East Coast spatial foundation: reproducible derivatives from authoritative rail/road data plus corpus-backed infrastructure and education points, a spatial registry and explicit geometry-gap reporting.
-- `maps/poc-003/` — population, settlements and landscape: 1,844 SA2 population polygons, settlement hierarchy, metro functional centres, LGA population/growth lens, satellite imagery, live ABARES land use, and the POC-002 transport foundation.
+1. `maps/poc-001/` — interaction proof.
+2. `maps/poc-002/` — authoritative road/rail spatial foundation.
+3. `maps/poc-003/` — SA2/LGA population, settlements and landscape.
+4. `maps/poc-004/` — transmission/REZ, water, capital, freight and planning geography; current builder includes robust AEMO REZ browser/cache fallback and KML parsing.
+5. `maps/poc-005/` — compute, digital backbone, rail capacity/investment, ports, DNSP capacity signals and expanded water systems.
 
-Important map-engineering findings:
-- network topology must be preserved before visual/generalisation optimisation; short road segments cannot simply be dropped;
-- semantic zoom needs different representations of the same network rather than fake detail or one geometry at every scale;
-- map geometry quality must be explicit (`authoritative_source`, `authoritative_source_simplified`, representative centroid, functional-centre inference, etc.);
-- generated browser derivatives should not become the corpus authority;
-- large static layers should move toward PMTiles/vector tiles and dynamic analytical layers toward a proper spatial serving boundary;
-- population needs multiple lenses: physical density, administrative LGA, and functional settlement hierarchy;
-- small-town/locality clutter should later aggregate into functional settlement clusters at medium zoom.
+Current map architecture remains MapLibre for interaction, with PMTiles/vector tiles/PostGIS as the production direction. Browser GeoJSON is POC delivery, not final serving architecture.
 
-The map is a view over evidence entities. It is not the analytical model itself.
+## 3. Reconciled branch/session state
 
-## 4. Important findings so far — not conclusions
+The 10 September reconciliation established:
 
-- Existing east-coast geography is more than three capital cities: deliberate non-CBD nodes, inland logistics nodes, energy nodes and cross-border service systems already exist.
-- Western Sydney demonstrates that coordinated public capital and planning can create new economic gravity.
-- Wagga combines an unusual set of existing service, logistics, water, industry and grid-position assets.
-- Parkes is a useful test of whether exceptional network position can overcome a smaller urban/service base.
-- New England is receiving energy-network investment at a scale disproportionate to current population and should not be judged only by today's Armidale/Tamworth economy.
-- Canberra-Queanbeyan should be analysed functionally across the border.
-- Albury-Wodonga is a live example of capital moving from spatial optionality toward site lock-in.
-- Toowoomba's hospital relocation demonstrates that renewal capital can sometimes reshape service geography rather than simply reproduce it.
-- Universities and major hospitals can be city-shaping anchors; schools are more often population-following growth liabilities.
-- Population geography is usefully different when viewed through SA2 density, LGA administration and functional settlement systems; no single geography is sufficient for VECA.
+- the old `docs/roadmap-assurance-next-ingestion` branch is superseded; do not merge it;
+- POC-004's final AEMO REZ reliability work is already present despite an older session summary saying it was missing;
+- the Ergon branch is historically diverged but its logical outputs are already in current main;
+- POC-005 / spatial-readiness was the material active delta absent from main and has been recovered from stale ancestry onto the current-main reconciliation branch;
+- branch count is therefore not a measure of unfinished work.
 
-None of these findings authorises a preferred candidate.
+See `session_summaries/RECONCILIATION_2026-09-10.md` for the current-state matrix and discovery recovery.
 
-## 5. End-to-end research plan
+## 4. Current primary work — Stage 2 survival screen
 
-### Stage 0 — Doctrine and research controls — COMPLETE
+The next analytical product should be a broad east-coast survival map using future conditions. The first output is **pass / difficult / uncertain / major constraint by evidence family**, not a weighted ranking.
 
-Define question, scope, evidence standard, status taxonomies, anti-bias rules and repository discipline.
+### Gate A — structural exclusions / severe constraints
 
-### Stage 1 — Inherited system — SUBSTANTIALLY COMPLETE, ENRICHMENT ACTIVE
+Materialise terrain and slope/buildability; protected areas; agricultural/strategic land context; native-title/ILUA context and other material legal/spatial constraints; and stronger floodplain/coastal constraints where authoritative data exists.
 
-Understand what already exists and what capital is already accumulating.
+### Gate B — water/resource feasibility
 
-Required close-out work:
-- energy generator/storage asset extraction;
-- distribution-network capacity/constraint extraction across NSW/QLD/VIC DNSPs;
-- water gaps: Toowoomba/Darling Downs, New England, Hunter/coastal;
-- broader industry/logistics nodes in QLD/Hunter/VIC/ACT;
-- port catchments;
-- clean non-double-counted capital register;
-- transport utilisation/capacity enrichment;
-- production-scale map delivery when useful.
+For broad regions, compare sustainable yield/current system stress, diversification and transfer capability, augmentation options and plausible cost/order of magnitude, drought/climate sensitivity, and treatment/desal/recycling opportunities.
 
-Do not delay EXP-002 merely to achieve exhaustive Stage-1 completeness.
+### Gate C — future climate/hazard burden
 
-### Stage 2 — Physical survival / habitat-resource screen — CURRENT PRIMARY ANALYTICAL STAGE
+Materialise 2050/2070 profiles/surfaces for heat, rainfall/water stress, bushfire/fire weather, extreme rainfall/flood and other regionally material hazards.
 
-Build the first broad east-coast `survival map`.
+### Gate D — inherited-system optionality
 
-Gate A: structural exclusions/severe constraints.  
-Gate B: water/resource feasibility.  
-Gate C: 2050/2070 climate and hazard burden.  
-Gate D: inherited-system optionality.  
-Gate E: government intent/future-capital context.
+Use Stage-1 evidence to show useful inherited energy, transport, logistics, services, digital and capital-optionality context without letting inherited assets override physical survival.
 
-First output is **pass / difficult / uncertain / major constraint by evidence family**, not a weighted ranking.
+### Gate E — government intent / future-capital context
 
-Immediate work:
-- materialise 2050/2070 climate profiles;
-- derive terrain/slope/buildability surfaces;
-- extend the existing ABARES land-use context with protected/agricultural/native-title and other structural constraint layers;
-- improve flood and bushfire evidence;
-- complete water feasibility/augmentation evidence;
-- render the survival layers on/alongside the existing map POC.
+Show what governments currently assume, what is already committed, and where future capital/location remains flexible. Government forecasts are policy-shaped baselines, not independent proof of optimal settlement.
 
-### Stage 3 — Candidate-region discovery
+## 5. Parallel enrichment that should not block Stage 2
 
-Only after Stage 2 is credible, identify broad regions that survive the physical/resource screen and possess enough system potential to justify detailed investigation.
+Continue, where useful: authoritative spatial joins for AEMO generation/storage, Ausgrid, Ergon, Essential Energy and other network assets; remaining Queensland/Victorian DNSP capacity/constraint ingestion; route-access/utilisation evidence for conventional rail; broader private/institutional capital and industrial/logistics pipelines; authoritative geometry replacement for representative map anchors; and a non-double-counted capital census.
 
-Candidates must emerge from evidence. Existing research candidates are prompts to interrogate, not a shortlist to validate.
+Do **not** hold Stage 2 hostage to exhaustive Stage-1 completion.
 
-Output: a deliberately small candidate set plus explicit rejected/uncertain regions and reasons.
+## 6. Later gated stages
 
-### Stage 4 — Regional Anchor Clusters / inherited capability join — PAUSED BACKLOG TASK
+### Stage 3 — candidate-region discovery
 
-Use the existing mapped points and layers to identify functional combinations within travel-time catchments: health + university + VET + schools + government land + water + energy + industry/logistics + transport + official growth intent.
+Only after Stage 2 is credible, identify a deliberately small set of broad regions that survive the screen and justify deeper investigation. Existing named regions are prompts to interrogate, not a shortlist to validate.
 
-Purpose: determine what useful systems already co-exist, what is missing, and which missing components require genuinely new capital.
+### Stage 4 — inherited capability / Regional Anchor Clusters
 
-Do **not** hide components behind a single cluster score. Keep node scale, reach, scarcity, replacement cost, scalability, strategic coupling and lock-in/optionality visible separately.
+Use travel-time catchments to join health, education, government land, water, energy, industry/logistics, transport and official growth intent. Keep each component visible; do not hide them behind one score. This stage remains paused.
 
-This task is intentionally paused until Stage-2 physical screening is more mature.
+### Stage 5 — attractiveness, economy and voluntary settlement
 
-### Stage 5 — Attractiveness, economy and voluntary settlement
+Test housing, employment, services, human-capital formation, lifestyle/amenity, local mobility, airport/intercity access, digital connectivity and the ability to attract rather than coerce migration.
 
-For surviving candidates ask why households and businesses would actually choose them.
+### Stage 6 — AI/automation robustness
 
-Research:
-- housing cost/quality and buildability;
-- productive employment and industry diversity;
-- universities/research/workforce formation;
-- hospitals/schools/services;
-- culture/community/sport/recreation/nature;
-- local mobility and 15/30/60-minute life accessibility;
-- airport/intercity accessibility;
-- digital connectivity;
-- ability to attract rather than coerce migration.
+Stress-test candidates under multiple AI/location scenarios, including the counter-case that AI strengthens agglomeration around capital, universities and compute.
 
-Output: regional propositions and failure modes, still with transparent dimensions.
+### Stage 7 — alternative settlement systems
 
-### Stage 6 — AI / 2075 uncertainty stress tests
+Construct materially different spatial systems: metropolitan baseline, regional constellation, corridor/networked-city, deliberate new-city and hybrid examples. Allocate the forcing population before selecting transport technology.
 
-Stress-test candidates and later settlement systems under A0–A3 automation/location scenarios, including the counter-case that AI strengthens agglomeration around capital, universities and compute.
+### Stage 8 — derive transport
 
-AI is a robustness test, not a forecast.
+Derive transport from settlement/trip/freight markets. Later methodology backlog includes door-to-door/generalised journey burden rather than trunk time alone; accessible population by station/interchange catchment; shared corridor/co-location versus shared track; corridor protectability/future-proofing; FSD/shared-car first-last-mile scenarios; airport/HSR/shared-vehicle mobility hubs; and regional-centre-to-international-airport network value.
 
-### Stage 7 — Construct alternative settlement systems
+A useful bounded future accessibility demonstration is a population-weighted `time_to_SYD - time_to_WSI` surface, with separate road and public-transport cases. WSI terminal, airport-edge and Bradfield interchange options remain hypotheses for this later stage, not current route recommendations.
 
-Build materially different 2075 spatial architectures, for example:
-- metropolitan-concentration baseline;
-- regional constellation;
-- corridor/networked-city system;
-- deliberate new-city strategy;
-- hybrid.
+### Stages 9–11 — economics, sensitivity, vision
 
-Each scenario must allocate the forcing population and explain economic/service geography. No transport technology should define the scenario in advance.
+Compare whole-system infrastructure/economics against the default-growth counterfactual; run sensitivity/uncertainty; then produce the 2075 spatial vision and near-term option-preservation decisions.
 
-### Stage 8 — Derive transport architecture
+## 7. Immediate recommended work packages
 
-Only now derive passenger/freight transport from the settlement scenarios:
-settlements -> trip markets -> freight -> airports -> regional rail -> HSR where justified -> roads -> local transit.
-
-Compare conventional upgrades, branch lines, new corridors and HSR. Optimise door-to-door access and capacity, not merely headline station-to-station speed.
-
-### Stage 9 — Whole-system infrastructure and economics
-
-For each settlement system estimate incremental requirements for:
-- housing/site preparation;
-- roads/local transit/rail/HSR/airports/freight;
-- electricity/transmission/storage;
-- water/wastewater/recycling;
-- hospitals/health;
-- schools/VET/universities;
-- digital;
-- industry enabling works;
-- environmental mitigation.
-
-Compare against the **counterfactual cost of accommodating the same population under the metropolitan/default plan**, including renewal, congestion remediation and growth-triggered expenditure that would occur anyway.
-
-A likely useful denominator is whole-system incremental infrastructure cost per additional resident, but this is not yet pinned.
-
-### Stage 10 — Scenario comparison and optimisation
-
-Test trade-offs across housing, infrastructure cost, productivity, accessibility, water, energy, climate resilience, environment/agriculture, lifestyle, optionality and migration attractiveness.
-
-Only here introduce composite weighting if required. Run sensitivity analysis: a robust result should survive materially different reasonable weights.
-
-### Stage 11 — VECA-2075 vision and near-term option-preservation program
-
-Produce a coherent spatial future plus the decisions that matter in the 2030s/2040s: land/corridor reservations, service-location decisions, infrastructure sequencing and experiments that preserve valuable future options.
-
-The final product should show not just a 2075 picture but **what Australia would need to do differently, and when, for that option to remain available**.
-
-## 6. Agent-ready work queue
-
-Good parallel tasks now include:
-
-**P0 — EXP-002 physical screening**
-- climate 2050/2070 regional profiles and spatial surfaces;
-- terrain/slope/buildability;
-- protected/agriculture/native-title/land-use constraints;
-- flood/bushfire evidence;
-- water augmentation/yield comparison.
-
-**P0 — Energy capacity and map enrichment**
-- map reconciled AEMO 2026 ISP transmission projects and REZ geography with status/time semantics;
-- ingest Essential Energy, Ausgrid, Endeavour, Energex, Ergon and Victorian DNSP capacity/constraint sources;
-- add generator/storage assets after authoritative extraction;
-- never treat transmission proximity as connection capacity.
-
-**P1 — Stage-1 enrichment**
-- Hunter/New England/Toowoomba water completion;
-- QLD/Hunter/VIC/ACT industry-logistics nodes;
-- port catchments;
-- ARTC conventional-rail capacity/investment program;
-- Inland Rail current delivered/active/preserved status;
-- transport capacity/utilisation;
-- clean capital census.
-
-**P1 — Government intent**
-- new-school reservations/major school pipeline rather than all schools;
-- tertiary/VET expansion and specialist capability;
-- government-owned development land/corridors;
-- hospital/service renewal windows and site flexibility.
-
-**P1 — Emerging infrastructure/economic geography**
-- hyperscale data-centre campus and powered-land pipelines;
-- long-haul fibre/interconnection nodes;
-- private growth/development pipeline evidence where it changes infrastructure optionality.
-
-**P2 — Map/data engineering**
-- restore/integrate already-derived health and education anchors into the current POC-003 layer catalogue;
-- add AEMO transmission/REZ as the next major analytical layer family;
-- then major infrastructure/capital projects and intermodal/freight nodes;
-- add government-land/zoning polygons once geometry is authoritative enough;
-- move large road/rail/static surfaces from monolithic GeoJSON toward PMTiles/vector tiles;
-- add low/medium/high-zoom generalised transport representations;
-- preserve provenance/status/time/geometry-quality metadata in map entities;
-- add functional settlement clustering at medium zoom;
-- later replace broad rural SA2 appearance with the finer population grid/inhabited footprint.
-
-**PAUSED — Regional Anchor Clusters v1**
-- do not start until explicitly resumed.
-
-**LATER**
-- candidate ranking;
-- settlement scenarios;
-- VECA HSR/transport design;
-- AI stress testing;
-- whole-system cost model;
-- optimisation.
-
-## 7. Known repository/QA issues
-
-- Canonical organisation is domain-first, but older `research/` and `data/` paths remain because the automated migration push was blocked by GitHub workflow-update permissions. Do not duplicate large datasets merely to make the tree look tidy.
-- Both `domains/government-intent/` and an older `domains/government_intent/` currently exist. **Use `domains/government-intent/` for all new work.** The underscore directory is legacy and must be consolidated carefully; do not add new evidence there.
-- `research/EXP-001-layer-status.md` and the original EXP-001 README became stale as work progressed; they are being updated as part of this documentation pass.
-- BITRE airport-history extraction failed/was parked because the source workbook delivery was unreliable. Current airport activity is represented; history is not required to block current work.
-- Exact road/rail QA should rely on materialised summaries and source validation, not old conversational counts.
-- Seed datasets are structured research artefacts, not necessarily exhaustive asset censuses.
-- POC map derivatives are deliberately generated/not canonical. The research corpus and assurance records remain authoritative.
-- Current POC road GeoJSON is large (~46 MB); production delivery must not scale by piling more monolithic GeoJSON into the browser.
-- Some map-ready curated datasets still lack authoritative geometry; do not invent precise corridors/polygons merely to make them visible.
-
-## 8. Rules for agents
-
-1. Read `README.md`, this document, `doctrine/design_principles.md`, `assurance/README.md`, and the relevant experiment/domain plan before work.
-2. Search the repository before creating a new file or taxonomy.
-3. Prefer primary authoritative sources.
-4. Record provenance and source dates.
-5. Keep proposed/planned/committed/completed distinct.
-6. Keep evidence, inference and hypothesis distinct.
-7. Do not rank settlements or design HSR unless the assigned task explicitly authorises it.
-8. Do not turn a government forecast into VECA truth.
-9. Do not equate infrastructure dollars with strategic value.
-10. Add findings and limitations, not just data.
-11. Avoid parallel agents editing the same canonical file; give agents bounded outputs that can be reviewed/merged.
-12. If a task reveals a doctrine-level decision, update `decisions/README.md` or propose a decision record rather than silently embedding it in code/data.
-13. New derived datasets and map inputs must be registered in `assurance/dataset_register.json`; exhaustive sources require independent inventory reconciliation before claiming completeness.
+1. **EXP-002 climate surfaces:** materialise 2050/2070 regional climate/hazard layers with explicit source/scenario metadata.
+2. **Terrain/buildability:** derive DEM/slope classes and structural buildability constraints.
+3. **Land constraints:** combine protected/agricultural/native-title and other severe-constraint layers without premature weighting.
+4. **Water feasibility:** convert the expanded water-system corpus into broad-region feasibility/augmentation evidence.
+5. **Survival-map POC:** add those Stage-2 layers to the map with assurance and geometry-quality metadata.
+6. **Spatial joins in parallel:** connect exhaustive energy/network datasets to authoritative coordinates so capacity evidence can later participate in Stage 4 without heuristic geocoding.
+
+The coordination rule for parallel agents is: bounded ownership, source/dataset assurance in the same change, findings as first-class outputs, and session closeout before the workstream ends. Global roadmap synthesis belongs to a reconciliation/coordinator pass rather than every feature branch.
