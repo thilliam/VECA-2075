@@ -10,9 +10,11 @@ from __future__ import annotations
 import csv
 import io
 import json
+import re
 import zipfile
 import xml.etree.ElementTree as ET
 from pathlib import Path
+from urllib.parse import urljoin
 
 import requests
 from build_map_poc003 import main as build_poc003
@@ -28,7 +30,8 @@ FREIGHT = ROOT / "data" / "derived" / "transport" / "intermodal_terminals_seed.c
 WATER = ROOT / "domains" / "water" / "data" / "derived" / "water_systems_seed.csv"
 PLANNING = ROOT / "domains" / "government-intent" / "data" / "derived" / "land_zoning_optionality_seed.csv"
 GOV_LAND = ROOT / "domains" / "government-intent" / "data" / "derived" / "government_land_education_seed.csv"
-AEMO_REZ_KMZ = "https://www.aemo.com.au/-/media/files/major-publications/isp/2026/supporting-materials/indicative-rez-boundaries-2026-gis-data.kmz?rev=9b0bf7fc154b496aa8736928be26b015&sc_lang=en"
+AEMO_ISP_PAGE = "https://www.aemo.com.au/energy-systems/major-publications/integrated-system-plan-isp/2026-integrated-system-plan-isp"
+AEMO_REZ_FALLBACK_URL = "https://www.aemo.com.au/-/media/files/major-publications/isp/2026/supporting-materials/indicative-rez-boundaries-2026-gis-data.kmz?rev=9b0bf7fc154b496aa8736928be26b015&sc_lang=en"
 
 WATER_ANCHORS = {"WAT-SEQ": (152.80,-27.55),"WAT-SYD": (150.90,-33.85),"WAT-CBR": (149.10,-35.30),"WAT-MELB": (144.90,-37.85),"WAT-WAGGA": (147.37,-35.12),"WAT-ALBURY": (146.92,-36.08),"WAT-GOULBURN": (149.72,-34.75)}
 PLANNING_ANCHORS = {"GI-LAND-SEQ-PFGA": (152.65,-27.62),"GI-LAND-TOOWOOMBA-PFGA": (151.95,-27.58),"GI-LAND-CC-SCP": (151.33,-33.28)}
@@ -83,27 +86,78 @@ def parse_coords(text):
     if len(ring)>=3 and ring[0]!=ring[-1]:ring.append(ring[0])
     return ring
 
+def local_name(tag): return tag.rsplit('}',1)[-1]
+
+def children_named(node,name): return [x for x in node.iter() if local_name(x.tag)==name]
+
+def first_text(node,name,default=''):
+    for x in node.iter():
+        if local_name(x.tag)==name and x.text:return x.text.strip()
+    return default
+
+def download_aemo_rez_kmz(cache: Path):
+    if cache.exists() and cache.stat().st_size>1000:
+        print(f"Using cached AEMO 2026 indicative REZ GIS: {cache.stat().st_size/1000:.0f} KB")
+        return cache.read_bytes()
+
+    session=requests.Session()
+    session.headers.update({
+        "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/150 Safari/537.36",
+        "Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language":"en-AU,en;q=0.9",
+    })
+    page=session.get(AEMO_ISP_PAGE,timeout=60)
+    page.raise_for_status()
+    matches=re.findall(r'href=["\']([^"\']*indicative-rez-boundaries-2026-gis-data[^"\']*)["\']',page.text,re.I)
+    candidates=[]
+    for href in matches:
+        url=urljoin(AEMO_ISP_PAGE,href.replace('&amp;','&'))
+        if url not in candidates:candidates.append(url)
+    if AEMO_REZ_FALLBACK_URL not in candidates:candidates.append(AEMO_REZ_FALLBACK_URL)
+    print(f"AEMO REZ download: resolved {len(candidates)} candidate URL(s) from ISP page")
+
+    errors=[]
+    for url in candidates:
+        try:
+            r=session.get(url,headers={"Referer":AEMO_ISP_PAGE,"Accept":"application/octet-stream,application/vnd.google-earth.kmz,*/*"},timeout=180,allow_redirects=True)
+            if r.status_code==200 and len(r.content)>1000 and r.content[:2]==b'PK':
+                cache.write_bytes(r.content)
+                print(f"Downloaded AEMO REZ GIS: {len(r.content)/1000:.0f} KB from {r.url}")
+                return r.content
+            errors.append(f"{r.status_code} {url}")
+        except Exception as exc:
+            errors.append(f"{type(exc).__name__}: {exc}")
+
+    raise RuntimeError("AEMO blocked automated GIS download ("+'; '.join(errors)+"). Download 'Indicative REZ boundaries 2026 – GIS data' in a browser from the 2026 ISP page and save it as maps/poc-004/data/cache/aemo_indicative_rez_2026.kmz; the next build will use it automatically.")
+
 def build_aemo_rez_boundaries():
-    CACHE.mkdir(parents=True,exist_ok=True); cache=CACHE/"aemo_indicative_rez_2026.kmz"
+    CACHE.mkdir(parents=True,exist_ok=True);cache=CACHE/"aemo_indicative_rez_2026.kmz"
     try:
-        if cache.exists():content=cache.read_bytes();print("Using cached AEMO 2026 indicative REZ GIS")
-        else:
-            r=requests.get(AEMO_REZ_KMZ,timeout=180);r.raise_for_status();content=r.content;cache.write_bytes(content);print(f"Downloaded AEMO REZ GIS: {len(content)/1000:.0f} KB")
-        z=zipfile.ZipFile(io.BytesIO(content));kml_name=next(n for n in z.namelist() if n.lower().endswith('.kml'))
-        root=ET.fromstring(z.read(kml_name)); ns={"k":"http://www.opengis.net/kml/2.2"};out=[]
-        for i,pm in enumerate(root.findall('.//k:Placemark',ns)):
-            name=(pm.findtext('k:name',default=f'REZ {i+1}',namespaces=ns) or f'REZ {i+1}').strip();polys=[]
-            for poly in pm.findall('.//k:Polygon',ns):
-                outer=poly.find('.//k:outerBoundaryIs/k:LinearRing/k:coordinates',ns)
-                ring=parse_coords(outer.text if outer is not None else '')
-                if len(ring)>=4:polys.append([ring])
-            if not polys:continue
-            pts=[p for poly in polys for ring in poly for p in ring]
-            # Keep eastern NEM geography; excludes SA/TAS while retaining QLD/NSW/VIC/ACT.
-            if not any(140.5<=p[0]<=154.5 and -39.8<=p[1]<=-10.0 for p in pts):continue
-            geom={"type":"Polygon","coordinates":polys[0]} if len(polys)==1 else {"type":"MultiPolygon","coordinates":polys}
-            out.append({"type":"Feature","geometry":geom,"properties":{"entity_id":f"AEMO-REZ-2026-{i+1}","name":name,"domain":"energy-zone-boundary","status":"indicative_2026","geometry_quality":"authoritative_AEMO_indicative_boundary","source_dataset":"AEMO 2026 ISP Indicative REZ boundaries GIS","source_url":AEMO_REZ_KMZ,"assurance_state":"authoritative_direct_source"}})
-        print(f"AEMO indicative REZ boundaries: {len(out)} east/NEM polygons")
+        content=download_aemo_rez_kmz(cache)
+        z=zipfile.ZipFile(io.BytesIO(content));kml_names=[n for n in z.namelist() if n.lower().endswith('.kml')]
+        print(f"AEMO REZ KMZ: {len(kml_names)} KML file(s): {', '.join(kml_names[:5])}")
+        out=[];placemark_count=polygon_count=ring_count=0
+        for kml_name in kml_names:
+            root=ET.fromstring(z.read(kml_name))
+            placemarks=children_named(root,'Placemark');placemark_count+=len(placemarks)
+            for pm in placemarks:
+                name=first_text(pm,'name',f'REZ {placemark_count}');polys=[]
+                for poly in children_named(pm,'Polygon'):
+                    polygon_count+=1
+                    outers=[]
+                    for outer in children_named(poly,'outerBoundaryIs'):
+                        coords=children_named(outer,'coordinates')
+                        if coords:
+                            ring=parse_coords(coords[0].text or '')
+                            if len(ring)>=4:outers.append(ring);ring_count+=1
+                    for ring in outers:polys.append([ring])
+                if not polys:continue
+                pts=[p for poly in polys for ring in poly for p in ring]
+                if not any(140.5<=p[0]<=154.5 and -39.8<=p[1]<=-10.0 for p in pts):continue
+                geom={"type":"Polygon","coordinates":polys[0]} if len(polys)==1 else {"type":"MultiPolygon","coordinates":polys}
+                out.append({"type":"Feature","geometry":geom,"properties":{"entity_id":f"AEMO-REZ-2026-{len(out)+1}","name":name,"domain":"energy-zone-boundary","status":"indicative_2026","geometry_quality":"authoritative_AEMO_indicative_boundary","source_dataset":"AEMO 2026 ISP Indicative REZ boundaries GIS","source_url":AEMO_ISP_PAGE,"assurance_state":"authoritative_direct_source"}})
+        print(f"AEMO REZ parse: placemarks={placemark_count}, polygons={polygon_count}, valid_outer_rings={ring_count}, east/NEM_features={len(out)}")
+        if not out:raise RuntimeError("KMZ parsed but yielded zero east/NEM polygon features")
         return {"type":"FeatureCollection","features":out}
     except Exception as exc:
         print(f"WARNING: AEMO REZ GIS unavailable/parse failed: {exc}")
