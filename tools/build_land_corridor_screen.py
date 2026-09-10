@@ -24,15 +24,21 @@ POC007 = ROOT / "maps" / "poc-007" / "data" / "hst_terrain_segments.geojson"
 OUT = ROOT / "maps" / "poc-008" / "data"
 CRS = "EPSG:3577"
 WGS84 = "EPSG:4326"
+DEFAULT_NSW_TENURE = ROOT / "research" / "source" / "land" / "nswlandtenure_dec2024_v2_seed.gdb"
+DEFAULT_ABS_MB = ROOT / "research" / "source" / "land" / "MB_2021_AUST_SHP_GDA2020"
+NSW_TENURE_LAYER = "NSW_LandTenure_DPI2024_v02"
 
 
 def parse_args():
     p = argparse.ArgumentParser()
-    p.add_argument("--nsw-tenure", type=Path, help="NSW Land Tenure GDB/SHP/GeoPackage")
-    p.add_argument("--nsw-layer", help="Optional layer name; auto-detected when omitted")
+    p.add_argument("--nsw-tenure", type=Path, default=DEFAULT_NSW_TENURE,
+                   help="NSW Land Tenure source; defaults to inspected local GDB")
+    p.add_argument("--nsw-layer", default=NSW_TENURE_LAYER,
+                   help="NSW tenure layer; defaults to inspected 2024 layer")
     p.add_argument("--vic-property", type=Path, help="Vicmap Property source (optional in first pass)")
     p.add_argument("--vic-crown", type=Path, help="Vicmap Crown Land Tenure source (optional in first pass)")
-    p.add_argument("--abs-meshblocks", type=Path, help="ABS 2021 Mesh Blocks SHP/GeoPackage")
+    p.add_argument("--abs-meshblocks", type=Path, default=DEFAULT_ABS_MB,
+                   help="ABS 2021 Mesh Blocks source; defaults to inspected local dataset")
     p.add_argument("--path", type=Path, default=POC007)
     p.add_argument("--buffer-km", type=float, default=50.0,
                    help="Browser/QA extraction buffer around POC-007; not a route-search constraint")
@@ -81,6 +87,8 @@ def path_buffer(path: Path, buffer_km: float):
 
 
 def read_clip(path: Path, clip_geom, layer=None):
+    if not path.exists():
+        raise FileNotFoundError(f"Source not found: {path}")
     # bbox first for efficient drivers, exact intersection after reprojection.
     clip_wgs=gpd.GeoSeries([clip_geom],crs=CRS).to_crs(WGS84).iloc[0]
     g=gpd.read_file(path,layer=layer,bbox=clip_wgs.bounds)
@@ -98,7 +106,8 @@ def rule_props(rule):
 def normalize_nsw(path: Path, clip_geom, layer_hint=None):
     layer=pick_layer(path,layer_hint,("tenure",))
     g=read_clip(path,clip_geom,layer)
-    class_col=pick_column(g.columns,("tenure_class","tenureclass","tenure class","ten_class"))
+    # Inspected 2024 schema pins TenureClass; fallback aliases kept for resilience.
+    class_col=pick_column(g.columns,("TenureClass","tenure_class","tenure class","ten_class"))
     type_col=pick_column(g.columns,("tenure_type","tenuretype","tenure type","ten_type"))
     if not class_col:
         raise ValueError(f"Could not identify NSW tenure class field. Columns: {list(g.columns)}; use --inspect first")
@@ -114,18 +123,22 @@ def normalize_nsw(path: Path, clip_geom, layer_hint=None):
 
 def normalize_abs(path: Path, clip_geom):
     g=read_clip(path,clip_geom)
+    # Inspected ABS schema pins these Edition 3 field names.
     cat=pick_column(g.columns,("MB_CAT21","mesh block category","mb_cat"))
-    if not cat: raise ValueError(f"Could not identify ABS MB_CAT21 field. Columns: {list(g.columns)}")
     code=pick_column(g.columns,("MB_CODE21","mesh block code","mb_code"))
+    state_name=pick_column(g.columns,("STE_NAME21","state name"))
+    sa2_name=pick_column(g.columns,("SA2_NAME21","sa2 name"))
+    if not cat: raise ValueError(f"Could not identify ABS MB_CAT21 field. Columns: {list(g.columns)}")
     rows=[]
     keep={"residential","commercial","industrial","transport","education","hospital/medical","parkland"}
     for _,r in g.iterrows():
         value="" if pd.isna(r[cat]) else str(r[cat])
         if value.strip().lower() not in keep: continue
         rule=classify_abs_meshblock(value)
-        # Transport/education/medical/parkland are evidence-only in v1 pending finer semantics.
         rows.append({"source_id":"ABS-MESH-BLOCK-2021","jurisdiction":"AU",
                      "source_class":value,"source_type":None,
+                     "state_name":None if not state_name or pd.isna(r[state_name]) else str(r[state_name]),
+                     "sa2_name":None if not sa2_name or pd.isna(r[sa2_name]) else str(r[sa2_name]),
                      "source_feature_id":None if not code or pd.isna(r[code]) else str(r[code]),
                      **rule_props(rule),"geometry":r.geometry})
     return gpd.GeoDataFrame(rows,crs=CRS)
@@ -151,7 +164,8 @@ def route_intersections(route, datasets):
             if length <= 0: continue
             records.append({"dataset":name,"factor_class":r.factor_class,"rule_role":r.rule_role,
                             "rule_weight":float(r.rule_weight),"intersection_length_m":round(length,1),
-                            "source_class":r.source_class,"source_type":r.source_type})
+                            "source_class":r.source_class,"source_type":r.source_type,
+                            "state_name":r.get("state_name"),"sa2_name":r.get("sa2_name")})
     by={}
     for x in records:
         key=x["factor_class"]
@@ -172,11 +186,11 @@ def main():
     datasets={}
 
     if args.nsw_tenure:
-        print("Normalizing NSW land tenure...")
+        print(f"Normalizing NSW land tenure from {args.nsw_tenure}...")
         datasets["nsw_tenure"]=normalize_nsw(args.nsw_tenure,clip,args.nsw_layer)
         write_geojson(datasets["nsw_tenure"],args.out/"land_tenure_nsw.geojson")
     if args.abs_meshblocks:
-        print("Normalizing ABS urban/developed Mesh Blocks...")
+        print(f"Normalizing ABS urban/developed Mesh Blocks from {args.abs_meshblocks}...")
         datasets["abs_meshblocks"]=normalize_abs(args.abs_meshblocks,clip)
         write_geojson(datasets["abs_meshblocks"],args.out/"urban_meshblocks.geojson")
 
@@ -194,7 +208,9 @@ def main():
     result={"status":"partial" if len(datasets)<2 or pending else "initial_evidence_built",
             "qa_buffer_km":args.buffer_km,"qa_buffer_is_routing_constraint":False,
             "datasets_built":list(datasets),"victoria_schema_pending":pending,
-            "poc007_path_intersections":summary,"intersection_records":len(detailed)}
+            "poc007_path_intersections":summary,"intersection_records":len(detailed),
+            "source_schemas":{"nsw":{"layer":NSW_TENURE_LAYER,"class_field":"TenureClass"},
+                              "abs":{"layer":"MB_2021_AUST_GDA2020","category_field":"MB_CAT21","state_field":"STE_NAME21","sa2_field":"SA2_NAME21"}}}
     (args.out/"land_corridor_summary.json").write_text(json.dumps(result,indent=2),encoding="utf-8")
     print(json.dumps(result,indent=2))
 
