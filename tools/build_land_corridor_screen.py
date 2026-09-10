@@ -16,6 +16,8 @@ from pathlib import Path
 import geopandas as gpd
 import pandas as pd
 import pyogrio
+from shapely import intersection, make_valid
+from shapely.errors import GEOSException
 from shapely.geometry import shape
 from shapely.ops import unary_union
 
@@ -196,20 +198,44 @@ def write_browser_geojson(gdf: gpd.GeoDataFrame,path: Path,display_clip,simplify
     return len(out)
 
 
+def _robust_intersection_length(route,geom):
+    """Intersect one route hit, repairing only geometry that needs it.
+
+    Fast NSW reads deliberately skip GDAL's expensive full polygon organisation.
+    Most features are still usable as-is. Repairing only route hits preserves the
+    ingestion speed while preventing one malformed multipart polygon from
+    aborting the analytical summary.
+    """
+    repaired=False
+    if not geom.is_valid:
+        geom=make_valid(geom)
+        repaired=True
+    try:
+        return float(intersection(route,geom).length),repaired,False
+    except GEOSException:
+        # Precision retry is a final guard for near-coincident topology after
+        # reprojection. 1 cm in EPSG:3577 is immaterial to corridor screening.
+        geom=make_valid(geom)
+        return float(intersection(route,geom,grid_size=0.01).length),True,True
+
+
 def route_intersections(route,datasets):
     records=[]
     for name,g in datasets.items():
         if g is None or g.empty: continue
         t=time.perf_counter(); log(f"Intersecting route with {name} ({len(g):,} analytical features)")
         hits=g[g.intersects(route)].copy()
+        repaired=0; precision_retries=0
+        log(f"{name}: {len(hits):,} candidate route hits; validating only these geometries")
         for _,r in hits.iterrows():
-            length=float(route.intersection(r.geometry).length)
+            length,was_repaired,precision_retry=_robust_intersection_length(route,r.geometry)
+            repaired+=int(was_repaired); precision_retries+=int(precision_retry)
             if length<=0: continue
             records.append({"dataset":name,"factor_class":r.get("factor_class"),"rule_role":r.get("rule_role"),
                             "rule_weight":float(r.get("rule_weight",0)),"intersection_length_m":round(length,1),
                             "source_class":r.get("source_class"),"source_type":r.get("source_type"),
                             "state_name":r.get("state_name"),"sa2_name":r.get("sa2_name")})
-        log(f"{name}: {len(hits):,} route-intersecting features in {time.perf_counter()-t:,.1f}s")
+        log(f"{name}: {len(hits):,} route-intersecting features; repaired {repaired:,}; precision retries {precision_retries:,}; {time.perf_counter()-t:,.1f}s")
     by={}
     for x in records:
         key=x["factor_class"]
