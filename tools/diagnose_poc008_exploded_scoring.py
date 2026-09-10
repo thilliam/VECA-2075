@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """Diagnostic: test POC-008 scoring after exploding multipart evidence.
 
-This deliberately reuses the current POC-008 reader/rules, but converts
-MultiPolygon evidence into individual Polygon rows before route scoring.  The
-hypothesis is that broad multipart envelopes are producing false bbox hits and
-forcing GEOS to inspect huge disconnected geometries for a short route segment.
+This reuses the current POC-008 reader/rules, but converts MultiPolygon evidence
+into individual Polygon rows before route scoring. Broad multipart envelopes were
+shown to create false bbox hits and pathological GEOS work for short route segments.
+
+The route-level kilometre summary printed here is NON-EXCLUSIVE evidence overlap:
+several evidence polygons/classes can cover the same route distance. Do not treat
+those totals as a partition of the route. Segment-level evidence is the primary QA
+output from this diagnostic.
 """
 from __future__ import annotations
 
@@ -44,18 +48,31 @@ def main():
     )
     nsw = explode_for_scoring(nsw, "nsw_tenure")
 
-    # Start with NSW only. If this completes quickly, the multipart-envelope
-    # diagnosis is confirmed before we spend time loading/scoring ABS as well.
-    poc.log("Scoring exploded NSW polygon parts against POC-007 segments")
+    poc.log("Loading ABS Mesh Blocks for exploded-scoring diagnostic")
+    abs_mb = poc.normalize_abs(poc.DEFAULT_ABS_MB, analysis_clip)
+    abs_mb = explode_for_scoring(abs_mb, "abs_meshblocks")
+
+    poc.log("Scoring exploded NSW + ABS polygon parts against POC-007 segments")
     detailed, summary, per_segment, stats = poc.score_route_segments(
-        segments, {"nsw_tenure": nsw}
+        segments,
+        {
+            "nsw_tenure": nsw,
+            "abs_meshblocks": abs_mb,
+        },
     )
 
     print("\n=== DIAGNOSTIC RESULT ===")
     print(f"records: {len(detailed):,}")
     print(f"stats: {stats}")
-    print(f"summary: {summary}")
-    print(f"segment 313: {per_segment.get('313', [])}")
+    print("summary (NON-EXCLUSIVE evidence overlaps; km can sum above route length):")
+    print(summary)
+    print("\nsegment 313 evidence:")
+    evidence = per_segment.get("313", [])
+    if evidence:
+        for row in evidence:
+            print(row)
+    else:
+        print("  none")
 
 
 if __name__ == "__main__":
