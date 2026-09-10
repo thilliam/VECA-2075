@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, asdict
 from typing import Iterable
+import re
 
 ROLE_HARD_EXCLUSION = "hard_exclusion"
 ROLE_VERY_HIGH_PENALTY = "very_high_penalty"
@@ -65,15 +66,15 @@ RULES = {
     ),
     "dense_residential": FeasibilityRule(
         "dense_residential", ROLE_VERY_HIGH_PENALTY, 12.0,
-        "Dense residential fabric implies displacement, severance, noise and acquisition impacts; tunnelling may later alter the surface penalty."
+        "Residential fabric implies displacement, severance, noise and acquisition impacts; tunnelling may later alter the surface penalty."
     ),
     "commercial_or_cbd": FeasibilityRule(
         "commercial_or_cbd", ROLE_VERY_HIGH_PENALTY, 10.0,
-        "Dense commercial/CBD land has major acquisition and disruption consequences; underground solutions require separate treatment."
+        "Commercial/CBD land has major acquisition and disruption consequences; underground solutions require separate treatment."
     ),
     "industrial": FeasibilityRule(
         "industrial", ROLE_SOFT_PENALTY, 4.0,
-        "Industrial land is developed and operationally constrained but can be more corridor-compatible than dense residential land."
+        "Industrial land is developed and operationally constrained but can be more corridor-compatible than residential land."
     ),
     "low_density_or_greenfield_urban": FeasibilityRule(
         "low_density_or_greenfield_urban", ROLE_SOFT_PENALTY, 3.0,
@@ -94,28 +95,35 @@ RULES = {
 }
 
 
+def _norm(value: str | None) -> str:
+    """Normalize punctuation/spacing so source labels such as Crownland-Leasehold remain matchable."""
+    return re.sub(r"[^a-z0-9]+", " ", (value or "").strip().lower()).strip()
+
+
 def classify_nsw_tenure(tenure_class: str | None, tenure_type: str | None = None) -> FeasibilityRule:
-    c = (tenure_class or "").strip().lower()
-    t = (tenure_type or "").strip().lower()
-    if "national park" in c or any(x in t for x in ("nature reserve", "conservation reserve", "regional park", "state conservation")):
+    c = _norm(tenure_class)
+    t = _norm(tenure_type)
+    joined = f"{c} {t}"
+    compact = joined.replace(" ", "")
+    if "nationalpark" in compact or any(x.replace(" ", "") in compact for x in ("nature reserve", "conservation reserve", "regional park", "state conservation")):
         return RULES["national_park_or_conservation"]
-    if "indigenous" in c or "aboriginal" in t:
+    if "indigenous" in joined or "aboriginal" in joined:
         return RULES["indigenous_owned"]
-    if "state forest" in c:
+    if "stateforest" in compact:
         return RULES["state_forest"]
-    if "private" in c:
+    if "private" in joined:
         return RULES["private_land"]
-    if "leasehold" in c:
+    if "leasehold" in joined:
         return RULES["crown_leasehold"]
-    if "crown" in c:
-        if "road" in t:
+    if "crown" in joined:
+        if "road" in joined:
             return RULES["government_road"]
         return RULES["crown_other"]
     return RULES["unresolved_tenure"]
 
 
 def classify_abs_meshblock(land_use: str | None) -> FeasibilityRule:
-    v = (land_use or "").strip().lower()
+    v = _norm(land_use)
     if "residential" in v:
         return RULES["dense_residential"]
     if "commercial" in v:
