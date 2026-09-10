@@ -15,8 +15,9 @@ import numpy as np
 import rasterio
 from PIL import Image
 from rasterio.enums import Resampling
-from rasterio.windows import from_bounds
+from rasterio.transform import from_bounds as transform_from_bounds
 from rasterio.vrt import WarpedVRT
+from rasterio.warp import reproject
 
 ROOT = Path(__file__).resolve().parents[1]
 TERRAIN_DIR = ROOT / "experiments" / "EXP-002-habitat-resource-screening" / "data" / "terrain"
@@ -79,10 +80,24 @@ def tile_bounds_3857(x,y,z):
 
 
 def read_tile(vrt,x,y,z):
+    """Render one Web Mercator XYZ tile without boundless WarpedVRT reads.
+
+    WarpedVRT.read(..., boundless=True) is unsupported. Reprojecting directly
+    into the tile-sized destination correctly leaves areas outside the source
+    raster as NaN/transparent while preserving the requested XYZ footprint.
+    """
     bounds=tile_bounds_3857(x,y,z)
-    window=from_bounds(*bounds,transform=vrt.transform)
-    a=vrt.read(1,window=window,out_shape=(256,256),masked=True,boundless=True,resampling=Resampling.bilinear)
-    return a.filled(np.nan).astype("float32")
+    destination=np.full((256,256),np.nan,dtype="float32")
+    reproject(
+        source=rasterio.band(vrt,1),
+        destination=destination,
+        dst_transform=transform_from_bounds(*bounds,256,256),
+        dst_crs=WEB_MERCATOR,
+        dst_nodata=np.nan,
+        resampling=Resampling.bilinear,
+        init_dest_nodata=True,
+    )
+    return destination
 
 
 def save_png(path,rgba):
