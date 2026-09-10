@@ -5,6 +5,7 @@ from pathlib import Path
 
 import tools.validate_source_assurance as assurance
 
+ROOT = Path(__file__).resolve().parents[1]
 
 REGISTER = {
     "schema_version": 1,
@@ -52,7 +53,9 @@ class SourceAssuranceTests(unittest.TestCase):
     def setUp(self):
         errors, self.register = assurance.validate_register(REGISTER)
         self.assertEqual([], errors)
-        self.path = Path("assurance/manifests/test.json")
+        # validate_manifest reports repository-relative paths, so synthetic tests must
+        # still provide a path rooted under the actual repository.
+        self.path = ROOT / "assurance" / "manifests" / "test.json"
 
     def test_27_expected_23_accounted_fails(self):
         errors = assurance.validate_manifest(self.path, manifest(), self.register)
