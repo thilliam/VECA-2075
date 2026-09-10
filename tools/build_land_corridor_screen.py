@@ -14,6 +14,7 @@ import time
 from pathlib import Path
 
 import geopandas as gpd
+import numpy as np
 import pandas as pd
 import pyogrio
 from shapely import GeometryCollection, MultiPolygon, Polygon, box, intersection, make_valid
@@ -203,80 +204,71 @@ def write_browser_geojson(gdf: gpd.GeoDataFrame,path: Path,display_clip,simplify
 
 
 def _polygonal_only(geom):
-    """Keep only areal components from make_valid output.
-
-    make_valid() may return GeometryCollection with Polygon plus LineString or
-    Point artefacts. Those lower-dimensional pieces are irrelevant to the
-    metric we need here: metres of route lying inside an areal land feature.
-    """
-    if geom is None or geom.is_empty:
-        return None
-    if isinstance(geom, Polygon):
-        return geom
-    if isinstance(geom, MultiPolygon):
-        return geom
-    if isinstance(geom, GeometryCollection):
+    """Keep only areal components from make_valid output."""
+    if geom is None or geom.is_empty: return None
+    if isinstance(geom,(Polygon,MultiPolygon)): return geom
+    if isinstance(geom,GeometryCollection):
         polys=[]
         for part in geom.geoms:
             p=_polygonal_only(part)
-            if p is None or p.is_empty:
-                continue
-            if isinstance(p, Polygon): polys.append(p)
-            elif isinstance(p, MultiPolygon): polys.extend(list(p.geoms))
+            if p is None or p.is_empty: continue
+            if isinstance(p,Polygon): polys.append(p)
+            elif isinstance(p,MultiPolygon): polys.extend(list(p.geoms))
         if not polys: return None
         return polys[0] if len(polys)==1 else MultiPolygon(polys)
     return None
 
 
 def _local_intersection_length(segment,geom):
-    """Return overlap length for a short route segment and one polygon.
-
-    Fast NSW ingestion can leave a few malformed multipart polygons. We first
-    try the exact local overlay. On GEOS failure we crop to a tiny box around
-    the route segment, repair only that local fragment, discard lower-dimensional
-    make_valid artefacts, then retry. A final failure is reported as an explicit
-    data-quality skip instead of aborting the whole build.
-    """
     try:
         return float(intersection(segment,geom).length),False,False,False
     except GEOSException:
-        minx,miny,maxx,maxy=segment.bounds
-        pad=5.0
+        minx,miny,maxx,maxy=segment.bounds; pad=5.0
         local_box=box(minx-pad,miny-pad,maxx+pad,maxy+pad)
         try:
-            # clip_by_rect is avoided because malformed geometry can still throw;
-            # a precision overlay against this tiny box is cheap if it succeeds.
-            try:
-                local=intersection(geom,local_box,grid_size=0.01)
-            except GEOSException:
-                local=geom
+            try: local=intersection(geom,local_box,grid_size=0.01)
+            except GEOSException: local=geom
             repaired=_polygonal_only(make_valid(local))
-            if repaired is None or repaired.is_empty:
-                return 0.0,True,True,False
+            if repaired is None or repaired.is_empty: return 0.0,True,True,False
             return float(intersection(segment,repaired,grid_size=0.01).length),True,True,False
         except GEOSException:
             return 0.0,True,True,True
 
 
+def _numeric_bounds(g: gpd.GeoDataFrame, name: str):
+    """Return Nx4 numeric bounds without constructing a GEOS STRtree.
+
+    NSW tenure contains pathological multipart geometries. STRtree construction
+    can spend a long time indexing them even though route scoring only needs a
+    coarse bbox rejection before exact local intersection. Bounds are cheap to
+    compare with NumPy and keep the expensive geometry path out of indexing.
+    """
+    t=time.perf_counter(); log(f"Computing numeric bounds for {name} ({len(g):,} analytical features); no GEOS spatial index")
+    b=g.geometry.bounds[["minx","miny","maxx","maxy"]].to_numpy(dtype="float64",copy=True)
+    finite=np.isfinite(b).all(axis=1)
+    log(f"Numeric bounds ready for {name}: {finite.sum():,}/{len(g):,} finite in {time.perf_counter()-t:,.1f}s")
+    return b,finite
+
+
 def score_route_segments(segments,datasets):
-    records=[]; per_segment={str(int(sid)):[] for sid in segments.segment_id}
-    stats={}
+    records=[]; per_segment={str(int(sid)):[] for sid in segments.segment_id}; stats={}
     for name,g in datasets.items():
         if g is None or g.empty: continue
-        t=time.perf_counter(); log(f"Building spatial index for {name} ({len(g):,} analytical features)")
-        sindex=g.sindex
+        t=time.perf_counter()
+        bounds,finite=_numeric_bounds(g,name)
+        minx=bounds[:,0]; miny=bounds[:,1]; maxx=bounds[:,2]; maxy=bounds[:,3]
         bbox_candidates=0; exact_hits=0; repaired=0; fallbacks=0; skipped=0
         total_segments=len(segments)
         for n,(_,srow) in enumerate(segments.iterrows(),1):
             seg=srow.geometry; sid=int(srow.segment_id)
-            idx=list(sindex.intersection(seg.bounds))
+            sx1,sy1,sx2,sy2=seg.bounds
+            mask=finite & (maxx>=sx1) & (minx<=sx2) & (maxy>=sy1) & (miny<=sy2)
+            idx=np.flatnonzero(mask)
             bbox_candidates+=len(idx)
             for pos in idx:
-                r=g.iloc[pos]
+                r=g.iloc[int(pos)]
                 try:
-                    # Cheap predicate first; malformed polygons may throw here too.
-                    if not seg.intersects(r.geometry):
-                        continue
+                    if not seg.intersects(r.geometry): continue
                 except GEOSException:
                     pass
                 length,was_repaired,used_fallback,was_skipped=_local_intersection_length(seg,r.geometry)
@@ -291,8 +283,9 @@ def score_route_segments(segments,datasets):
             if n%50==0 or n==total_segments:
                 log(f"{name}: scored {n}/{total_segments} segments; {bbox_candidates:,} bbox candidates; {exact_hits:,} exact hits; {skipped:,} skipped")
         elapsed=time.perf_counter()-t
-        stats[name]={"bbox_candidates":bbox_candidates,"exact_hits":exact_hits,"repaired_local_fragments":repaired,
-                     "fallback_attempts":fallbacks,"skipped_unrecoverable":skipped,"seconds":round(elapsed,1)}
+        stats[name]={"candidate_method":"numeric_bounds","bbox_candidates":bbox_candidates,"exact_hits":exact_hits,
+                     "repaired_local_fragments":repaired,"fallback_attempts":fallbacks,
+                     "skipped_unrecoverable":skipped,"seconds":round(elapsed,1)}
         log(f"{name} complete: {bbox_candidates:,} bbox candidates -> {exact_hits:,} exact hits; repaired {repaired:,}; fallbacks {fallbacks:,}; skipped {skipped:,}; {elapsed:,.1f}s")
     by={}
     for x in records:
