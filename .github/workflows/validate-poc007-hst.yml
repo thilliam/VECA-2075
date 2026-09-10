@@ -1,0 +1,23 @@
+name: Validate POC-007 HST terrain path
+
+on:
+  pull_request:
+    paths:
+      - "tools/build_hst_terrain_path.py"
+      - "tests/test_hst_terrain_path.py"
+      - "maps/poc-007/**"
+      - ".github/workflows/validate-poc007-hst.yml"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install terrain dependencies
+        run: python -m pip install -r tools/requirements-terrain.txt
+      - name: Run POC-007 regression tests
+        run: python -m unittest tests.test_hst_terrain_path
