@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Build VECA EXP-002 terrain/buildability screening products.
 
-Authoritative source family: Geoscience Australia SRTM-derived 1-second DEM,
-mirrored by Digital Earth Australia. Continuous elevation and slope remain the
+Preferred source: local Geoscience Australia SRTM-derived 3-second DEM (~90 m)
+stored outside Git. The pipeline preserves continuous elevation and slope as the
 analytical truth; the browser classification is a deliberately coarser view.
 """
 from __future__ import annotations
@@ -22,13 +22,9 @@ from rasterio.warp import transform, transform_bounds
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUT = ROOT / "experiments" / "EXP-002-habitat-resource-screening" / "data" / "terrain"
 MAP_OUT = ROOT / "maps" / "poc-006" / "data"
-
-# DEA documents this public GeoTIFF as the GA SRTM 1-second elevation product.
-# The asset name is DEM-S (smoothed DEM), which is preferred for this regional
-# gradient screen because it reduces source-surface noise before slope derivation.
-DEM_URL = "https://dea-public-data.s3-ap-southeast-2.amazonaws.com/projects/elevation/ga_srtm_dem1sv1_0/dems1sv1_0.tif"
+DEFAULT_LOCAL_DEM = ROOT / "research" / "source" / "terrain" / "3secSRTM_DEM" / "DEM_ESRI_GRID_16bit_Integer" / "dem3s_int"
 BBOX_WGS84 = (137.8, -39.25, 154.1, -9.9)
-TARGET_CRS = "EPSG:3577"  # Australian Albers: metre-based gradients.
+TARGET_CRS = "EPSG:3577"
 DEFAULT_RESOLUTION_M = 250
 DEFAULT_MAP_CELL_M = 10000
 NODATA = -9999.0
@@ -56,7 +52,8 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--resolution-m", type=int, default=DEFAULT_RESOLUTION_M)
     p.add_argument("--map-cell-m", type=int, default=DEFAULT_MAP_CELL_M)
     p.add_argument("--out", type=Path, default=DEFAULT_OUT)
-    p.add_argument("--dem-url", default=DEM_URL)
+    p.add_argument("--dem-path", type=Path, default=DEFAULT_LOCAL_DEM,
+                   help="Local GA 3-second DEM dataset path (AIG directory or GDAL-readable raster)")
     p.add_argument("--skip-map", action="store_true")
     return p.parse_args()
 
@@ -68,35 +65,44 @@ def target_grid(resolution_m: int):
     return width, height, from_origin(left, top, resolution_m, resolution_m)
 
 
-def read_dem(url: str, resolution_m: int):
-    with rasterio.Env(GDAL_HTTP_MULTIRANGE="YES", GDAL_DISABLE_READDIR_ON_OPEN="EMPTY_DIR"):
-        with rasterio.open(url) as src:
-            width, height, tx = target_grid(resolution_m)
-            with WarpedVRT(src, crs=TARGET_CRS, transform=tx, width=width, height=height,
-                           resampling=Resampling.bilinear, nodata=NODATA) as vrt:
-                dem = vrt.read(1, masked=True).astype("float32")
+def read_dem(path: Path, resolution_m: int):
+    if not path.exists():
+        raise SystemExit(f"Local DEM not found: {path}")
+    with rasterio.open(path) as src:
+        print(f"Opened source: driver={src.driver} size={src.width}x{src.height} crs={src.crs} nodata={src.nodata}")
+        width, height, tx = target_grid(resolution_m)
+        print(f"Target grid: {width}x{height} at {resolution_m} m in {TARGET_CRS}")
+        with WarpedVRT(src, crs=TARGET_CRS, transform=tx, width=width, height=height,
+                       resampling=Resampling.bilinear, nodata=NODATA) as vrt:
+            print("Reading/reprojecting DEM...")
+            dem = vrt.read(1, masked=True).astype("float32")
+    print(f"DEM read complete: {dem.count():,} valid cells")
     return dem, tx
 
 
 def slope_degrees(dem: np.ma.MaskedArray, resolution_m: int) -> np.ma.MaskedArray:
+    print("Calculating slope...")
     data = dem.filled(np.nan).astype("float64")
     dz_dy, dz_dx = np.gradient(data, resolution_m, resolution_m)
     slope = np.degrees(np.arctan(np.hypot(dz_dx, dz_dy))).astype("float32")
-    return np.ma.array(slope, mask=np.ma.getmaskarray(dem) | ~np.isfinite(slope))
+    out = np.ma.array(slope, mask=np.ma.getmaskarray(dem) | ~np.isfinite(slope))
+    print(f"Slope complete: {out.count():,} valid cells")
+    return out
 
 
 def band_name(value: float) -> str:
     return next((name for name, lo, hi in BANDS if lo <= value < hi), "unknown")
 
 
-def write_raster(path: Path, arr: np.ma.MaskedArray, tx, units: str, source_url: str):
+def write_raster(path: Path, arr: np.ma.MaskedArray, tx, units: str, source_ref: str):
     path.parent.mkdir(parents=True, exist_ok=True)
     profile = {"driver":"GTiff","height":arr.shape[0],"width":arr.shape[1],"count":1,
                "dtype":"float32","crs":TARGET_CRS,"transform":tx,"nodata":NODATA,
                "compress":"deflate","tiled":True,"blockxsize":512,"blockysize":512}
     with rasterio.open(path, "w", **profile) as dst:
         dst.write(arr.filled(NODATA).astype("float32"), 1)
-        dst.update_tags(units=units, source=source_url, analysis_role="continuous")
+        dst.update_tags(units=units, source=source_ref, analysis_role="continuous")
+    print(f"Wrote {path}")
 
 
 def sample_points(dem_path: Path):
@@ -112,6 +118,7 @@ def sample_points(dem_path: Path):
 
 
 def aggregate_map_grid(dem, slope, map_cell_m: int, resolution_m: int):
+    print("Aggregating 10 km map cells...")
     factor = map_cell_m // resolution_m
     h, w = (dem.shape[0] // factor) * factor, (dem.shape[1] // factor) * factor
     d = dem[:h,:w].filled(np.nan).reshape(h//factor,factor,w//factor,factor)
@@ -142,9 +149,10 @@ def map_geojson(path: Path, tx, factor: int, resolution_m: int, metrics):
                     "slope_median_deg":round(float(slope_median[row,col]),2),
                     "slope_p90_deg":round(p90,2),"steep_share_ge15":round(float(steep_share[row,col]),3),
                     "terrain_band":band_name(p90),"analysis_resolution_m":resolution_m,"map_cell_m":cell,
-                    "geometry_quality":"derived_regular_grid","source_surface":"GA SRTM 1-second DEM-S"}})
+                    "geometry_quality":"derived_regular_grid","source_surface":"GA SRTM 3-second DEM"}})
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps({"type":"FeatureCollection","name":"terrain_buildability_v1","features":features},separators=(",",":")),encoding="utf-8")
+    print(f"Wrote {path} with {len(features):,} cells")
     return len(features)
 
 
@@ -153,20 +161,21 @@ def main():
     if args.map_cell_m % args.resolution_m:
         raise SystemExit("--map-cell-m must be an integer multiple of --resolution-m")
     args.out.mkdir(parents=True, exist_ok=True)
-    print(f"Reading GA DEM-S -> {args.resolution_m} m continuous analysis surface")
-    dem, tx = read_dem(args.dem_url, args.resolution_m)
+    print(f"Reading local GA 3-second DEM -> {args.resolution_m} m continuous analysis surface")
+    dem, tx = read_dem(args.dem_path, args.resolution_m)
     slope = slope_degrees(dem, args.resolution_m)
     if float(slope.min()) < 0 or float(slope.max()) > 90:
         raise SystemExit("Slope sanity bound failed: expected 0..90 degrees")
 
+    source_ref = str(args.dem_path)
     dem_path = args.out / f"elevation_{args.resolution_m}m.tif"
     slope_path = args.out / f"slope_degrees_{args.resolution_m}m.tif"
-    write_raster(dem_path, dem, tx, "metres", args.dem_url)
-    write_raster(slope_path, slope, tx, "degrees", args.dem_url)
+    write_raster(dem_path, dem, tx, "metres", source_ref)
+    write_raster(slope_path, slope, tx, "degrees", source_ref)
     sanity, failures = sample_points(dem_path)
 
-    summary = {"source":args.dem_url,"source_product":"Geoscience Australia SRTM-derived 1 Second DEM-S (ga_srtm_dem1sv1_0)",
-        "source_nominal_resolution":"1 arc-second (~30 m)","analysis_crs":TARGET_CRS,
+    summary = {"source":source_ref,"source_product":"Geoscience Australia SRTM-derived 3 Second DEM",
+        "source_nominal_resolution":"3 arc-second (~90 m)","analysis_crs":TARGET_CRS,
         "analysis_resolution_m":args.resolution_m,"map_cell_m":args.map_cell_m,"terrain_band_basis":"P90 slope within map cell",
         "bands_degrees":[{"name":n,"min":lo,"max":None if math.isinf(hi) else hi} for n,lo,hi in BANDS],
         "sanity_points":sanity,"valid_elevation_pixels":int(dem.count()),"valid_slope_pixels":int(slope.count()),
