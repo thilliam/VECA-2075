@@ -1,12 +1,23 @@
 # EXP-002 — Habitat and Resource Screening
 
-**Status:** framework established; evidence collection active; no rankings authorised yet.
+**Status:** Stage-2 implementation active; terrain/buildability v1 is the first implemented structural screen; no rankings authorised yet.
 
 ## Purpose
 
 Identify broad eastern-Australian areas that remain plausible for substantial 2075 population growth after future climate, water, terrain, hazard, land-use and environmental constraints are made visible.
 
 This experiment does **not** choose cities and does **not** design transport.
+
+## Current implementation
+
+Terrain/buildability is the first active slice. See `terrain_buildability_v1.md` and `terrain_source_profile_v1.json`.
+
+The v1 terrain pipeline preserves three distinct levels:
+- authoritative GA 1-second elevation source family;
+- continuous 250 m elevation and slope analytical rasters by default;
+- a 10 km browser/summary grid carrying continuous slope/elevation summaries plus descriptive terrain bands.
+
+POC-006 is the first survival-map generation. Full-source terrain status remains pending until the continental build and sanity checks pass; implementation existence is not being treated as data verification.
 
 ## Core question
 

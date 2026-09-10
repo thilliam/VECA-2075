@@ -1,0 +1,25 @@
+{
+  "source_id": "TERRAIN-GA-SRTM-1S",
+  "title": "SRTM-derived 1 Second Digital Elevation Models Version 1.0",
+  "publisher": "Geoscience Australia",
+  "dea_product_id": "ga_srtm_dem1sv1_0",
+  "persistent_id": "72759",
+  "source_type": "authoritative_reality",
+  "domain": "terrain",
+  "geography": "Australia / VECA QLD-NSW-ACT-VIC processing extent",
+  "nominal_resolution": "1 arc-second (~30 m)",
+  "units": "metres",
+  "licence": "CC BY 4.0",
+  "selected_asset": "dems1sv1_0.tif",
+  "selected_surface": "DEM-S smoothed digital elevation model",
+  "selection_reason": "Nationally consistent authoritative elevation; smoothed surface reduces source-surface noise before regional slope derivation.",
+  "access_url": "https://dea-public-data.s3-ap-southeast-2.amazonaws.com/projects/elevation/ga_srtm_dem1sv1_0/dems1sv1_0.tif",
+  "ga_product_page": "https://www.ga.gov.au/scientific-topics/national-location-information/digital-elevation-data",
+  "status": "source_pinned_pipeline_implemented",
+  "assurance_notes": [
+    "GA/DEA metadata establishes publisher, product identity, resolution, units and CC BY 4.0 licensing.",
+    "Full VECA derivative has not been committed; the build records exact source URL and parameters in terrain_summary.json.",
+    "Synthetic regression tests verify slope mathematics and terrain-band boundaries independently of the remote DEM.",
+    "End-to-end acceptance requires a successful full-source build and broad known-location elevation sanity checks."
+  ]
+}

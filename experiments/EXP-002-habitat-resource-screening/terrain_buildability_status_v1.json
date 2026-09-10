@@ -1,0 +1,10 @@
+{
+  "work_item": "EXP002-TERRAIN-001",
+  "status": "implementation_complete_full_source_run_pending",
+  "source": "TERRAIN-GA-SRTM-1S",
+  "analysis_resolution_m_default": 250,
+  "map_cell_m_default": 10000,
+  "continuous_products": ["elevation", "slope_degrees"],
+  "map_summary_metrics": ["elevation_mean_m", "slope_median_deg", "slope_p90_deg", "steep_share_ge15", "terrain_band"],
+  "next_gate": "full_source_build_and_sanity_acceptance"
+}

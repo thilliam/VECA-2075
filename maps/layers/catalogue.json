@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "updated": "2026-09-10",
   "layers": [
     {"layer_id":"population_sa2","domain":"population","name":"SA2 population density/growth","geometry_type":"polygon","source":"ABS ERP + ASGS","source_date":"2025","assurance_state":"reconciled","geometry_quality":"authoritative_geometry_simplified","serving":"generated GeoJSON POC","map_poc":"003+"},
@@ -22,6 +22,7 @@
     {"layer_id":"port_systems","domain":"industry-logistics","name":"Port systems / hinterland role","geometry_type":"point","source":"domains/industry/data/derived/port_catchments_seed.csv","source_date":"2025-2026","assurance_state":"curated_synthesis","geometry_quality":"representative_port_anchor","serving":"generated GeoJSON POC; port-estate/catchment geometry later","map_poc":"005+"},
     {"layer_id":"dnsp_capacity_signals","domain":"energy-distribution","name":"Distribution capacity / augmentation signals","geometry_type":"point","source":"domains/energy/data/derived/distribution_capacity_signals_seed.csv","source_date":"2025-2026","assurance_state":"curated_synthesis","geometry_quality":"representative_region_anchor","serving":"generated GeoJSON POC; authoritative substation coordinates required","map_poc":"005+"},
     {"layer_id":"water_systems_expanded","domain":"water","name":"Expanded regional water-system evidence","geometry_type":"point","source":"domains/water/data/derived/water_systems_seed.csv","source_date":"2026","assurance_state":"curated_synthesis","geometry_quality":"representative_system_anchor","serving":"generated GeoJSON POC; network/catchment geometry later","map_poc":"005+"},
+    {"layer_id":"terrain_buildability","domain":"terrain","name":"Terrain gradient / buildability screen","geometry_type":"polygon","source":"Geoscience Australia SRTM-derived 1 Second DEM-S via DEA","source_date":"GA product v1 / DEA current access","assurance_state":"authoritative_source_derived_pending_full_run","geometry_quality":"derived_regular_grid_from_authoritative_raster","serving":"250 m continuous GeoTIFF analysis -> 10 km generated GeoJSON POC; tiled raster/vector delivery later","map_poc":"006+"},
     {"layer_id":"land_use","domain":"land","name":"ABARES national land use","geometry_type":"raster","source":"ABARES / Digital Atlas","source_date":"2020-21","assurance_state":"authoritative_live_service","geometry_quality":"source raster","serving":"live raster service","map_poc":"003+"},
     {"layer_id":"satellite","domain":"context","name":"Satellite imagery","geometry_type":"raster","source":"Esri World Imagery","source_date":"live service","assurance_state":"context_only","geometry_quality":"source imagery","serving":"live raster tiles","map_poc":"003+"}
   ]
