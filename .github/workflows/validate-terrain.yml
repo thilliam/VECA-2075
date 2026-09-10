@@ -4,8 +4,10 @@ on:
   pull_request:
     paths:
       - "tools/build_terrain_screen.py"
+      - "tools/build_terrain_tiles.py"
       - "tools/requirements-terrain.txt"
       - "tests/test_terrain_screen.py"
+      - "tests/test_terrain_tiles.py"
       - "maps/poc-006/**"
       - "experiments/EXP-002-habitat-resource-screening/terrain_buildability_v1.md"
       - ".github/workflows/validate-terrain.yml"
@@ -22,4 +24,4 @@ jobs:
       - name: Install terrain dependencies
         run: python -m pip install -r tools/requirements-terrain.txt
       - name: Run terrain regression tests
-        run: python -m unittest tests.test_terrain_screen
+        run: python -m unittest tests.test_terrain_screen tests.test_terrain_tiles
