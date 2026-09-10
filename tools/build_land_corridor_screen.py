@@ -56,6 +56,7 @@ def inspect_vector(path: Path):
     for name, _ in layers[:8]:
         g = gpd.read_file(path, layer=name, rows=3)
         print(f"\n{name}: {list(g.columns)}")
+        print(f"  CRS: {g.crs}")
         if len(g): print(g.drop(columns="geometry", errors="ignore").head(2).to_string(index=False))
 
 
@@ -86,13 +87,26 @@ def path_buffer(path: Path, buffer_km: float):
     return route, route.buffer(buffer_km*1000)
 
 
+def source_crs(path: Path, layer=None):
+    """Read source CRS without loading the full dataset."""
+    probe=gpd.read_file(path,layer=layer,rows=1)
+    if probe.crs is None:
+        raise ValueError(f"Source has no CRS: {path}")
+    return probe.crs
+
+
 def read_clip(path: Path, clip_geom, layer=None):
     if not path.exists():
         raise FileNotFoundError(f"Source not found: {path}")
-    # bbox first for efficient drivers, exact intersection after reprojection.
-    clip_wgs=gpd.GeoSeries([clip_geom],crs=CRS).to_crs(WGS84).iloc[0]
-    g=gpd.read_file(path,layer=layer,bbox=clip_wgs.bounds)
+    # GeoPandas/pyogrio interpret a tuple bbox in the SOURCE CRS. Transform the
+    # QA corridor into that CRS before the efficient bbox read, then reproject
+    # returned features into Australian Albers for exact intersection.
+    src_crs=source_crs(path,layer)
+    clip_src=gpd.GeoSeries([clip_geom],crs=CRS).to_crs(src_crs).iloc[0]
+    g=gpd.read_file(path,layer=layer,bbox=clip_src.bounds)
     if g.crs is None: raise ValueError(f"Source has no CRS: {path}")
+    if g.empty:
+        return gpd.GeoDataFrame(g,geometry="geometry",crs=src_crs).to_crs(CRS)
     g=g.to_crs(CRS)
     g=g[g.geometry.notna() & ~g.geometry.is_empty]
     return g[g.intersects(clip_geom)].copy()
@@ -101,6 +115,11 @@ def read_clip(path: Path, clip_geom, layer=None):
 def rule_props(rule):
     return {"factor_class":rule.factor_class,"rule_role":rule.role,
             "rule_weight":rule.weight,"rule_rationale":rule.rationale}
+
+
+def empty_normalized(columns):
+    data={c:pd.Series(dtype="object") for c in columns if c!="geometry"}
+    return gpd.GeoDataFrame(data,geometry=gpd.GeoSeries([],crs=CRS),crs=CRS)
 
 
 def normalize_nsw(path: Path, clip_geom, layer_hint=None):
@@ -118,7 +137,10 @@ def normalize_nsw(path: Path, clip_geom, layer_hint=None):
         rule=classify_nsw_tenure(tc,tt)
         rows.append({"source_id":"NSW-LAND-TENURE-2024","jurisdiction":"NSW",
                      "source_class":tc,"source_type":tt,**rule_props(rule),"geometry":r.geometry})
-    return gpd.GeoDataFrame(rows,crs=CRS)
+    if not rows:
+        return empty_normalized(["source_id","jurisdiction","source_class","source_type",
+                                 "factor_class","rule_role","rule_weight","rule_rationale","geometry"])
+    return gpd.GeoDataFrame(rows,geometry="geometry",crs=CRS)
 
 
 def normalize_abs(path: Path, clip_geom):
@@ -141,7 +163,10 @@ def normalize_abs(path: Path, clip_geom):
                      "sa2_name":None if not sa2_name or pd.isna(r[sa2_name]) else str(r[sa2_name]),
                      "source_feature_id":None if not code or pd.isna(r[code]) else str(r[code]),
                      **rule_props(rule),"geometry":r.geometry})
-    return gpd.GeoDataFrame(rows,crs=CRS)
+    if not rows:
+        return empty_normalized(["source_id","jurisdiction","source_class","source_type","state_name","sa2_name",
+                                 "source_feature_id","factor_class","rule_role","rule_weight","rule_rationale","geometry"])
+    return gpd.GeoDataFrame(rows,geometry="geometry",crs=CRS)
 
 
 def write_geojson(gdf: gpd.GeoDataFrame, path: Path, simplify_m: float=15.0):
