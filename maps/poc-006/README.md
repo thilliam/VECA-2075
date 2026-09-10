@@ -1,36 +1,40 @@
 # POC-006 — Terrain Survival Screen
 
-POC-006 is the first Stage-2 map increment. It adds terrain/buildability evidence over the inherited-system map without converting terrain into a settlement score.
+POC-006 is the first Stage-2 map increment. It adds terrain/buildability evidence without converting terrain into a settlement score.
 
 ## Inputs and analytical truth
 
-Source family: Geoscience Australia SRTM-derived 1-second elevation (`ga_srtm_dem1sv1_0`), accessed through Digital Earth Australia.
+Preferred v1 source: local Geoscience Australia SRTM-derived 3-second DEM (~90 m), stored outside Git under `research/source/terrain/3secSRTM_DEM/`.
 
 `tools/build_terrain_screen.py` creates:
 
 - continuous elevation at the configured analytical resolution (default 250 m);
 - continuous slope in degrees at the same analytical resolution;
-- a coarse browser grid (default 10 km) carrying mean elevation, median slope, P90 slope, share of analytical pixels >=15 degrees and a descriptive terrain band.
+- a 10 km overview grid carrying mean elevation, median slope, P90 slope, share of analytical pixels >=15 degrees and a descriptive terrain band.
 
-The GeoTIFF elevation/slope surfaces are the analytical products. The 10 km GeoJSON is only a map/summary representation.
+The GeoTIFF elevation/slope surfaces are the analytical products. The 10 km GeoJSON is only an overview/click-summary representation.
 
-## Terrain modes
+## Multiscale map delivery
 
-The POC can display the same map cells as:
+`tools/build_terrain_tiles.py` reads the accepted 250 m GeoTIFFs and creates ignored local XYZ PNG tile pyramids for:
 
-- descriptive P90 slope bands;
-- continuous P90 slope;
-- continuous mean elevation.
+- descriptive slope bands;
+- continuous slope;
+- elevation.
 
-The bands are transparent display classes, not engineering cutoffs.
+POC-006 displays the 10 km vector summary at east-coast scale and switches to the tiled 250 m-derived surface from zoom 6 onward. The default tile pyramid ends at zoom 9, where Web Mercator pixels are roughly 300 m at the equator and therefore close to the analytical resolution; further browser zoom can overzoom those tiles without claiming additional source precision.
 
 ## Build
 
+After the local GA 3-second source is present:
+
 ```bash
 python -m pip install -r tools/requirements-terrain.txt
-python tools/build_map_poc004.py
 python tools/build_terrain_screen.py
+python tools/build_terrain_tiles.py
 ```
+
+The terrain screen build does not require POC-004 to succeed. Reference layers inherited from earlier POCs are optional context rather than a terrain-build dependency.
 
 Run:
 
@@ -48,8 +52,7 @@ A steep cell is not automatically excluded. It indicates likely higher terrain/c
 
 ## Known v1 limitations
 
-- The continental product is intentionally resampled for broad regional analysis; it is not parcel-scale terrain.
-- v1 uses the DEA-hosted smoothed DEM-S asset from the GA 1-second product family for slope derivation.
-- The study-area processing extent is a mainland bounding extent covering QLD/NSW/ACT/VIC. Ocean/nodata is excluded; exact state-border summary clipping can be added if needed for jurisdiction statistics.
-- Browser delivery uses a coarse regular grid rather than raster/vector tiles. Production serving remains a later concern.
+- The source is a national ~90 m DEM resampled to a 250 m regional analytical surface; it is not parcel-scale terrain.
+- The study-area processing extent is a mainland bounding extent covering QLD/NSW/ACT/VIC. Ocean/nodata is excluded; exact state-border summary clipping can be added later.
+- 10 km cell statistics remain useful for regional comparison and click details; the closer raster view shows the underlying spatial pattern rather than inventing finer vector summaries.
 - Higher-resolution ELVIS/LiDAR should be reserved for shortlisted regions where local engineering questions justify it.
