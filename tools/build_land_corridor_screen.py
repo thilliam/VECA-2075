@@ -14,10 +14,12 @@ import time
 from pathlib import Path
 
 import geopandas as gpd
+import numpy as np
 import pandas as pd
 import pyogrio
+from shapely import GeometryCollection, MultiPolygon, Polygon, box, intersection, make_valid
+from shapely.errors import GEOSException
 from shapely.geometry import shape
-from shapely.ops import unary_union
 
 from land_corridor_rules import classify_abs_meshblock, classify_nsw_tenure
 
@@ -84,14 +86,19 @@ def pick_layer(path: Path,hint: str|None,contains: tuple[str,...]):
     return names[0] if names else None
 
 
-def load_route(path: Path):
-    log(f"Reading POC-007 route: {path}")
+def load_route_segments(path: Path):
+    log(f"Reading POC-007 route segments: {path}")
     raw=json.loads(path.read_text(encoding="utf-8"))
-    geoms=[shape(f["geometry"]) for f in raw.get("features",[]) if f.get("geometry")]
-    if not geoms: raise SystemExit(f"No path geometry in {path}; run POC-007 builder first")
-    route=gpd.GeoSeries([unary_union(geoms)],crs=WGS84).to_crs(CRS).iloc[0]
-    log(f"Route length {route.length/1000:,.1f} km")
-    return route
+    rows=[]
+    for i,f in enumerate(raw.get("features",[]),1):
+        if not f.get("geometry"): continue
+        p=f.get("properties") or {}
+        rows.append({"segment_id":p.get("segment_id",i),"geometry":shape(f["geometry"])})
+    if not rows: raise SystemExit(f"No path geometry in {path}; run POC-007 builder first")
+    segs=gpd.GeoDataFrame(rows,geometry="geometry",crs=WGS84).to_crs(CRS)
+    route_length=float(segs.length.sum())
+    log(f"Loaded {len(segs):,} POC-007 segments; total segment length {route_length/1000:,.1f} km")
+    return segs
 
 
 def _empty_gdf(columns):
@@ -107,8 +114,8 @@ def read_clip(path: Path,clip_geom,layer=None,columns=None,fast_polygons=False):
     if not source_crs: raise ValueError(f"Source has no CRS: {path}")
     log(f"Source CRS: {source_crs}; source features reported: {info.get('features','unknown')}")
     clip_src=gpd.GeoSeries([clip_geom],crs=CRS).to_crs(source_crs).iloc[0]
-    bbox=clip_src.bounds
-    log("Source-native bbox: "+", ".join(f"{v:.2f}" for v in bbox))
+    bbox_bounds=clip_src.bounds
+    log("Source-native bbox: "+", ".join(f"{v:.2f}" for v in bbox_bounds))
     log("Reading bbox candidates"+(f"; requested attributes: {', '.join(columns)}" if columns else ""))
     old=os.environ.get("OGR_ORGANIZE_POLYGONS")
     if fast_polygons:
@@ -116,7 +123,7 @@ def read_clip(path: Path,clip_geom,layer=None,columns=None,fast_polygons=False):
         log("Fast polygon mode: OGR_ORGANIZE_POLYGONS=SKIP")
     t=time.perf_counter()
     try:
-        g=gpd.read_file(path,layer=layer,bbox=bbox,columns=columns,engine="pyogrio")
+        g=gpd.read_file(path,layer=layer,bbox=bbox_bounds,columns=columns,engine="pyogrio")
     finally:
         if fast_polygons:
             if old is None: os.environ.pop("OGR_ORGANIZE_POLYGONS",None)
@@ -196,34 +203,105 @@ def write_browser_geojson(gdf: gpd.GeoDataFrame,path: Path,display_clip,simplify
     return len(out)
 
 
-def route_intersections(route,datasets):
-    records=[]
+def _polygonal_only(geom):
+    """Keep only areal components from make_valid output."""
+    if geom is None or geom.is_empty: return None
+    if isinstance(geom,(Polygon,MultiPolygon)): return geom
+    if isinstance(geom,GeometryCollection):
+        polys=[]
+        for part in geom.geoms:
+            p=_polygonal_only(part)
+            if p is None or p.is_empty: continue
+            if isinstance(p,Polygon): polys.append(p)
+            elif isinstance(p,MultiPolygon): polys.extend(list(p.geoms))
+        if not polys: return None
+        return polys[0] if len(polys)==1 else MultiPolygon(polys)
+    return None
+
+
+def _local_intersection_length(segment,geom):
+    try:
+        return float(intersection(segment,geom).length),False,False,False
+    except GEOSException:
+        minx,miny,maxx,maxy=segment.bounds; pad=5.0
+        local_box=box(minx-pad,miny-pad,maxx+pad,maxy+pad)
+        try:
+            try: local=intersection(geom,local_box,grid_size=0.01)
+            except GEOSException: local=geom
+            repaired=_polygonal_only(make_valid(local))
+            if repaired is None or repaired.is_empty: return 0.0,True,True,False
+            return float(intersection(segment,repaired,grid_size=0.01).length),True,True,False
+        except GEOSException:
+            return 0.0,True,True,True
+
+
+def _numeric_bounds(g: gpd.GeoDataFrame, name: str):
+    """Return Nx4 numeric bounds without constructing a GEOS STRtree.
+
+    NSW tenure contains pathological multipart geometries. STRtree construction
+    can spend a long time indexing them even though route scoring only needs a
+    coarse bbox rejection before exact local intersection. Bounds are cheap to
+    compare with NumPy and keep the expensive geometry path out of indexing.
+    """
+    t=time.perf_counter(); log(f"Computing numeric bounds for {name} ({len(g):,} analytical features); no GEOS spatial index")
+    b=g.geometry.bounds[["minx","miny","maxx","maxy"]].to_numpy(dtype="float64",copy=True)
+    finite=np.isfinite(b).all(axis=1)
+    log(f"Numeric bounds ready for {name}: {finite.sum():,}/{len(g):,} finite in {time.perf_counter()-t:,.1f}s")
+    return b,finite
+
+
+def score_route_segments(segments,datasets):
+    records=[]; per_segment={str(int(sid)):[] for sid in segments.segment_id}; stats={}
     for name,g in datasets.items():
         if g is None or g.empty: continue
-        t=time.perf_counter(); log(f"Intersecting route with {name} ({len(g):,} analytical features)")
-        hits=g[g.intersects(route)].copy()
-        for _,r in hits.iterrows():
-            length=float(route.intersection(r.geometry).length)
-            if length<=0: continue
-            records.append({"dataset":name,"factor_class":r.get("factor_class"),"rule_role":r.get("rule_role"),
-                            "rule_weight":float(r.get("rule_weight",0)),"intersection_length_m":round(length,1),
-                            "source_class":r.get("source_class"),"source_type":r.get("source_type"),
-                            "state_name":r.get("state_name"),"sa2_name":r.get("sa2_name")})
-        log(f"{name}: {len(hits):,} route-intersecting features in {time.perf_counter()-t:,.1f}s")
+        t=time.perf_counter()
+        bounds,finite=_numeric_bounds(g,name)
+        minx=bounds[:,0]; miny=bounds[:,1]; maxx=bounds[:,2]; maxy=bounds[:,3]
+        bbox_candidates=0; exact_hits=0; repaired=0; fallbacks=0; skipped=0
+        total_segments=len(segments)
+        for n,(_,srow) in enumerate(segments.iterrows(),1):
+            seg=srow.geometry; sid=int(srow.segment_id)
+            sx1,sy1,sx2,sy2=seg.bounds
+            mask=finite & (maxx>=sx1) & (minx<=sx2) & (maxy>=sy1) & (miny<=sy2)
+            idx=np.flatnonzero(mask)
+            bbox_candidates+=len(idx)
+            for pos in idx:
+                r=g.iloc[int(pos)]
+                try:
+                    if not seg.intersects(r.geometry): continue
+                except GEOSException:
+                    pass
+                length,was_repaired,used_fallback,was_skipped=_local_intersection_length(seg,r.geometry)
+                repaired+=int(was_repaired); fallbacks+=int(used_fallback); skipped+=int(was_skipped)
+                if length<=0: continue
+                exact_hits+=1
+                rec={"dataset":name,"segment_id":sid,"factor_class":r.get("factor_class"),"rule_role":r.get("rule_role"),
+                     "rule_weight":float(r.get("rule_weight",0)),"intersection_length_m":round(length,1),
+                     "source_class":r.get("source_class"),"source_type":r.get("source_type"),
+                     "state_name":r.get("state_name"),"sa2_name":r.get("sa2_name")}
+                records.append(rec); per_segment[str(sid)].append(rec)
+            if n%50==0 or n==total_segments:
+                log(f"{name}: scored {n}/{total_segments} segments; {bbox_candidates:,} bbox candidates; {exact_hits:,} exact hits; {skipped:,} skipped")
+        elapsed=time.perf_counter()-t
+        stats[name]={"candidate_method":"numeric_bounds","bbox_candidates":bbox_candidates,"exact_hits":exact_hits,
+                     "repaired_local_fragments":repaired,"fallback_attempts":fallbacks,
+                     "skipped_unrecoverable":skipped,"seconds":round(elapsed,1)}
+        log(f"{name} complete: {bbox_candidates:,} bbox candidates -> {exact_hits:,} exact hits; repaired {repaired:,}; fallbacks {fallbacks:,}; skipped {skipped:,}; {elapsed:,.1f}s")
     by={}
     for x in records:
         key=x["factor_class"]
         by.setdefault(key,{"factor_class":key,"intersection_length_m":0.0,"crossed_features":0,"rule_role":x["rule_role"]})
         by[key]["intersection_length_m"]+=x["intersection_length_m"]; by[key]["crossed_features"]+=1
     for v in by.values(): v["intersection_length_km"]=round(v.pop("intersection_length_m")/1000,2)
-    return records,sorted(by.values(),key=lambda x:-x["intersection_length_km"])
+    return records,sorted(by.values(),key=lambda x:-x["intersection_length_km"]),per_segment,stats
 
 
 def main():
     args=parse_args()
     if args.inspect: inspect_vector(args.inspect); return
     if not args.path.exists(): raise SystemExit(f"Missing {args.path}; run python tools/build_hst_terrain_path.py first")
-    route=load_route(args.path)
+    segments=load_route_segments(args.path)
+    route=segments.geometry.union_all()
     analysis_clip=route.buffer(args.buffer_km*1000)
     display_clip=route.buffer(args.browser_buffer_km*1000)
     log(f"Analytical QA corridor {args.buffer_km:g} km; browser corridor {args.browser_buffer_km:g} km")
@@ -235,7 +313,10 @@ def main():
         log(f"Normalizing ABS Mesh Blocks from {args.abs_meshblocks}")
         datasets["abs_meshblocks"]=normalize_abs(args.abs_meshblocks,analysis_clip)
 
-    detailed,summary=route_intersections(route,datasets)
+    detailed,summary,per_segment,scoring_stats=score_route_segments(segments,datasets)
+    (args.out/"poc007_segment_land_summary.json").write_text(json.dumps(per_segment,indent=2),encoding="utf-8")
+    log(f"Wrote segment-level route evidence: {args.out/'poc007_segment_land_summary.json'}")
+
     browser_counts={}
     if "nsw_tenure" in datasets:
         browser_counts["nsw_tenure"]=write_browser_geojson(datasets["nsw_tenure"],args.out/"land_tenure_nsw.geojson",display_clip,args.browser_simplify_m)
@@ -248,6 +329,7 @@ def main():
             "qa_buffer_is_routing_constraint":False,"datasets_built":list(datasets),
             "browser_feature_counts":browser_counts,"victoria_schema_pending":pending,
             "poc007_path_intersections":summary,"intersection_records":len(detailed),
+            "segment_scoring_stats":scoring_stats,
             "source_schemas":{"nsw":{"layer":NSW_TENURE_LAYER,"class_field":"TenureClass"},
                               "abs":{"layer":"MB_2021_AUST_GDA2020","category_field":"MB_CAT21","state_field":"STE_NAME21","sa2_field":"SA2_NAME21"}},
             "fast_polygon_mode":not args.safe_polygons}
