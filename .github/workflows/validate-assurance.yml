@@ -8,8 +8,10 @@ on:
       - "domains/*/data/derived/**"
       - "domains/*/research/source_register.csv"
       - "research/source_register.csv"
+      - "maps/layers/catalogue.json"
       - "tools/validate_*assurance.py"
       - "tools/validate_dataset_register.py"
+      - "tools/validate_spatial_readiness.py"
       - "tests/test_*assurance.py"
       - "tests/test_dataset_register.py"
       - ".github/workflows/validate-assurance.yml"
@@ -22,8 +24,10 @@ on:
       - "domains/*/data/derived/**"
       - "domains/*/research/source_register.csv"
       - "research/source_register.csv"
+      - "maps/layers/catalogue.json"
       - "tools/validate_*assurance.py"
       - "tools/validate_dataset_register.py"
+      - "tools/validate_spatial_readiness.py"
       - "tests/test_*assurance.py"
       - "tests/test_dataset_register.py"
   workflow_dispatch:
@@ -40,5 +44,7 @@ jobs:
         run: python tools/validate_source_assurance.py --strict
       - name: Validate dataset registry
         run: python tools/validate_dataset_register.py
+      - name: Validate spatial readiness
+        run: python tools/validate_spatial_readiness.py
       - name: Run assurance regression tests
         run: python -m unittest tests.test_source_assurance tests.test_dataset_register
