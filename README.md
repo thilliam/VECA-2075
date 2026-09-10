@@ -2,15 +2,21 @@
 
 **Vision East Coast Australia 2075**
 
-VECA-2075 is a long-horizon, evidence-driven investigation into how eastern Australia could be deliberately reshaped over the next 50 years to accommodate substantial population growth while improving quality of life, housing affordability, infrastructure efficiency, climate resilience, water security, renewable energy utilisation, economic productivity, transport efficiency and environmental outcomes.
+VECA-2075 is a long-horizon, evidence-driven investigation into how eastern Australia could accommodate roughly 10 million additional residents by around 2075 while improving housing, infrastructure efficiency, climate resilience, water security, energy utilisation, productivity, transport efficiency and environmental outcomes.
+
+The 10 million figure is a forcing scenario, not a forecast. VECA may conclude that metropolitan concentration, regional expansion or a hybrid spatial system is superior.
 
 ## Start here
 
-For the current state of the project, completed work, open tasks and the full end-to-end research sequence, read **`PROJECT_STATUS_AND_ROADMAP.md`**.
+Read in this order:
 
-Agents should also read **`AGENTS.md`** before starting work.
+1. `PROJECT_STATUS_AND_ROADMAP.md` — canonical current state, stage gates and next work.
+2. `AGENTS.md` — repository/assurance rules for agents.
+3. `doctrine/design_principles.md` — durable research rules.
+4. `session_summaries/RECONCILIATION_2026-09-10.md` — latest cross-agent reconciliation and recovered backlog.
+5. the relevant domain/experiment README and findings files.
 
-The durable research rules are in `doctrine/design_principles.md`.
+Session summaries are historical evidence about work performed; they are not automatically current truth. Current `main` plus canonical assurance/register/consumer files wins after reconciliation.
 
 ## Core research question
 
@@ -20,96 +26,67 @@ Secondary question:
 
 > What combination of settlement, infrastructure, water, energy, industry and transport investment would produce the best long-term Australian outcome?
 
-The 10 million figure is a forcing scenario, not a population forecast.
+## Current phase — 10 September 2026
 
-## Vision
+**Primary analytical stage: EXP-002 physical survival / habitat-resource screening.**
 
-Australia will invest enormous sums in housing, energy, water, transport, health, education and urban infrastructure to 2075 regardless of VECA. The opportunity is not simply to advocate more spending. It is to investigate whether those investments can be coordinated around a coherent 50-year spatial strategy rather than thousands of individually rational but disconnected decisions.
+Stage 1 inherited-system evidence is substantially established and continues to be enriched in parallel. The repository now includes:
 
-Australia deliberately built Canberra. Modern engineering, data, climate modelling, AI, renewables and computational optimisation may allow far more ambitious spatial planning. VECA asks what a modern equivalent could achieve at continental scale.
+- reconciled ABS population and authoritative road/rail foundations;
+- historical/current HSR and conventional-rail evidence;
+- AEMO transmission and exhaustive generation/storage source observations;
+- DNSP distribution-capacity/load datasets including Ausgrid, Essential Energy and Ergon evidence;
+- regional water-system, ports/intermodal, digital-backbone and compute-capital evidence;
+- Government Intent / Future Capital Optionality research;
+- a source/dataset assurance control plane;
+- a multi-generation MapLibre map through **POC-005**, including population, transport, energy, water, capital, compute, digital, ports and capacity/investment context;
+- a machine-readable spatial-readiness register distinguishing mapped evidence from datasets blocked on authoritative spatial joins.
 
-## Working hypothesis
+**No settlement ranking is authorised yet. No preferred VECA HSR route is authorised yet.**
 
-Australia may achieve better long-term outcomes by deliberately creating or greatly expanding several regional population centres rather than concentrating most future growth into the existing Brisbane, Sydney and Melbourne metropolitan footprints.
+The Regional Anchor Cluster join/weighting task remains paused until Stage 2 is materially advanced.
 
-This is a hypothesis to test, not a conclusion. High-speed rail may eventually be enabling infrastructure, but the settlement pattern must be derived before the transport solution.
+## Map lineage
 
-The initial geographic scope is eastern Australia from South East Queensland to Melbourne, including inland regions that could plausibly form part of a future urban and economic system. South Australia is outside the base model unless evidence later shows that Adelaide or South Australia materially improves the national spatial system.
+- `maps/poc-001/` — interaction proof.
+- `maps/poc-002/` — real east-coast road/rail spatial foundation.
+- `maps/poc-003/` — SA2/LGA population, settlements and landscape.
+- `maps/poc-004/` — energy, REZ, water, capital, freight and planning geography.
+- `maps/poc-005/` — compute, digital backbone, conventional-rail capacity/investment, ports, DNSP signals and expanded regional water evidence.
 
-## Non-goals
+Map absence must not be interpreted as data absence. `assurance/spatial_readiness.json` records whether a dataset is mapped, map-ready, blocked on a spatial join or non-spatial.
 
-VECA-2075 is not:
+## Research sequence
 
-- high-speed-rail advocacy;
-- a political platform;
-- an engineering design;
-- a population forecast;
-- an argument for any particular new city; or
-- a recommendation to abandon existing cities.
+1. inherited system and capital accumulation;
+2. physical survival / habitat-resource screening;
+3. evidence-led candidate-region discovery;
+4. inherited service/economic capability and missing capital;
+5. attractiveness, productive economy and voluntary migration;
+6. AI/automation uncertainty stress tests;
+7. materially different settlement systems;
+8. transport derived from those systems;
+9. whole-system infrastructure/economic comparison;
+10. scenario and sensitivity analysis;
+11. 2075 spatial vision plus near-term option-preservation decisions.
 
-It is an evidence-driven exploration of possible long-term spatial systems.
-
-## Research method
-
-The project separates **evidence**, **inference** and **hypothesis**.
-
-The broad sequence is:
-
-1. understand the inherited system and current capital accumulation;
-2. screen physical habitat/resource constraints using 2050–2075 conditions;
-3. discover candidate regions from evidence;
-4. analyse inherited service/economic capability and missing capital;
-5. test attractiveness, productive economy and voluntary migration;
-6. stress-test long-horizon AI/automation uncertainty;
-7. construct materially different settlement systems;
-8. derive transport from those settlement systems;
-9. compare whole-system infrastructure and economics against the default-growth counterfactual;
-10. run scenario/weight sensitivity; and
-11. produce a 2075 spatial vision plus near-term option-preservation decisions.
-
-See `PROJECT_STATUS_AND_ROADMAP.md` for stage gates and current priorities.
-
-## Current phase — September 2026
-
-**Primary analytical work: EXP-002 habitat/resource survival screening.**
-
-EXP-001 has progressed far beyond source reconnaissance: population, road/rail geometry, HSR evidence, infrastructure capital, energy, water and industry/logistics all have meaningful first-pass evidence, although several enrichment gaps remain.
-
-Government intent / Future Capital Optionality is now a formal evidence family covering regional growth assumptions, health/service capital, government land, universities/VET and school-growth signals.
-
-A working layered-map POC exists at `maps/poc-001/`, with layer toggles, time/status filtering, regional navigation and feature-level evidence inspection.
-
-**No settlement ranking is authorised yet. No VECA HSR route is authorised yet.**
-
-The proposed Regional Anchor Cluster join/weighting task is currently **paused** and recorded in the roadmap backlog.
+Transport concepts such as HSR, corridor co-location, autonomous/shared first-last-mile mobility and airport/interchange network value remain later-stage scenario/method questions, not current route choices.
 
 ## Repository guide
 
-The canonical organising principle is **research domain**, not file type. Evidence, source registers and derived datasets for a subject should live together wherever practical.
+The canonical organising principle is **research domain**, not file type.
 
 - `domains/<domain>/research/` — plans, source registers, findings and evidence notes.
 - `domains/<domain>/data/raw/` — preserved source data where practical.
-- `domains/<domain>/data/derived/` — reproducible/structured outputs.
+- `domains/<domain>/data/derived/` — reproducible structured outputs.
+- `assurance/` — source coverage, dataset registration, reconciliation and spatial-readiness controls.
 - `doctrine/` — project purpose and durable design principles.
-- `experiments/` — bounded cross-domain research experiments and synthesis.
+- `experiments/` — bounded cross-domain experiments/synthesis.
 - `maps/` — spatial outputs and map-specific documentation.
 - `scenarios/` — later alternative 2075 spatial systems.
 - `decisions/` — consequential project decisions and rationale.
-- `tools/` — only tooling necessary to answer research questions.
-- `research/` and `data/` — live legacy/migration locations while older generated layers and CI workflows are moved safely into the domain structure.
+- `session_summaries/` — agent-session history and reconciliation records.
+- `tools/` — tooling necessary to answer research questions.
+- `research/` and `data/` — live legacy/migration locations while older content is consolidated safely.
 
-The automated migration staged successfully but its push was blocked because the GitHub App lacked permission to rewrite workflow files. Do not duplicate large datasets simply to make the tree conform visually.
-
-### Naming note
-
-`domains/government-intent/` is canonical for new government-intent work. The older `domains/government_intent/` directory is legacy and awaits careful consolidation; agents must not add new material there.
-
-## Mapping
-
-`maps/poc-001/` is the first runnable VECA layered-map explorer. It is already a useful evidence-inspection POC, not merely a future proposal. Large authoritative rail/road extracts should ultimately be served through tiles rather than loaded wholesale into the browser.
-
-## Agent handoff
-
-A new agent should normally begin with:
-
-`README.md` -> `PROJECT_STATUS_AND_ROADMAP.md` -> `AGENTS.md` -> `doctrine/design_principles.md` -> relevant experiment/domain plan.
+`domains/government-intent/` is canonical for new Government Intent work. `domains/government_intent/` is legacy and must not receive new material.
